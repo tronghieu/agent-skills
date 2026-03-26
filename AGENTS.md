@@ -22,7 +22,7 @@ skills/
 
 ### Naming Conventions
 
-- **Skill directory**: `kebab-case` (e.g., `vercel-deploy`, `log-monitor`)
+- **Skill directory**: `kebab-case` (e.g., `system-prompt-creator`, `log-monitor`)
 - **SKILL.md**: Always uppercase, always this exact filename
 - **Scripts**: `kebab-case.sh` (e.g., `deploy.sh`, `fetch-logs.sh`)
 - **Zip file**: Must match directory name exactly: `{skill-name}.zip`
@@ -99,6 +99,11 @@ zip -r {skill-name}.zip {skill-name}/
 ### End-User Installation
 
 Document these two installation methods for users:
+
+**Coding agent**
+```bash
+cp -r skills/{skill-name} ~/.agents/skills/
+```
 
 **Claude Code:**
 ```bash
