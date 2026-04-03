@@ -4,6 +4,18 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 
 ## Available Skills
 
+### cv-scorer
+
+Score candidate CVs on a 100-point scale against a Job Description.
+
+**What it does:**
+- Scores CVs across 5 weighted criteria: JD Matching, Work Experience, Project & Impact, Education, CV Quality
+- Detects red flags: repetitive content, inflated metrics, contradictory information
+- Outputs structured JSON with per-criterion scores, highlights, red flags, and a recommendation (Recommend / Maybe / Pass)
+- Supports batch processing: scores multiple CVs independently then ranks them
+
+**Trigger phrases:** "review CV", "screen resume", "score candidate", "rate candidates", "shortlist applicants", "match resume to JD"
+
 ### system-prompt-creator
 
 Create high-quality, model-aware system prompts for any LLM (Claude, GPT, Gemini, open-source).
@@ -24,6 +36,7 @@ Create high-quality, model-aware system prompts for any LLM (Claude, GPT, Gemini
 npx skills add tronghieu/agent-skills
 
 # Or manually for Claude Code
+cp -r skills/cv-scorer ~/.claude/skills/
 cp -r skills/system-prompt-creator ~/.claude/skills/
 ```
 
@@ -31,6 +44,11 @@ cp -r skills/system-prompt-creator ~/.claude/skills/
 
 ```
 skills/
+  cv-scorer/
+    SKILL.md                    # Core skill (workflow + scoring rubric)
+    references/
+      scoring-rubric.md         # Detailed 5-criterion rubric with scoring guides
+      output-format.md          # JSON output templates (single CV + batch)
   system-prompt-creator/
     SKILL.md                    # Core skill (workflow + 12 principles)
     references/
