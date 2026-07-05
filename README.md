@@ -10,6 +10,8 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 
 Score candidate CVs on a 100-point scale against a Job Description.
 
+**Skill README:** [cv-scorer](./skills/cv-scorer/README.md)
+
 **What it does:**
 - Scores CVs across 5 weighted criteria: JD Matching, Work Experience, Project & Impact, Education, CV Quality
 - Detects red flags: repetitive content, inflated metrics, contradictory information
@@ -26,6 +28,8 @@ npx skills add tronghieu/agent-skills --skill cv-scorer
 ### system-prompt-creator
 
 Create high-quality, model-aware system prompts for any LLM (Claude, GPT, Gemini, open-source).
+
+**Skill README:** [system-prompt-creator](./skills/system-prompt-creator/README.md)
 
 **What it does:**
 - Walks you through a structured 5-step workflow: Interview, Analyze, Structure, Draft, Review
@@ -45,6 +49,8 @@ npx skills add tronghieu/agent-skills --skill system-prompt-creator
 
 Socratic questioning partner (Gadfly) for deep learning through dialogue.
 
+**Skill README:** [socratic-questor](./skills/socratic-questor/README.md)
+
 **What it does:**
 - Teaches any topic by asking questions, never by explaining — the learner discovers understanding through dialogue
 - Follows the Paul & Elder 6-type Socratic questioning framework: Clarification, Assumptions, Evidence, Perspectives, Implications, Meta-questions
@@ -63,6 +69,8 @@ npx skills add tronghieu/agent-skills --skill socratic-questor
 
 A complete prose-fiction writing studio, run as a team of named specialist agents, that guides an author from a bare idea to a polished manuscript.
 
+**Skill README:** [fiction-studio](./skills/fiction-studio/README.md)
+
 **What it does:**
 - Runs a team of 10 specialists named after literary masters, led by **Homer** (orchestrator): Aristotle (plot), Fyodor (character), Tolkien (world), Scheherazade (drafting), Oscar (dialogue), Max (editing), Virginia (beta read), Borges (genre), Bloom (critique)
 - Drives an end-to-end pipeline — premise → outline → characters → world → scene list → draft → dialogue → edit → beta read → revision triage → polish → package — with quality gates for genre, continuity, foreshadowing, and sensitivity
@@ -80,6 +88,8 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 ### slidewright
 
 Build interactive presentation websites — slide decks projected to a room and driven by one presenter.
+
+**Skill README:** [slidewright](./skills/slidewright/README.md)
 
 **What it does:**
 - Two tracks: a **zero-build single HTML file** (open it in a browser, no install) or a **Vite + React + TypeScript** project — picks the right one for the job

@@ -10,6 +10,8 @@
 
 根据职位描述（JD）对候选人简历进行百分制评分。
 
+**技能 README：** [cv-scorer](./skills/cv-scorer/README.zh.md)
+
 **功能：**
 - 按 5 项加权标准对简历评分：JD 匹配度、工作经验、项目与影响力、教育背景、简历质量
 - 检测红旗警告：重复内容、数据虚报、信息矛盾
@@ -26,6 +28,8 @@ npx skills add tronghieu/agent-skills --skill cv-scorer
 ### system-prompt-creator
 
 为任意 LLM（Claude、GPT、Gemini、开源模型）创建高质量、模型感知的系统提示词。
+
+**技能 README：** [system-prompt-creator](./skills/system-prompt-creator/README.zh.md)
 
 **功能：**
 - 引导完成结构化五步工作流：访谈、分析、结构化、起草、审查
@@ -45,6 +49,8 @@ npx skills add tronghieu/agent-skills --skill system-prompt-creator
 
 苏格拉底式问答伙伴（牛虻），通过对话实现深度学习。
 
+**技能 README：** [socratic-questor](./skills/socratic-questor/README.zh.md)
+
 **功能：**
 - 通过提问而非讲解来教授任意主题 — 学习者在对话中自己发现理解
 - 遵循 Paul & Elder 6 种苏格拉底提问框架：澄清、假设、证据、视角、含义、元问题
@@ -63,6 +69,8 @@ npx skills add tronghieu/agent-skills --skill socratic-questor
 
 一个完整的小说创作工作室，以一支被命名的专家智能体团队的形式运行，引导作者从一个粗略的想法走到打磨完成的书稿。
 
+**技能 README：** [fiction-studio](./skills/fiction-studio/README.zh.md)
+
 **功能：**
 - 运行一支以文学大师命名的 10 人专家团队，由 **Homer**（编排者）统领：Aristotle（情节）、Fyodor（人物）、Tolkien（世界观）、Scheherazade（起草）、Oscar（对白）、Max（编辑）、Virginia（试读）、Borges（类型）、Bloom（评论）
 - 驱动一条端到端流程 — 前提 → 大纲 → 人物 → 世界观 → 场景列表 → 草稿 → 对白 → 编辑 → 试读 → 修订分类 → 润色 → 打包 — 并设有类型、连续性、铺垫呼应与敏感度的质量关卡
@@ -80,6 +88,8 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 ### slidewright
 
 构建交互式演示网站 —— 投影到房间、由单个演讲者操控的幻灯片。
+
+**技能 README：** [slidewright](./skills/slidewright/README.zh.md)
 
 **技能功能：**
 - 两条路线：**无需构建的单个 HTML 文件**（浏览器打开即用，无需安装）或 **Vite + React + TypeScript** 项目 —— 自动为任务选择合适的路线

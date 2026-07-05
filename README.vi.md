@@ -10,6 +10,8 @@ Bộ sưu tập skills dành cho các AI coding agent. Tương thích với [Cla
 
 Chấm điểm CV ứng viên trên thang 100 điểm so với Mô tả Công việc (JD).
 
+**README của skill:** [cv-scorer](./skills/cv-scorer/README.vi.md)
+
 **Chức năng:**
 - Chấm điểm CV theo 5 tiêu chí có trọng số: Khớp JD, Kinh nghiệm làm việc, Dự án & Tác động, Học vấn, Chất lượng CV
 - Phát hiện cờ đỏ: nội dung lặp lại, số liệu phóng đại, thông tin mâu thuẫn
@@ -26,6 +28,8 @@ npx skills add tronghieu/agent-skills --skill cv-scorer
 ### system-prompt-creator
 
 Tạo system prompt chất lượng cao, tối ưu theo từng mô hình cho bất kỳ LLM nào (Claude, GPT, Gemini, open-source).
+
+**README của skill:** [system-prompt-creator](./skills/system-prompt-creator/README.vi.md)
 
 **Chức năng:**
 - Dẫn dắt qua quy trình 5 bước có cấu trúc: Phỏng vấn, Phân tích, Cấu trúc, Soạn thảo, Đánh giá
@@ -45,6 +49,8 @@ npx skills add tronghieu/agent-skills --skill system-prompt-creator
 
 Người bạn đặt câu hỏi Socrates (Gadfly) để học sâu thông qua đối thoại.
 
+**README của skill:** [socratic-questor](./skills/socratic-questor/README.vi.md)
+
 **Chức năng:**
 - Dạy bất kỳ chủ đề nào bằng cách đặt câu hỏi, không bao giờ giải thích trực tiếp — người học tự khám phá sự hiểu biết qua đối thoại
 - Tuân theo khung câu hỏi Socrates 6 loại của Paul & Elder: Làm rõ, Giả định, Bằng chứng, Quan điểm, Hàm ý, Siêu câu hỏi
@@ -63,6 +69,8 @@ npx skills add tronghieu/agent-skills --skill socratic-questor
 
 Một xưởng viết truyện hư cấu hoàn chỉnh, vận hành như một đội các agent chuyên gia được đặt tên, dẫn dắt tác giả từ một ý tưởng thô đến bản thảo hoàn thiện.
 
+**README của skill:** [fiction-studio](./skills/fiction-studio/README.vi.md)
+
 **Chức năng:**
 - Vận hành đội 10 chuyên gia mang tên các bậc thầy văn chương, do **Homer** điều phối: Aristotle (cốt truyện), Fyodor (nhân vật), Tolkien (thế giới), Scheherazade (viết nháp), Oscar (đối thoại), Max (biên tập), Virginia (đọc thử), Borges (thể loại), Bloom (phê bình)
 - Chạy quy trình đầu-cuối — tiền đề → dàn ý → nhân vật → thế giới → danh sách cảnh → nháp → đối thoại → biên tập → đọc thử → phân loại sửa → mài giũa → đóng gói — kèm các cổng chất lượng về thể loại, tính nhất quán, cài cắm–hồi đáp, và độ nhạy cảm
@@ -80,6 +88,8 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 ### slidewright
 
 Dựng website thuyết trình tương tác — slide deck để chiếu lên màn lớn, do một người trình bày điều khiển.
+
+**README của skill:** [slidewright](./skills/slidewright/README.vi.md)
 
 **Skill này làm gì:**
 - Hai hướng: **một file HTML không cần build** (mở là chạy, không cài đặt) hoặc một dự án **Vite + React + TypeScript** — tự chọn hướng phù hợp
