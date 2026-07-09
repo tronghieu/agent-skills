@@ -146,3 +146,59 @@ legitimate and important answer).
 **Tips:** past behaviour beats stated intentions. An incumbent's response is
 constrained by what protecting their margin allows them to do — that
 asymmetry is often the entrant's whole case.
+
+## Strategy canvas & ERRC (escaping a converged industry)
+
+**When:** the industry's offerings have converged — every competitor profile
+reads the same, rivalry is High and margins compress — and the question is
+"how do we stop fighting this game?" rather than "how do we win it?". Run
+only when the Phase 0 Palette read is **Visionary or Shaping** (the
+environment can be reshaped), or when the executive explicitly asks for a
+way out of a commodity fight. In a Classical or Renewal environment this
+tool is the wrong medicine — say so and hand back to positioning.
+
+**How:** two moves, always together.
+
+1. **Canvas.** List the 8–12 factors buyers actually weigh (price, the
+   dimensions from the competitor positioning read, service, convenience —
+   from evidence `[S#]`, not the client's brochure). Rate each player's
+   offering level Low/Medium/High per factor. Convergence is the finding:
+   where every curve tracks the same shape, the industry competes on
+   execution, not strategy.
+2. **ERRC.** Against that curve, decide: which factors the industry takes
+   for granted can be **eliminated**; which can be **reduced** well below
+   standard; which **raised** well above; which **created** that the
+   industry has never offered. Eliminate/Reduce funds Raise/Create — a grid
+   that only raises and creates is a cost increase, not a move.
+   Christensen's noncustomer tiers (`frameworks/innovation-disruption.md`)
+   supply the best Create candidates: the shared blockers that keep whole
+   tiers out.
+
+Then the test that decides whether the move is a strategy or an opening:
+**what holds the win when this space turns red?** Imitation is fast —
+assume a validated move is copied within months, not years. Name the
+mechanism (network effects, switching costs, brand, scale, proprietary
+data or assets) or mark the move as a head start that must convert into
+one.
+
+**Output format:**
+
+```
+## Canvas & ERRC: [industry, boundary stated]
+
+| Factor | Industry standard | Us today | Move (E/R/R/C) | New level |
+|--------|-------------------|----------|----------------|-----------|
+(factors from evidence [S#]; convergence read in one line below the table)
+
+- Funded by: [what Eliminate/Reduce pays for Raise/Create]
+- Buyer it unlocks: [noncustomer tier / segment — [S#] or (assumption)]
+- Moat when it turns red: [mechanism — or "none yet: head start only"]
+- Imitation timeline: [estimate] (assumption) → goes on Taleb's Phase 4 list
+### So what
+```
+
+**Tips:** the canvas describes the opening move, not the end state — pair
+it with the competitor-response read above (what can incumbents afford to
+copy?). And keep Porter's discipline on: a "new market space" still gets a
+Five Forces read the day it works, because that is the structure the
+imitators will arrive into.

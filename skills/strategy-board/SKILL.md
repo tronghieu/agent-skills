@@ -183,6 +183,7 @@ its required output format:
 | Is this market/industry attractive? | Porter | Five Forces, market map |
 | Who wins and why, today? | Porter | Competitor profiles, positioning |
 | Which of several markets do we prioritize? | Porter (+ Grove) | Arena screen |
+| How do we escape a converged, commoditized fight? | Porter + Christensen | Strategy canvas + ERRC (only when the Palette reads Visionary/Shaping) |
 | Is this a real opportunity or a fad? | Christensen | Jobs-to-be-done, Three Horizons |
 | What is it worth? Can we afford it? | Graham | Sizing, unit economics, sensitivity |
 | Build, buy, or partner? | Graham + Grove | TCO comparison + capability fit |

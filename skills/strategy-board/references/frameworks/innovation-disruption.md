@@ -33,6 +33,42 @@ customer measures*, and what must they give up to switch?
 best disruption soil and the best sign there is no job. The tiebreaker is
 whether people already cobble together workarounds.
 
+## Noncustomer tiers (where new demand hides)
+
+**When:** growth questions where the instinct is to fight for the
+industry's existing customers; sizing the demand side of a new-market move
+(it feeds Porter's canvas & ERRC pass,
+`frameworks/market-competition.md`); any time "the market" has been
+defined as "people who already buy".
+
+**How:** map the people the industry does *not* serve, in three tiers:
+
+1. **Soon-to-be noncustomers** — buy today, minimally and reluctantly,
+   waiting for an alternative. Ask what they tolerate rather than value.
+2. **Refusing noncustomers** — considered the industry's offer and said
+   no: too expensive, too complex, not worth it. Ask what the deal-breaker
+   was.
+3. **Unexplored noncustomers** — never thought of the industry as an
+   option; the job is served by another industry or not at all. Ask what
+   they hire instead (this is the JTBD audit pointed outward).
+
+For each tier: rough size `[S#]` or `(assumption)`, and the blocker in the
+customers' words. The finding is the *shared* blocker — a barrier that
+recurs across tiers is a Create/Eliminate candidate for the ERRC grid and
+usually a bigger prize than any share fight.
+
+**Output format:** table — `Tier | Who (described by job) | Rough size
+[S#] | Blocker (their words) | What unlocking them requires`, then a
+So-what: the one or two blockers worth building a move around, and the
+demand-evidence grade behind them (behavioural beats stated — the section
+below applies to noncustomers doubly, because they are the easiest
+customers to invent).
+
+**Tips:** noncustomers can't answer "would you buy X?" usefully — study
+what they *do* about the job today (workarounds, substitutes, doing
+nothing). And a tier with no workarounds anywhere is a warning, not an
+opportunity: it may not want the job done at all.
+
 ## Demand evidence & research prescription
 
 **When:** a load-bearing assumption is about customer behaviour — "they will
