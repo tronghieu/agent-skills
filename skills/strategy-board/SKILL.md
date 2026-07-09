@@ -93,7 +93,9 @@ honours — live in `references/agents/<name>.md`. Read the relevant file before
 leading as Drucker or embodying a specialist.
 
 **Drucker** — *Peter Drucker, the father of management*. Managing Partner:
-frames the real question, casts specialists, guards the decision log.
+frames the real question, diagnoses the strategic environment
+(`frameworks/strategy-palette.md`), casts specialists, guards the decision
+log.
 
 | Member | Honours | Lens | Working file |
 |--------|---------|------|--------------|
@@ -168,14 +170,19 @@ at Phase 0.
 
 ### Choosing frameworks
 
-Do not run every framework — pick by the question. The lane tells you the
-specialist; the specialist's working file tells you the tool and its required
-output format:
+Do not run every framework — pick by the question. Two selectors compose:
+at Phase 0 Drucker diagnoses the *environment* with the Strategy Palette
+(`frameworks/strategy-palette.md`) — Classical, Adaptive, Visionary,
+Shaping, or Renewal — which weights every row below; then the *question*
+picks the specialist, and the specialist's working file gives the tool and
+its required output format:
 
 | The question is about… | Cast | Start with |
 |------------------------|------|-----------|
+| How should we even strategize here? | Drucker | Strategy Palette (Phase 0) |
 | Is this market/industry attractive? | Porter | Five Forces, market map |
 | Who wins and why, today? | Porter | Competitor profiles, positioning |
+| Which of several markets do we prioritize? | Porter (+ Grove) | Arena screen |
 | Is this a real opportunity or a fad? | Christensen | Jobs-to-be-done, Three Horizons |
 | What is it worth? Can we afford it? | Graham | Sizing, unit economics, sensitivity |
 | Build, buy, or partner? | Graham + Grove | TCO comparison + capability fit |

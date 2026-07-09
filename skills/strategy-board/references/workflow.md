@@ -30,6 +30,16 @@ special duty: test whether the stated question is the real one — "should we
 build a data platform?" frequently decodes to "why can't we trust our
 numbers?". Reframe before spending analysis on the wrong question.
 
+Once the question stands, diagnose the environment with the **Strategy
+Palette** (`references/frameworks/strategy-palette.md`): how predictable is
+this market on this horizon, can we shape it, is survival at stake? The
+resulting approach — Classical, Adaptive, Visionary, Shaping, or Renewal —
+goes into `brief.md` and sets the casting weights and the recommendation's
+default shape (e.g. Adaptive engagements default to staged experiments with
+kill criteria; a Renewal read puts Graham's diagnosis first and borrows the
+crisis playbook's compression). Guard the trap named in that file: assuming
+a plannable, Classical world without evidence.
+
 **Gate 1:** read the brief back. The executive confirms the question, or
 corrects it. Log the framing in `decision-log.md`.
 
@@ -121,6 +131,13 @@ the choice, the alternatives rejected and why, the load-bearing assumptions,
 and any recorded dissent. On every session resume, Drucker reads it first
 (`status`). It is also the honesty mechanism: dissent that is written down
 keeps both the board and the executive straight when results come in.
+
+Every entry opens with a dated state line in the form `[YYYY-MM-DD] Phase N
+started|done — <one line>`; gate entries record the gate outcome the same
+way, e.g. `[date] Gate 2 passed — direction: <option>`. This makes the log
+the single source of truth for where the engagement stands: on resume, the
+current phase is read directly from the log's last state line, never
+inferred from which files happen to exist in the folder.
 
 ## Single-analysis engagements
 

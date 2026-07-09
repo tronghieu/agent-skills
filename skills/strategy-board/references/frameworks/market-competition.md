@@ -59,6 +59,47 @@ the client's strengths.
 Today's solution | Our fit (1–5) | Notes`, followed by a So-what naming the
 1–2 segments that matter and why.
 
+## Arena screen (choosing among markets)
+
+**When:** the question is "which of these markets / segments / geographies
+do we enter or prioritize?" — several candidate arenas, one comparison. Runs
+after a market map (and usually a light Five Forces per finalist), never
+instead of them. The GE–McKinsey nine-box spirit, compressed.
+
+**How:** score every candidate on the same two axes, plus the color:
+
+- **Attractiveness** — structural, from the arena itself: the Five Forces
+  read, size and growth `[S#]`, margin benchmarks. Not "do we like it".
+- **Ability to win** — from us: fit from the market map (1–5), the 2–3
+  capabilities the arena demands vs Grove's honest ratings, and the response
+  the incumbents can afford (from the competitor profiles).
+- **Palette color** (`frameworks/strategy-palette.md`) — the game the arena
+  forces. An attractive market that demands a Shaping game we cannot
+  orchestrate, or an Adaptive game our planning culture cannot run, is a
+  legitimate rejection: attractive, but the wrong game for us.
+
+Score attractiveness from evidence per arena — not one column researched and
+the rest eyeballed. Where two arenas tie, the tiebreakers are reversibility
+and what each teaches: a cheap test of a bigger thesis outranks a slightly
+better standalone.
+
+**Output format:**
+
+```
+| Arena | Attractiveness (L/M/H — why [S#]) | Ability to win (L/M/H — why) | Palette color | Verdict |
+```
+
+then a So-what naming the 1–2 arenas to carry into Phase 3 as options. The
+screen ranks; it does not decide — the entry decision still gets the full
+options treatment with Graham's numbers.
+
+**Tips:** this is a funnel stage, not a beauty contest — six arenas in, one
+or two out, and every rejected arena keeps one honest line in the record
+(Minto's rule on rejected options applies here too). High-attractiveness /
+low-ability arenas are acquisition or partner candidates, not automatic
+"no"s — route them through the build-buy-partner comparison before
+discarding.
+
 ## Value chain analysis
 
 **When:** "where does the margin actually sit" questions — pricing, vertical

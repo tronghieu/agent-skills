@@ -35,25 +35,37 @@ Instead of asking a generic chatbot to "think about strategy," you convene a boa
 
 ## The Engagement Pipeline
 
-For a live decision, the board runs a gated pipeline. Artifacts are kept as files in an engagement folder so the work compounds across sessions, with three gates requiring your explicit go-ahead:
+For a live decision, the board runs a gated pipeline — each phase produces a concrete deliverable, and three gates stop and wait for your explicit go-ahead:
 
-```
-0 Brief        → Drucker              → brief.md          ⛔ gate: you confirm the question
-1 Fact base    → cast by question     → fact-base.md
-2 Analysis     → specialists by lane  → analysis/*.md
-3 Options      → Drucker + board      → options.md        ⛔ gate: you pick a direction
-4 Stress-test  → Taleb (+ Wack)       → boardroom/pre-mortem.md
-5 Recommend    → Minto                → recommendation.md ⛔ gate: you approve
-6 Roadmap      → Grove                → roadmap.md
-```
+1. **Brief** — Drucker turns your request into a confirmed decision question. ⛔ *Gate: you confirm it.*
+2. **Fact base** — the board researches the facts, every number with a source.
+3. **Analysis** — the relevant specialists each examine the decision through their own lens.
+4. **Options** — three genuine directions, honestly compared. ⛔ *Gate: you pick one.*
+5. **Stress-test** — Taleb tries to break the chosen direction before reality does.
+6. **Recommendation** — Minto writes it up, answer first. ⛔ *Gate: you approve.*
+7. **Roadmap** — Grove turns the approved choice into owners, dates, and what gets stopped to pay for it.
 
 Not every engagement needs every phase at full depth — Drucker proposes a right-sized plan and you trim it. What never gets trimmed: sourcing discipline, three options, the pre-mortem, and the gates.
 
 For a single analysis ("size this market", "run a pre-mortem on this plan"), the board skips the full pipeline and casts the matching specialist directly — the sourcing and rigor rules still apply.
 
+## How to Run a Strategy Discussion
+
+You are the executive; the board works for you. A full engagement walks through seven phases, but your part at each one is small and specific:
+
+1. **Bring the decision.** State it in plain words — "should we enter X?", "build or buy Y?". No preparation needed; Drucker opens the engagement.
+2. **Answer the scoping questions (Phase 0).** Drucker probes for the real question, the deadline, scope, constraints, and your risk appetite, then diagnoses the strategic environment (the Strategy Palette) and proposes a right-sized plan. **Gate 1 — you confirm the question** before any analysis is spent.
+3. **Hand over what only you know (Phase 1).** The board researches market data with cited sources; internal numbers, team capacity, and political realities must come from you. What you can't provide becomes a named assumption — never a silent guess.
+4. **Read the "So what" (Phase 2).** Specialists run their lenses, and each deliver their own analysis. At every pause you get a menu: refine / go deeper / challenge it (send it to Taleb) / continue.
+5. **Pick a direction (Phase 3).** The board lays out three genuine options in the same honest table. If your team is split, open a Boardroom session and watch the members argue it out. **Gate 2 — the choice is yours**, logged together with the rejected options.
+6. **Let it be attacked (Phase 4).** Taleb's pre-mortem assumes your chosen direction has already failed and explains why. You decide which risks to mitigate and which to consciously accept.
+7. **Approve and execute (Phases 5–6).** Minto compresses everything into an answer-first recommendation — **Gate 3 — you approve it** — then Grove turns it into a roadmap with owners, dates, and what gets stopped to pay for it.
+
+Shorter paths: for a single analysis ("size this market"), just ask — the matching specialist delivers it as one self-contained memo. To resume a paused engagement in a new session, say `status` — the board reads its notes and picks up exactly where you left off.
+
 ## The Boardroom (party mode)
 
-The pipeline runs one specialist at a time — right for production work. The **Boardroom** is for decisions under disagreement: Drucker seats 3–4 relevant members around one sharp question, gathers each member's independent take first (to kill groupthink), then runs cross-talk while you direct the room. Every session closes with minutes and a decision recorded to `boardroom/`. It's offered naturally at the options debate (Phase 3) and always runs, in its adversarial pre-mortem variant, before a recommendation ships (Phase 4).
+The pipeline runs one specialist at a time — right for production work. The **Boardroom** is for decisions under disagreement: Drucker seats 3–4 relevant members around one sharp question, gathers each member's independent take first (to kill groupthink), then runs cross-talk while you direct the room. Every session closes with minutes and a recorded decision. It's offered naturally at the options debate (Phase 3) and always runs, in its adversarial pre-mortem variant, before a recommendation ships (Phase 4).
 
 ## The Five Non-Negotiables
 
@@ -81,23 +93,9 @@ Bring in Porter — I need a Five Forces read on the ride-hailing market in Viet
 We have three options on the table for entering Cambodia and the team is split. Open a Boardroom session.
 ```
 
-## File Structure
+## Nothing Gets Lost
 
-```
-strategy-board/
-  SKILL.md                          # Entry point: roster, pipeline, non-negotiables
-  references/
-    agents/<name>.md                # Voice, principles, focus per board member
-    frameworks/<lens>.md            # Tools and required output formats per lens
-    workflow.md                     # Full phase-by-phase pipeline guidance
-    boardroom.md                    # Party-mode protocol, casting, transcript format
-  templates/                        # engagement-brief, fact-base, options-analysis,
-                                     # boardroom-minutes, recommendation, roadmap
-  checklists/                       # fact-base-quality, pre-mortem, recommendation-quality
-  scripts/board_check.py            # Deterministic hygiene checker for an engagement folder
-```
-
-Engagements themselves are written to a separate folder (default `./<engagement-slug>/`) with `brief.md`, `fact-base.md`, `analysis/*.md`, `options.md`, `boardroom/*.md`, `recommendation.md`, `roadmap.md`, and a running `decision-log.md`.
+The board writes everything down as it works — the brief, the facts with their sources, each specialist's analysis, the options, meeting minutes, the recommendation, the roadmap, and a running log of every decision and why it was made. It all lives in one folder in your workspace, so you can close the conversation at any point and pick up exactly where you left off — in a later session, just ask for a `status`.
 
 ## Installation
 
@@ -123,14 +121,14 @@ Copy the `strategy-board` folder to `.agents/skills/` or `.claude/skills/` in yo
 
 > **You:** We're debating whether to expand our SaaS product into the EU market next year. Can the board look at this?
 >
-> **Drucker:** Before I cast anyone — is the real question "should we expand to the EU," or is it "our domestic growth is slowing and EU looks like the fastest lever"? Worth confirming, because it changes what we research. [asks a short numbered list of scoping questions, then drafts `brief.md`]
+> **Drucker:** Before I cast anyone — is the real question "should we expand to the EU," or is it "our domestic growth is slowing and EU looks like the fastest lever"? Worth confirming, because it changes what we research. [asks a short numbered list of scoping questions, then drafts the brief]
 >
 > *(Gate 1 — you confirm the framing.)*
 >
-> **Drucker:** Casting Porter for market structure and Graham for a baseline sizing — these can run in parallel. [specialists work from `fact-base.md`, each producing a sourced `analysis/*.md`]
+> **Drucker:** Casting Porter for market structure and Graham for a baseline sizing — these can run in parallel. [specialists work from the fact base, each producing a sourced analysis]
 >
 > **Drucker:** Three options are on the table: direct entry, a distribution partnership, and waiting 12 months to build a UK beachhead first. Given the split between Porter's read and Graham's numbers, want to open a Boardroom session before you choose?
 >
-> *(Boardroom convenes Porter, Graham, Grove, and Taleb; independent takes, then cross-talk; you direct; minutes saved to `boardroom/`.)*
+> *(Boardroom convenes Porter, Graham, Grove, and Taleb; independent takes, then cross-talk; you direct; minutes saved.)*
 >
-> *(Gate 2 — you pick a direction.)* → Taleb runs the pre-mortem → Minto drafts `recommendation.md` → *(Gate 3 — you approve)* → Grove turns it into `roadmap.md`.
+> *(Gate 2 — you pick a direction.)* → Taleb runs the pre-mortem → Minto drafts the recommendation → *(Gate 3 — you approve)* → Grove turns it into the roadmap.

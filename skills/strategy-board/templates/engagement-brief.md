@@ -19,6 +19,17 @@ question to ask, not a blank to invent. Read it back before Gate 1.*
 - **Out of scope:** [explicitly excluded — prevents drift]
 - **Planning horizon:** [e.g. 3 years, to FY2029]
 
+## Strategic environment (Strategy Palette)
+
+*Diagnosed by Drucker with the executive — method and casting consequences
+in `references/frameworks/strategy-palette.md`.*
+
+- **Predictability:** [L/M/H — evidence `[S#]` or `(assumption)`]
+- **Malleability:** [L/M/H — why]
+- **Harshness:** [survival threatened? no / yes — what]
+- **Approach:** [Classical / Adaptive / Visionary / Shaping / Renewal] —
+  [one line: what this changes about casting and the recommendation shape]
+
 ## Constraints & context
 
 - **Hard constraints:** [budget ceiling, timeline, regulatory, board mandates]
