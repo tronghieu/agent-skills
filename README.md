@@ -13,6 +13,7 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 | [deep-reader](#deep-reader) | Deep-read long books and papers using Adler's method, with page-anchored notes as external memory |
 | [diataxis-writer](#diataxis-writer) | Write, restructure, classify, and review documentation using the Diataxis framework |
 | [fiction-studio](#fiction-studio) | A complete prose-fiction writing studio run by a team of named specialist agents |
+| [market-researcher](#market-researcher) | Citation-disciplined desk market research — go/no-go scans and deep-dive sizing, competitors, demand, and trends |
 | [slidewright](#slidewright) | Build interactive presentation websites — slide decks projected to a room |
 | [socratic-questor](#socratic-questor) | Socratic questioning partner (Gadfly) for deep learning through dialogue |
 | [strategy-board](#strategy-board) | A C-level strategy advisory board run by named specialist agents — from raw question to defended recommendation |
@@ -113,6 +114,26 @@ A complete prose-fiction writing studio, run as a team of named specialist agent
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill fiction-studio
+```
+
+### market-researcher
+
+Citation-disciplined desk market research: quick go/no-go market scans and modular deep dives — market sizing (TAM/SAM/SOM), competitor analysis, demand signals, and trends/macro (PESTEL) — for any market, in any language.
+
+**Skill README:** [market-researcher](./skills/market-researcher/README.md)
+
+**What it does:**
+- Every claim traces to a `[S#]` source registry (URL, publisher, dates, confidence grade) or is labelled an assumption — no uncited "the market is growing rapidly"
+- Two modes: **Quick Scan** (default, one-session go/no-go brief) and **Deep Dive** (opt-in, modular lanes — sizing / competitors / demand / macro — multi-session and resumable)
+- Built-in adversarial verification pass re-checks claims against their sources and recomputes every estimate's arithmetic before delivery
+- **Composition contract** lets other skills (e.g. strategy-board) call it to append cited facts straight into their own workspace
+- Honest boundary: desk research produces demand signals and hypothesis personas for primary research to validate — never fabricated "insights"
+
+**Trigger phrases:** "market research for...", "how big is the market for...", "who are the competitors of...", "should I build/launch/sell...", "validate this business idea", "nghiên cứu thị trường", "市場調査 / 市场调研"
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
 ```
 
 ### slidewright

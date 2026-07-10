@@ -13,6 +13,7 @@
 | [deep-reader](#deep-reader) | 使用 Adler 的方法深度阅读长篇书籍和论文，以按页码锚定的笔记作为外部记忆 |
 | [diataxis-writer](#diataxis-writer) | 使用 Diataxis 框架编写、重构、分类和审查文档 |
 | [fiction-studio](#fiction-studio) | 一个完整的小说创作工作室，由一支被命名的专家智能体团队运行 |
+| [market-researcher](#market-researcher) | 具备引用纪律的桌面市场调研 —— 快速 go/no-go 扫描，以及市场规模、竞品、需求、趋势的深度模块 |
 | [slidewright](#slidewright) | 构建交互式演示网站 —— 投影到房间的幻灯片 |
 | [socratic-questor](#socratic-questor) | 苏格拉底式问答伙伴（牛虻），通过对话实现深度学习 |
 | [strategy-board](#strategy-board) | 由被命名的专家智能体运行的 C 级战略顾问委员会 —— 从原始问题到经过答辩的建议方案 |
@@ -113,6 +114,26 @@ npx skills add tronghieu/agent-skills --skill diataxis-writer
 **安装：**
 ```bash
 npx skills add tronghieu/agent-skills --skill fiction-studio
+```
+
+### market-researcher
+
+具备引用纪律的桌面市场调研（desk research）：快速 go/no-go 市场扫描，以及按模块深入的市场规模测算（TAM/SAM/SOM）、竞品分析、需求信号、趋势与宏观（PESTEL）分析 —— 适用于任意市场、任意语言。
+
+**技能 README：** [market-researcher](./skills/market-researcher/README.zh.md)
+
+**功能：**
+- 每一条论断都可追溯到 `[S#]` 来源登记表（URL、发布方、日期、置信等级），或明确标注为假设 —— 不允许出现"市场正在快速增长"这类无引用的断言
+- 两种模式：**Quick Scan**（默认，单次会话内完成的 go/no-go 简报）和 **Deep Dive**（可选，按模块分车道 —— 规模测算 / 竞品 / 需求 / 宏观 —— 支持多会话续跑）
+- 内置对抗式核查环节，在交付前重新核对每条论断的来源、并重算每个估算的算术
+- **组合契约（Composition contract）** 让其他技能（如 strategy-board）可以调用本技能，把带引用的事实直接追加进各自的工作区
+- 诚实的边界：桌面调研产出的是需求信号与假设性用户画像，供一手调研去验证 —— 绝不编造"洞察"
+
+**触发短语：** "帮我做市场调研"、"这个市场规模有多大"、"……的竞争对手有哪些"、"要不要做/推出/卖这个"、"验证这个商业点子"、"nghiên cứu thị trường"、"市場調査"
+
+**安装：**
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
 ```
 
 ### slidewright
