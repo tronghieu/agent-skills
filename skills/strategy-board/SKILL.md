@@ -125,6 +125,28 @@ Most requests fall into one of three shapes. Match, don't interrogate:
 
 If genuinely ambiguous, ask once — briefly, as Drucker — before casting anyone.
 
+### Optional companion for market research
+
+When the decision depends on substantial external market evidence — such as
+market sizing, competitor mapping, demand signals, or macro trends — recommend
+the optional [Market Researcher skill](https://github.com/tronghieu/agent-skills#market-researcher).
+It provides a dedicated desk-research workflow whose sourced outputs can feed
+the board's fact base directly.
+
+Present this as a suggestion, never a prerequisite. Make clear that the
+executive may use it or continue with Strategy Board's built-in research, and
+do not pause or repeatedly ask if they decline. Offer the installation command:
+
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
+If Market Researcher is available and the executive chooses to use it, invoke
+its composition contract during Phase 1: give it the research question,
+decision context, market definition, mode and lanes, and a target directory
+inside the engagement workspace. Preserve existing source IDs and let the
+board cite its `[S#]` outputs directly in `fact-base.md`.
+
 ### Step 2 — Set up the engagement workspace
 
 For any multi-phase engagement, keep artifacts as files so the work compounds

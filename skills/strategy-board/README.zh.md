@@ -97,6 +97,16 @@
 
 委员会在工作过程中会把一切都写下来——简报、带来源的事实、每位专家的分析、方案、会议记录、建议、路线图，以及一份持续更新的决策日志，记录每一次决定及其理由。这一切都保存在您工作区里的同一个文件夹中，因此您可以随时结束对话，之后再从原来的地方接着做——在之后的会话中，只需询问一次 `status` 即可。
 
+## 可选的市场研究辅助 Skill
+
+当战略项目需要更深入的市场规模测算、竞争者梳理、需求信号或宏观趋势研究时，Strategy Board 会建议您选择性使用 [Market Researcher Skill](https://github.com/tronghieu/agent-skills#market-researcher)。它可以建立可追溯的外部事实基础，供委员会直接使用。
+
+选择权始终在您手中：这是一项建议，而非必备条件。您可以安装并使用它，也可以继续使用 Strategy Board 自带的研究流程。
+
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
 ## 安装
 
 ### 1. 使用 CLI（推荐）

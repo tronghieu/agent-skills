@@ -97,6 +97,16 @@ Chúng tôi đang có ba phương án để thâm nhập thị trường Campuch
 
 Hội đồng ghi lại mọi thứ trong quá trình làm việc — bản brief, các dữ kiện kèm nguồn, phân tích của từng chuyên gia, các phương án, biên bản họp, bản khuyến nghị, roadmap, và một nhật ký ghi lại liên tục mọi quyết định cùng lý do đằng sau nó. Tất cả được lưu trong một thư mục duy nhất trong không gian làm việc của bạn, để bạn có thể đóng cuộc trò chuyện bất cứ lúc nào và tiếp tục đúng từ chỗ đã dừng — ở một phiên làm việc sau, chỉ cần hỏi `status`.
 
+## Skill Nghiên Cứu Thị Trường Tùy Chọn
+
+Khi một dự án chiến lược cần nghiên cứu sâu hơn về quy mô thị trường, đối thủ cạnh tranh, tín hiệu nhu cầu hoặc xu hướng vĩ mô, Strategy Board sẽ đề xuất skill [Market Researcher](https://github.com/tronghieu/agent-skills#market-researcher) như một công cụ bổ trợ tùy chọn. Skill này có thể xây dựng bộ dữ kiện bên ngoài có khả năng truy nguyên để hội đồng sử dụng trực tiếp.
+
+Quyền lựa chọn luôn thuộc về bạn: đây là đề xuất, không phải yêu cầu bắt buộc. Bạn có thể cài và sử dụng skill này, hoặc tiếp tục với quy trình nghiên cứu có sẵn của Strategy Board.
+
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
 ## Cài Đặt
 
 ### 1. Dùng CLI (Khuyến nghị)

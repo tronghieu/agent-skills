@@ -97,6 +97,16 @@ We have three options on the table for entering Cambodia and the team is split. 
 
 The board writes everything down as it works — the brief, the facts with their sources, each specialist's analysis, the options, meeting minutes, the recommendation, the roadmap, and a running log of every decision and why it was made. It all lives in one folder in your workspace, so you can close the conversation at any point and pick up exactly where you left off — in a later session, just ask for a `status`.
 
+## Optional Market Research Companion
+
+When a strategy engagement needs deeper market sizing, competitor mapping, demand signals, or macro research, Strategy Board will suggest the optional [Market Researcher skill](https://github.com/tronghieu/agent-skills#market-researcher). It can build a traceable external fact base that the board uses directly.
+
+You remain in control: this is a recommendation, not a requirement. You can install and use it, or continue with Strategy Board's built-in research workflow.
+
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
 ## Installation
 
 ### 1. Using CLI (Recommended)

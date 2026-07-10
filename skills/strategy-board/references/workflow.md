@@ -52,6 +52,15 @@ and internal numbers for everything inside the company. Record each fact in
 reliability note. What cannot be sourced gets written as a named
 `(assumption)` with an owner and a plan to verify — or it doesn't get used.
 
+If this phase needs substantial market sizing, competitor, demand-signal, or
+macro research, recommend the optional [Market Researcher skill](https://github.com/tronghieu/agent-skills#market-researcher)
+and offer `npx skills add tronghieu/agent-skills --skill market-researcher`.
+The executive chooses whether to use it. Never make installation a gate,
+repeat the recommendation after a decline, or imply that Strategy Board cannot
+continue without it. When accepted and available, call its composition
+contract and merge its source registry and findings into the engagement fact
+base without renumbering existing `[S#]` entries.
+
 Where facts must come from the executive (internal costs, team capacity,
 political constraints), ask directly — a short numbered list of questions, at
 most once per phase. Run `checklists/fact-base-quality.md` before advancing.
