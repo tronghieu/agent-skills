@@ -11,6 +11,7 @@ Bộ sưu tập skills dành cho các AI coding agent. Tương thích với [Cla
 | [cv-scorer](#cv-scorer) | Chấm điểm CV ứng viên trên thang 100 điểm so với Mô tả Công việc |
 | [data-scientist](#data-scientist) | Đóng vai một nhà khoa học dữ liệu đầu-cuối, nghiêm ngặt — khung câu hỏi, khám phá, kiểm định, xây model, và truyền đạt |
 | [deep-reader](#deep-reader) | Đọc sâu sách và bài báo dài bằng phương pháp của Adler, dùng ghi chú neo theo trang làm bộ nhớ ngoài |
+| [design-thinking](#design-thinking) | Một người điều phối tư duy thiết kế thân thiện, đồng hành cùng bạn qua vòng lặp Empathize→Define→Ideate→Prototype→Test như một dự án lâu dài — skill thiết kế nghiên cứu, bạn thực hiện, mọi insight đều có bằng chứng đi kèm |
 | [diataxis-writer](#diataxis-writer) | Viết, tái cấu trúc, phân loại và review tài liệu bằng khung Diataxis |
 | [fiction-studio](#fiction-studio) | Một xưởng viết truyện hư cấu hoàn chỉnh, vận hành bởi đội agent chuyên gia được đặt tên |
 | [market-researcher](#market-researcher) | Nghiên cứu thị trường bàn giấy kỷ luật trích dẫn — quét nhanh go/no-go và đào sâu quy mô thị trường, đối thủ, nhu cầu, xu hướng |
@@ -75,6 +76,26 @@ npx skills add tronghieu/agent-skills --skill data-scientist
 **Cài đặt:**
 ```bash
 npx skills add tronghieu/agent-skills --skill deep-reader
+```
+
+### design-thinking
+
+Một người điều phối tư duy thiết kế (design-thinking) và bạn đồng hành tư duy thân thiện, cùng bạn đi trọn vòng lặp Empathize→Define→Ideate→Prototype→Test như một dự án nhiều phiên với workspace bền vững; AI thiết kế công cụ nghiên cứu và thí nghiệm, tổng hợp dữ liệu thật mà bạn mang về, và luôn giữ cho mọi insight người dùng có bằng chứng đi kèm.
+
+**README của skill:** [design-thinking](./skills/design-thinking/README.vi.md)
+
+**Chức năng:**
+- Mọi insight đều mang thẻ [I#] truy vết về bằng chứng đã đăng ký [S#] (ghi chú phỏng vấn, bản ghi, khảo sát, nguồn desk research) hoặc được gắn nhãn `(hypothesis — needs validation)`, nhờ vậy dữ liệu giả lập không bao giờ lọt vào cơ sở bằng chứng
+- AI thiết kế các công cụ (discussion guide, kế hoạch quan sát, test card kèm ngưỡng pass/fail đăng ký trước), người dùng thực hiện các cuộc phỏng vấn và test thật
+- Một Verifier chạy tại các cổng pha — rà soát insight sau Define, rà soát giả định trước Test — với phát hiện được chia sẻ công khai
+- Ideate phân nhánh song song các ideator subagent với góc nhìn khác nhau, sau đó hội tụ bằng chấm điểm Desirability/Feasibility/Viability cùng người dùng
+- Workspace bền vững (phase-state.md, journal.md, sources/insights/personas/hmw/ideas/prototypes/tests) với giao thức quay lại phiên làm việc và các bước loop-back có chủ đích — cộng thêm khả năng kết hợp tùy chọn với skill market-researcher cho các câu hỏi thị trường nặng hơn (chỉ nhắc đến một lần nếu chưa có, hoàn toàn tùy chọn)
+
+**Câu kích hoạt:** "run design thinking", "understand our users", "design user interviews", "synthesize these interview notes", "build personas", "How might we…", "design an experiment to validate…", "tư duy thiết kế", "nghiên cứu người dùng", "デザイン思考 / 设计思维"
+
+**Cài đặt:**
+```bash
+npx skills add tronghieu/agent-skills --skill design-thinking
 ```
 
 ### diataxis-writer

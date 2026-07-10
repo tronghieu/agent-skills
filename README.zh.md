@@ -11,6 +11,7 @@
 | [cv-scorer](#cv-scorer) | 根据职位描述（JD）对候选人简历进行百分制评分 |
 | [data-scientist](#data-scientist) | 担任严谨的端到端数据科学家 —— 界定问题、探索、检验、建模并传达结论 |
 | [deep-reader](#deep-reader) | 使用 Adler 的方法深度阅读长篇书籍和论文，以按页码锚定的笔记作为外部记忆 |
+| [design-thinking](#design-thinking) | 一位亲切的设计思维引导者，陪您走过 Empathize→Define→Ideate→Prototype→Test 这个持续进行的项目 —— 由它设计研究方案，由您执行，每条洞察都带着自己的证据 |
 | [diataxis-writer](#diataxis-writer) | 使用 Diataxis 框架编写、重构、分类和审查文档 |
 | [fiction-studio](#fiction-studio) | 一个完整的小说创作工作室，由一支被命名的专家智能体团队运行 |
 | [market-researcher](#market-researcher) | 具备引用纪律的桌面市场调研 —— 快速 go/no-go 扫描，以及市场规模、竞品、需求、趋势的深度模块 |
@@ -75,6 +76,26 @@ npx skills add tronghieu/agent-skills --skill data-scientist
 **安装：**
 ```bash
 npx skills add tronghieu/agent-skills --skill deep-reader
+```
+
+### design-thinking
+
+一位亲切的设计思维引导者兼思考伙伴，陪您走完完整的 Empathize→Define→Ideate→Prototype→Test 循环，作为一个拥有持久化工作区的多会话项目；AI 设计研究工具和实验方案，综合您带回的真实数据，并始终让每条用户洞察都有据可依。
+
+**技能 README：** [design-thinking](./skills/design-thinking/README.zh.md)
+
+**功能：**
+- 每条洞察都带有 [I#] 标签，可追溯到已登记的证据 [S#]（访谈记录、转录稿、调查问卷、桌面调研来源），或被标记为 `(hypothesis — needs validation)`，因此模拟数据不会进入证据库
+- AI 设计研究工具（讨论指南、观察计划、带有预先设定通过/不通过阈值的测试卡），由用户执行真实的访谈和测试
+- Verifier 在各阶段关口运行——Define 之后的洞察复核、Test 之前的假设复核——并公开分享发现
+- Ideate 阶段并行展开多个具有不同视角的 ideator 子智能体，然后通过与用户一起完成的 Desirability/Feasibility/Viability 评分进行收敛
+- 持久化工作区（phase-state.md、journal.md、sources/insights/personas/hmw/ideas/prototypes/tests）配有重新进入协议和有意为之的回退步骤——并可选择与 market-researcher 技能组合用于更重的市场问题（仅在缺失时提一次，完全可选）
+
+**触发短语：** "run design thinking"、"understand our users"、"design user interviews"、"synthesize these interview notes"、"build personas"、"How might we…"、"design an experiment to validate…"、"tư duy thiết kế"、"nghiên cứu người dùng"、"デザイン思考 / 设计思维"
+
+**安装：**
+```bash
+npx skills add tronghieu/agent-skills --skill design-thinking
 ```
 
 ### diataxis-writer

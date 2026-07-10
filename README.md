@@ -11,6 +11,7 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 | [cv-scorer](#cv-scorer) | Score candidate CVs on a 100-point scale against a Job Description |
 | [data-scientist](#data-scientist) | Act as a rigorous, end-to-end data scientist — frame, explore, test, model, and communicate |
 | [deep-reader](#deep-reader) | Deep-read long books and papers using Adler's method, with page-anchored notes as external memory |
+| [design-thinking](#design-thinking) | A friendly design-thinking facilitator that walks you through Empathize→Define→Ideate→Prototype→Test as an ongoing project — it designs the research, you run it, and every insight is backed by evidence |
 | [diataxis-writer](#diataxis-writer) | Write, restructure, classify, and review documentation using the Diataxis framework |
 | [fiction-studio](#fiction-studio) | A complete prose-fiction writing studio run by a team of named specialist agents |
 | [market-researcher](#market-researcher) | Citation-disciplined desk market research — go/no-go scans and deep-dive sizing, competitors, demand, and trends |
@@ -75,6 +76,26 @@ Deep-read long books and papers using Adler's inspectional/analytical/syntopical
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill deep-reader
+```
+
+### design-thinking
+
+A friendly design-thinking facilitator and thinking partner that walks you through the full Empathize→Define→Ideate→Prototype→Test loop as a multi-session project with a persistent workspace; it designs research instruments and experiments, synthesizes the real data you bring back, and keeps every user insight grounded in evidence.
+
+**Skill README:** [design-thinking](./skills/design-thinking/README.md)
+
+**What it does:**
+- Every insight carries an [I#] tag tracing to registered evidence [S#] (interview notes, transcripts, surveys, desk sources) or is labelled `(hypothesis — needs validation)`, so simulated data never enters the evidence base
+- AI designs the instruments (discussion guides, observation plans, test cards with pre-registered pass/fail thresholds), the user runs the real interviews and tests
+- A Verifier runs at phase gates — insight review after Define, assumption review before Test — with findings shared openly
+- Ideate fans out parallel ideator subagents with distinct lenses, then converges with Desirability/Feasibility/Viability scoring done with the user
+- Persistent workspace (phase-state.md, journal.md, sources/insights/personas/hmw/ideas/prototypes/tests) with a re-entry protocol and deliberate loop-backs — plus optional composition with the market-researcher skill for heavier market questions (mentioned once if absent, fully optional)
+
+**Trigger phrases:** "run design thinking", "understand our users", "design user interviews", "synthesize these interview notes", "build personas", "How might we…", "design an experiment to validate…", "tư duy thiết kế", "nghiên cứu người dùng", "デザイン思考 / 设计思维"
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill design-thinking
 ```
 
 ### diataxis-writer
