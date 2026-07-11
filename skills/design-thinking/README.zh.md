@@ -30,31 +30,31 @@
 
 ## 团队与视角 (Lenses)
 
-默认情况下您与 **Facilitator**（引导者）共事，它每次只切换一种功能性视角——不是有名字的人格，也没有菜单可选。
+默认情况下您与 **Helm** 共事，它每次只切换一种功能性视角——不是有名字的人格，也没有菜单可选。
 
 | 视角 | 阶段 | 做什么 |
 |------|-------|--------------|
-| **Facilitator**（默认） | 贯穿全程 | 保持阶段状态，切换视角，运行 Gate，与您对话，记录日志 |
-| **Research designer** | Empathize | 研究计划、讨论提纲、访谈问题、观察计划——然后等待数据 |
-| **Desk researcher** | Empathize → Prototype | 市场背景、现有方案扫描、可行性检查 |
-| **Synthesizer** | Define | 亲和图 (affinity mapping)、洞察 `[I#]`、假设性用户画像、POV 陈述、HMW 问题 |
-| **Ideators** | Ideate | 并行构思，每个子代理一种视角——真正值得并行展开的唯一环节 |
-| **Prototyper** | Prototype | 故事板、纸面原型规格、原型简报，每一个都是为回答某个问题而建 |
-| **Test designer** | Test | 假设地图、挑选风险最高的假设、带通过/未通过标准的测试卡 |
-| **Verifier** | 阶段 Gate | 洞察复核与假设复核——在有子代理可用时独立运行，以保持复核的公正性 |
+| **Helm**（默认） | 贯穿全程 | 保持阶段状态，切换视角，运行 Gate，与您对话，记录日志 |
+| **Lens** | Empathize | 研究计划、讨论提纲、访谈问题、观察计划——然后等待数据 |
+| **Radar** | Empathize → Prototype | 市场背景、现有方案扫描、可行性检查 |
+| **Loom** | Define | 亲和图 (affinity mapping)、洞察 `[I#]`、假设性用户画像、POV 陈述、HMW 问题 |
+| **Prism** | Ideate | 并行构思，每个子代理一种视角——真正值得并行展开的唯一环节 |
+| **Forge** | Prototype | 故事板、纸面原型规格、原型简报，每一个都是为回答某个问题而建 |
+| **Probe** | Test | 假设地图、挑选风险最高的假设、带通过/未通过标准的测试卡 |
+| **Judge** | 阶段 Gate | 洞察复核与假设复核——在有子代理可用时独立运行，以保持复核的公正性 |
 
-只有 Ideate 会展开成并行子代理；Verifier 在各个 Gate 独立运行一次复核。其余环节都是主对话中依次切换视角——引导者理应和您在同一个"房间"里。
+只有 Ideate 会展开成并行子代理（每个子代理对应一个 Prism 视角）；Judge 在各个 Gate 独立运行一次复核。其余环节都是主对话中依次切换视角——Helm 理应和您在同一个"房间"里。
 
 ## 阶段循环
 
 ```
-0 Kickoff    → Facilitator       → project.md              ⛔ 用户确认框架
-1 Empathize  → Research designer → 研究计划、访谈提纲       ⏸ 等待用户数据 → research/
-2 Define     → Synthesizer       → 洞察、用户画像、hmw      ⛔ verifier 洞察复核 + 用户挑选 HMW
-3 Ideate     → Ideators (fan-out)→ ideas.md                ⛔ 用户挑选概念
-4 Prototype  → Prototyper        → prototypes/*
-5 Test       → Test designer     → tests/*                 ⛔ verifier 假设复核 → ⏸ 用户运行测试
-↺ Loop       → Facilitator       → journal, phase-state    （记录轮次+原因，重新进入正确的阶段）
+0 Kickoff    → Helm              → project.md              ⛔ 用户确认框架
+1 Empathize  → Lens              → 研究计划、访谈提纲       ⏸ 等待用户数据 → research/
+2 Define     → Loom              → 洞察、用户画像、hmw      ⛔ Judge 洞察复核 + 用户挑选 HMW
+3 Ideate     → Prism (fan-out)   → ideas.md                ⛔ 用户挑选概念
+4 Prototype  → Forge             → prototypes/*
+5 Test       → Probe             → tests/*                 ⛔ Judge 假设复核 → ⏸ 用户运行测试
+↺ Loop       → Helm              → journal, phase-state    （记录轮次+原因，重新进入正确的阶段）
 ```
 
 ⛔ 表示一个 Gate：Skill 会先停下来，向您展示产出物，再等待您的决定。⏸ 表示 Skill 已完成它这部分的工作，真实世界的数据收集接下来在您手中——它会明确说明自己在等什么，并在此期间给出有用的并行建议（通常是桌面研究）。

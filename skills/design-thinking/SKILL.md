@@ -77,25 +77,25 @@ standing on?"**
 
 ## The team
 
-You act as the **Facilitator** by default and adopt one working lens at a
+You act as **Helm** by default and adopt one working lens at a
 time. Roles are functional lenses that narrow attention — not named personas,
 no menus, no waiting for commands.
 
 | Lens | Phase | What it does |
 |------|-------|--------------|
-| **Facilitator** (default) | Throughout | Holds phase state, casts lenses, runs gates, talks to the user, keeps the journal |
-| **Research designer** | Empathize | Research plan, discussion guides, interview questions, observation plans — then waits for data |
-| **Desk researcher** | Empathize → Prototype | Market context, existing-solution scans, feasibility checks (see "Desk research" below) |
-| **Synthesizer** | Define | Affinity mapping, insights `[I#]`, hypothesis personas, POV statements, HMW questions |
-| **Ideators** | Ideate | Parallel idea generation, one lens per subagent — the one place where fan-out genuinely pays |
-| **Prototyper** | Prototype | Storyboards, paper-prototype specs, prototype briefs — each built to answer a question |
-| **Test designer** | Test | Assumption map, riskiest-assumption selection, test cards with pass/fail criteria |
-| **Verifier** | Phase gates | Insight audit (end of Define), assumption audit (before Test) — adversarial, evidence-first |
+| **Helm** (default) | Throughout | Holds phase state, casts lenses, runs gates, talks to the user, keeps the journal |
+| **Lens** | Empathize | Research plan, discussion guides, interview questions, observation plans — then waits for data |
+| **Radar** | Empathize → Prototype | Market context, existing-solution scans, feasibility checks (see "Desk research" below) |
+| **Loom** | Define | Affinity mapping, insights `[I#]`, hypothesis personas, POV statements, HMW questions |
+| **Prism** | Ideate | Parallel idea generation, one lens per subagent — the one place where fan-out genuinely pays |
+| **Forge** | Prototype | Storyboards, paper-prototype specs, prototype briefs — each built to answer a question |
+| **Probe** | Test | Assumption map, riskiest-assumption selection, test cards with pass/fail criteria |
+| **Judge** | Phase gates | Insight audit (end of Define), assumption audit (before Test) — adversarial, evidence-first |
 
-If subagents are available, run Ideate as parallel subagents (one per lens)
-and the Verifier as a separate subagent (independence makes the audit
+If subagents are available, run Ideate as parallel subagents (one per Prism lens)
+and Judge as a separate subagent (independence makes the audit
 honest). Everything else works fine as sequential lens-switching in the main
-conversation — the user stays in the room, which is where a facilitator
+conversation — the user stays in the room, which is where Helm
 belongs.
 
 ## The workspace
@@ -139,19 +139,19 @@ work silently.
 Read the phase's reference file before running it. The spine:
 
 ```
-0 Kickoff    → Facilitator       → project.md              ⛔ user confirms the frame
-1 Empathize  → Research designer → research plan, guides   ⏸ waits for user data → research/
-2 Define     → Synthesizer       → insights, personas, hmw ⛔ verifier insight audit + user picks HMWs
-3 Ideate     → Ideators (fan-out)→ ideas.md                ⛔ user picks concept(s)
-4 Prototype  → Prototyper        → prototypes/*            
-5 Test       → Test designer     → tests/*                 ⛔ verifier assumption audit → ⏸ user runs test
-↺ Loop       → Facilitator       → journal, phase-state    (record round + reason, re-enter the right phase)
+0 Kickoff    → Helm              → project.md              ⛔ user confirms the frame
+1 Empathize  → Lens              → research plan, guides   ⏸ waits for user data → research/
+2 Define     → Loom              → insights, personas, hmw ⛔ Judge insight audit + user picks HMWs
+3 Ideate     → Prism (fan-out)  → ideas.md                ⛔ user picks concept(s)
+4 Prototype  → Forge             → prototypes/*            
+5 Test       → Probe             → tests/*                 ⛔ Judge assumption audit → ⏸ user runs test
+↺ Loop       → Helm              → journal, phase-state    (record round + reason, re-enter the right phase)
 ```
 
 ⛔ = a gate: stop, show the artifact, get the user's decision. ⏸ = the skill
 has done its part and real-world data collection is in the user's hands —
 say exactly what you're waiting for and offer useful parallel work (e.g.
-desk research) in the meantime.
+Radar desk research) in the meantime.
 
 Phase-by-phase method, artifact formats, and gate checklists live in the
 reference files:
@@ -163,7 +163,7 @@ reference files:
 | Ideate | `references/ideate.md` |
 | Prototype | `references/prototype.md` |
 | Test | `references/test.md` |
-| Evidence & insight schema, verifier gates | `references/insight-discipline.md` — read before writing any insight, persona, or test artifact |
+| Evidence & insight schema, Judge gates | `references/insight-discipline.md` — read before writing any insight, persona, or test artifact |
 
 **Entering mid-process is normal.** A user who arrives with a stack of
 interview notes starts at Define; one who arrives with a prototype starts at
@@ -207,7 +207,7 @@ skill as the research engine:
 Either way the boundary holds: desk output is context and signals, labelled
 as such — never a substitute for hearing from real users.
 
-## Facilitator habits
+## Helm habits
 
 - **Ask before assuming.** The user holds context you cannot google — their
   users, constraints, politics, appetite. After drafting any artifact

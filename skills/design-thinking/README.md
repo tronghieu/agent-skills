@@ -30,31 +30,31 @@ Many general-purpose AI tools tend to make up personas and quotes without really
 
 ## The Team of Lenses
 
-You work with the **Facilitator** by default, who takes on one functional lens at a time — not named personas, no menu to pick from.
+You work with **Helm** by default, who takes on one functional lens at a time — not named personas, no menu to pick from.
 
 | Lens | Phase | What it does |
 |------|-------|--------------|
-| **Facilitator** (default) | Throughout | Holds phase state, switches lenses, runs gates, talks with you, keeps the journal |
-| **Research designer** | Empathize | Research plan, discussion guides, interview questions, observation plans — then waits for data |
-| **Desk researcher** | Empathize → Prototype | Market context, existing-solution scans, feasibility checks |
-| **Synthesizer** | Define | Affinity mapping, insights `[I#]`, hypothesis personas, POV statements, HMW questions |
-| **Ideators** | Ideate | Parallel idea generation, one lens per subagent — the one place fanning out genuinely pays off |
-| **Prototyper** | Prototype | Storyboards, paper-prototype specs, prototype briefs, each built to answer a question |
-| **Test designer** | Test | Assumption map, riskiest-assumption pick, test cards with pass/fail criteria |
-| **Verifier** | Phase gates | Insight review and assumption review — runs independently when subagents are available, to keep the review honest |
+| **Helm** (default) | Throughout | Holds phase state, switches lenses, runs gates, talks with you, keeps the journal |
+| **Lens** | Empathize | Research plan, discussion guides, interview questions, observation plans — then waits for data |
+| **Radar** | Empathize → Prototype | Market context, existing-solution scans, feasibility checks |
+| **Loom** | Define | Affinity mapping, insights `[I#]`, hypothesis personas, POV statements, HMW questions |
+| **Prism** | Ideate | Parallel idea generation, one lens per subagent — the one place fanning out genuinely pays off |
+| **Forge** | Prototype | Storyboards, paper-prototype specs, prototype briefs, each built to answer a question |
+| **Probe** | Test | Assumption map, riskiest-assumption pick, test cards with pass/fail criteria |
+| **Judge** | Phase gates | Insight review and assumption review — runs independently when subagents are available, to keep the review honest |
 
-Only Ideate fans out into parallel subagents; the Verifier runs as its own independent pass at the gates. Everything else is sequential lens-switching in the main conversation — a facilitator belongs in the room with you.
+Only Ideate fans out into parallel subagents (one per Prism lens); Judge runs as its own independent pass at the gates. Everything else is sequential lens-switching in the main conversation — Helm belongs in the room with you.
 
 ## The Phase Loop
 
 ```
-0 Kickoff    → Facilitator       → project.md              ⛔ user confirms the frame
-1 Empathize  → Research designer → research plan, guides   ⏸ waits for user data → research/
-2 Define     → Synthesizer       → insights, personas, hmw ⛔ verifier insight review + user picks HMWs
-3 Ideate     → Ideators (fan-out)→ ideas.md                ⛔ user picks concept(s)
-4 Prototype  → Prototyper        → prototypes/*
-5 Test       → Test designer     → tests/*                 ⛔ verifier assumption review → ⏸ user runs test
-↺ Loop       → Facilitator       → journal, phase-state    (record round + reason, re-enter the right phase)
+0 Kickoff    → Helm              → project.md              ⛔ user confirms the frame
+1 Empathize  → Lens              → research plan, guides   ⏸ waits for user data → research/
+2 Define     → Loom              → insights, personas, hmw ⛔ Judge insight review + user picks HMWs
+3 Ideate     → Prism (fan-out)   → ideas.md                ⛔ user picks concept(s)
+4 Prototype  → Forge             → prototypes/*
+5 Test       → Probe             → tests/*                 ⛔ Judge assumption review → ⏸ user runs test
+↺ Loop       → Helm              → journal, phase-state    (record round + reason, re-enter the right phase)
 ```
 
 ⛔ marks a gate: the skill pauses, shows you the artifact, and waits for your decision. ⏸ marks the point where the skill has done its part and real-world data collection is in your hands — it says exactly what it's waiting for and offers useful parallel work (usually desk research) in the meantime.

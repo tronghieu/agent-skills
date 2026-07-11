@@ -30,31 +30,31 @@ Nhiều công cụ AI thông thường có xu hướng tự bịa ra persona và
 
 ## Đội Ngũ Các Lăng Kính (Lenses)
 
-Bạn làm việc với **Facilitator** (Người điều phối) mặc định, người khoác lên một lăng kính chức năng tại một thời điểm — không phải các persona có tên, không có menu để chọn.
+Bạn làm việc với **Helm** mặc định, người khoác lên một lăng kính chức năng tại một thời điểm — không phải các persona có tên, không có menu để chọn.
 
 | Lăng kính | Pha | Làm gì |
 |------|-------|--------------|
-| **Facilitator** (mặc định) | Xuyên suốt | Giữ trạng thái pha, chuyển lăng kính, chạy các gate, trò chuyện với bạn, ghi journal |
-| **Research designer** | Empathize | Kế hoạch nghiên cứu, bảng hỏi thảo luận, câu hỏi phỏng vấn, kế hoạch quan sát — rồi chờ dữ liệu |
-| **Desk researcher** | Empathize → Prototype | Bối cảnh thị trường, khảo sát giải pháp hiện có, kiểm tra tính khả thi |
-| **Synthesizer** | Define | Affinity mapping, insight `[I#]`, persona giả thuyết, POV statement, câu hỏi HMW |
-| **Ideators** | Ideate | Sinh ý tưởng song song, mỗi lăng kính một subagent — nơi duy nhất việc chạy song song thật sự đáng giá |
-| **Prototyper** | Prototype | Storyboard, đặc tả paper-prototype, brief nguyên mẫu, mỗi cái được xây để trả lời một câu hỏi |
-| **Test designer** | Test | Bản đồ giả định, chọn giả định rủi ro nhất, test card có tiêu chí đạt/không đạt |
-| **Verifier** | Các cổng gate | Rà soát insight và rà soát giả định — chạy độc lập khi có subagent, để việc rà soát giữ được sự khách quan |
+| **Helm** (mặc định) | Xuyên suốt | Giữ trạng thái pha, chuyển lăng kính, chạy các gate, trò chuyện với bạn, ghi journal |
+| **Lens** | Empathize | Kế hoạch nghiên cứu, bảng hỏi thảo luận, câu hỏi phỏng vấn, kế hoạch quan sát — rồi chờ dữ liệu |
+| **Radar** | Empathize → Prototype | Bối cảnh thị trường, khảo sát giải pháp hiện có, kiểm tra tính khả thi |
+| **Loom** | Define | Affinity mapping, insight `[I#]`, persona giả thuyết, POV statement, câu hỏi HMW |
+| **Prism** | Ideate | Sinh ý tưởng song song, mỗi lăng kính một subagent — nơi duy nhất việc chạy song song thật sự đáng giá |
+| **Forge** | Prototype | Storyboard, đặc tả paper-prototype, brief nguyên mẫu, mỗi cái được xây để trả lời một câu hỏi |
+| **Probe** | Test | Bản đồ giả định, chọn giả định rủi ro nhất, test card có tiêu chí đạt/không đạt |
+| **Judge** | Các cổng gate | Rà soát insight và rà soát giả định — chạy độc lập khi có subagent, để việc rà soát giữ được sự khách quan |
 
-Chỉ Ideate mới chạy song song thành các subagent; Verifier chạy như một lượt độc lập riêng ở các gate. Mọi thứ còn lại là chuyển lăng kính tuần tự trong cuộc hội thoại chính — một người điều phối nên ở trong phòng cùng bạn.
+Chỉ Ideate mới chạy song song thành các subagent (mỗi subagent đóng vai một lăng kính Prism); Judge chạy như một lượt độc lập riêng ở các gate. Mọi thứ còn lại là chuyển lăng kính tuần tự trong cuộc hội thoại chính — Helm nên ở trong phòng cùng bạn.
 
 ## Vòng Lặp Các Pha
 
 ```
-0 Kickoff    → Facilitator       → project.md              ⛔ người dùng xác nhận khung
-1 Empathize  → Research designer → kế hoạch nghiên cứu, guide  ⏸ chờ dữ liệu người dùng → research/
-2 Define     → Synthesizer       → insight, persona, hmw   ⛔ verifier rà soát insight + người dùng chọn HMW
-3 Ideate     → Ideators (fan-out)→ ideas.md                ⛔ người dùng chọn (các) concept
-4 Prototype  → Prototyper        → prototypes/*
-5 Test       → Test designer     → tests/*                 ⛔ verifier rà soát giả định → ⏸ người dùng chạy test
-↺ Loop       → Facilitator       → journal, phase-state    (ghi số vòng + lý do, quay lại đúng pha)
+0 Kickoff    → Helm              → project.md              ⛔ người dùng xác nhận khung
+1 Empathize  → Lens              → kế hoạch nghiên cứu, guide  ⏸ chờ dữ liệu người dùng → research/
+2 Define     → Loom              → insight, persona, hmw   ⛔ Judge rà soát insight + người dùng chọn HMW
+3 Ideate     → Prism (fan-out)   → ideas.md                ⛔ người dùng chọn (các) concept
+4 Prototype  → Forge             → prototypes/*
+5 Test       → Probe             → tests/*                 ⛔ Judge rà soát giả định → ⏸ người dùng chạy test
+↺ Loop       → Helm              → journal, phase-state    (ghi số vòng + lý do, quay lại đúng pha)
 ```
 
 ⛔ đánh dấu một gate: skill dừng lại, cho bạn xem artifact, và chờ quyết định của bạn. ⏸ đánh dấu điểm mà skill đã làm xong phần của nó, còn việc thu thập dữ liệu thực tế nằm trong tay bạn — skill sẽ nói rõ nó đang chờ gì và gợi ý việc làm song song hữu ích (thường là nghiên cứu bàn giấy) trong lúc chờ.
