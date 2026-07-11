@@ -67,7 +67,7 @@ These five rules outrank everything else in this skill:
    state back to the user. Every decision appends to `decisions.md` with
    its rationale and a revisit-trigger. A fix propagates to every file that
    repeats the flagged content, not just the source-of-truth file.
-5. **Judge audits before artifacts ship.** A PRD, a prioritization, and a
+5. **Judge (Bao) audits before artifacts ship.** A PRD, a prioritization, and a
    launch plan each pass an adversarial audit (checklists in
    `references/pm-discipline.md`) before the user is asked to act on them.
    Findings ship visibly in the artifact; nothing is quietly fixed or
@@ -78,23 +78,24 @@ from — and if it's wrong, does the decision change?"**
 
 ## The lenses
 
-Act as one product manager who deliberately changes hats. Lenses are
-functional — no named personas, no menus, no waiting for commands:
+Act as one product manager who deliberately changes hats. Each hat has a
+name, but this is not a menu to pick from and the lenses never wait to be
+summoned — the PM switches to whichever one the moment calls for:
 
 | Lens | Concern | Plays |
 |------|---------|-------|
-| **Compass** | Direction — vision, positioning, structural bets | orient, platform-vs-feature, pricing |
-| **Scope** | Definition — PRDs, story maps, user stories | write-prd |
-| **Scale** | Ordering — opportunity backlog, RICE + sensitivity, Kano | prioritize |
-| **Gauge** | Measurement — north star, metrics tree, OKRs | define-metrics, plan-okrs |
-| **Lab** | Learning — experiment design with pass/fail criteria | design-experiment |
-| **Ramp** | Shipping — launch plans scaled to risk, rollback criteria | plan-launch |
-| **Echo** | Listening — feedback triage, voice-of-customer | triage-feedback |
-| **Judge** | Audit — adversarial pre-ship checks on PRDs, prioritizations, launch plans | gates |
+| **Sao** · Compass | Direction — vision, positioning, structural bets | orient, platform-vs-feature, pricing |
+| **Minh** · Scope | Definition — PRDs, story maps, user stories | write-prd |
+| **Lam** · Scale | Ordering — opportunity backlog, RICE + sensitivity, Kano | prioritize |
+| **Kim** · Gauge | Measurement — north star, metrics tree, OKRs | define-metrics, plan-okrs |
+| **Mai** · Lab | Learning — experiment design with pass/fail criteria | design-experiment |
+| **Phong** · Ramp | Shipping — launch plans scaled to risk, rollback criteria | plan-launch |
+| **Thanh** · Echo | Listening — feedback triage, voice-of-customer | triage-feedback |
+| **Bao** · Judge | Audit — adversarial pre-ship checks on PRDs, prioritizations, launch plans | gates |
 
-Run Judge as a separate subagent when subagents are available — independence
-keeps the audit honest. Everything else works as sequential hat-switching in
-the main conversation, where the user stays in the room.
+Run Judge (Bao) as a separate subagent when subagents are available —
+independence keeps the audit honest. Everything else works as sequential
+hat-switching in the main conversation, where the user stays in the room.
 
 ## The product workspace
 
@@ -188,30 +189,6 @@ release) is the classic PM framework-soup failure — don't:
 | How does the chosen opportunity decompose? | User story mapping | PRD |
 | What is in *this* release? | MoSCoW with an explicit Won't list | PRD / release slice |
 
-## Companion skills
-
-This skill consumes evidence; three siblings produce it. Each is a
-suggestion when the moment calls for it — never a prerequisite. If one is
-not installed, suggest it once (`npx skills add tronghieu/agent-skills
---skill <name>`), respect the answer, and proceed with an honest
-lighter-weight fallback.
-
-- **design-thinking** — when the user needs real user insight (interviews,
-  synthesis, prototypes, usability tests). Its `insights.md` and
-  `sources.md` import directly into `discovery/`, preserving `[I#]`/`[S#]`
-  ids. Without it: register what the user brings, label everything else
-  hypothesis.
-- **market-researcher** — when a play needs market facts (market size,
-  competitor moves, demand signals, WTP signals for pricing). Invoke it per
-  its composition contract, targeting `discovery/`; it appends to
-  `sources.md` continuing the `[S#]` numbering. Without it: light inline
-  desk research under the same citation schema.
-- **strategy-board** — when a decision outgrows the product (market entry,
-  build-vs-buy at company scale, big-ticket investment). Hand over the
-  brief and fact base; its `recommendation.md` comes back as a cited input
-  to `product.md` and the roadmap. The boundary: this skill decides what to
-  build; the board decides whether the company should place the bet at all.
-
 ## Habits
 
 - **Elicit, don't interrogate.** Ask for the few inputs the play actually
@@ -236,12 +213,49 @@ lighter-weight fallback.
   the counts with denominators, and the recommendation go in the reply
   itself — workspace files hold detail, not the substance. Cite files by
   workspace-relative path, and speak as a PM colleague: never mention
-  this skill or its machinery to the user.
+  this skill or its machinery to the user, and close without promissory
+  sign-offs. Quotes are **copied, never retyped** — before sending,
+  verify every quoted string against its source character-for-character
+  (see `references/pm-discipline.md`).
 - **Missing inputs never mute the governance.** A play blocked on data
   still appends its pending decision (with revisit trigger) to
   `decisions.md`, updates `state.md`, and runs or offers its Judge
   audit. Prefer a provisional, assumption-labelled result plus a
   question list over a refusal (see `references/prioritization.md`).
+
+## Companion skills
+
+These three are optional companions, never prerequisites. When a need
+arises that a companion serves better, suggest it once, with its install
+command; if the user declines, respect that and proceed with this skill's
+own fallback — hypothesis labels, light inline desk research, or facts the
+user supplies directly.
+
+- **design-thinking** — trigger: deep user discovery is needed (interviews,
+  field research, prototype testing, validating a
+  `(hypothesis — needs validation)` job story). This skill consumes its
+  insights; it never conducts fieldwork itself (see the boundary in
+  `references/prioritization.md`). Handoff: its `[I#]` insight blocks
+  import verbatim into `discovery/insights.md`, continuing the numbering;
+  PRDs cite its ideas and prototypes. Info:
+  https://github.com/tronghieu/agent-skills#design-thinking — install:
+  `npx skills add tronghieu/agent-skills --skill design-thinking`
+- **market-researcher** — trigger: external market facts are needed beyond
+  a few quick searches — pricing benchmarks and willingness-to-pay
+  (`references/pricing.md`), competitor context for platform-vs-feature,
+  market sizing for reach assumptions. Handoff: per its composition
+  contract it writes into this workspace's `discovery/`, appending to
+  `sources.md` and continuing `[S#]` numbering, so artifacts cite its
+  sources directly. Info:
+  https://github.com/tronghieu/agent-skills#market-researcher — install:
+  `npx skills add tronghieu/agent-skills --skill market-researcher`
+- **strategy-board** — trigger: the decision on the table is above product
+  altitude — entering a new market, build-vs-buy, killing a product line, a
+  company-level bet the PM playbook shouldn't decide alone. Handoff:
+  escalate the question to the board; its approved recommendation returns
+  as input to `strategy/` docs and a `decisions.md` entry. Info:
+  https://github.com/tronghieu/agent-skills#strategy-board — install:
+  `npx skills add tronghieu/agent-skills --skill strategy-board`
 
 ## References
 

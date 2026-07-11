@@ -1,6 +1,6 @@
 # Platform-vs-Feature: A Structural Bet, Decided on Evidence
 
-The Compass lens. Read `references/pm-discipline.md` first. This decision
+The Compass lens (Sao). Read `references/pm-discipline.md` first. This decision
 is worth its own play because it is expensive in both directions: build a
 feature where a platform was needed and you rebuild the same capability
 three times; build a platform where a feature was needed and you spend

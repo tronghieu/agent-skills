@@ -1,6 +1,6 @@
 # Design-Experiment: Killing Assumptions Cheaply
 
-The Lab lens. Read `references/pm-discipline.md` first. This play exists
+The Lab lens (Mai). Read `references/pm-discipline.md` first. This play exists
 because the assumption registry and sensitivity analyses keep producing
 the same output: a short list of beliefs the roadmap is betting on. An
 experiment is how a belief stops being a bet.

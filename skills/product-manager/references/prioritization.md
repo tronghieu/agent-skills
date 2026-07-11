@@ -1,8 +1,8 @@
 # Prioritize: Opportunity Backlog, RICE, and Kano
 
-The Scale lens. Read `references/pm-discipline.md` first — every cell in a
+The Scale lens (Lam). Read `references/pm-discipline.md` first — every cell in a
 scoring table is subject to number provenance, and the ranking is subject
-to the Judge prioritization audit before it is presented as final.
+to the Judge (Bao) prioritization audit before it is presented as final.
 
 ## Contents
 
@@ -80,7 +80,8 @@ input labelled per pm-discipline:
   guess. Below 50%, don't score it — register the assumption and consider
   a cheap experiment before investing a rank in it. Confidence is where
   fabricated Reach/Impact get honestly discounted, so it may not silently
-  stay at 100%.
+  stay at 100% — and a confidence held flat across every row is itself
+  an assumption: vary it in the sensitivity pass or say why it is flat.
 - **Effort** — person-weeks or S/M/L/XL from whoever will build it. This
   input belongs to engineering; solicit it via the user, label it
   `(user estimate, <date>)`, and resist the temptation to guess it

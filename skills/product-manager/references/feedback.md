@@ -1,6 +1,6 @@
 # Triage-Feedback: From Raw Voice-of-Customer to Backlog Evidence
 
-The Echo lens. Read `references/pm-discipline.md` first. Feedback is the
+The Echo lens (Thanh). Read `references/pm-discipline.md` first. Feedback is the
 workspace's richest evidence stream and its noisiest: three loud
 customers feel like a trend, an exec's anecdote outweighs fifty tickets,
 and the users who churned silently never appear at all. Triage is the

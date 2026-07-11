@@ -15,6 +15,7 @@
 | [diataxis-writer](#diataxis-writer) | 使用 Diataxis 框架编写、重构、分类和审查文档 |
 | [fiction-studio](#fiction-studio) | 一个完整的小说创作工作室，由一支被命名的专家智能体团队运行 |
 | [market-researcher](#market-researcher) | 具备引用纪律的桌面市场调研 —— 快速 go/no-go 扫描，以及市场规模、竞品、需求、趋势的深度模块 |
+| [product-manager](#product-manager) | 一个严谨的产品经理（PM）copilot，运行产品的完整操作闭环 —— 优先级排序、PRD、OKR、实验、发布、反馈分诊 —— 全部置于一个持久化的单产品工作区中，且每个数字都注明来源 |
 | [slidewright](#slidewright) | 构建交互式演示网站 —— 投影到房间的幻灯片 |
 | [socratic-questor](#socratic-questor) | 苏格拉底式问答伙伴（牛虻），通过对话实现深度学习 |
 | [strategy-board](#strategy-board) | 由被命名的专家智能体运行的 C 级战略顾问委员会 —— 从原始问题到经过答辩的建议方案 |
@@ -155,6 +156,27 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 **安装：**
 ```bash
 npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
+### product-manager
+
+一个面向持续演进产品的严谨 PM copilot，而非一次性的文档生成器：它把机会点记录为 job story，用 RICE 加敏感性分析（sensitivity analysis）排优先级，用 story map 和可验证的用户故事撰写 PRD，规划 OKR、实验与带回滚（rollback）标准的发布计划，并对反馈进行分诊（triage）——同时拒绝编造数字。
+
+**技能 README：** [product-manager](./skills/product-manager/README.zh.md)
+
+**功能：**
+- 端到端运行产品的操作闭环 —— 机会点 → RICE 优先级排序 → PRD → story map → OKR → 实验 → 发布计划 → 反馈分诊 —— 全部置于一个持久化的单产品工作区中
+- 把机会点记录为 job story，并用 RICE 评分加输入项的敏感性分析来排优先级，让排名不取决于单一凭空猜测的数字
+- 用 story map 和可验证（Given/When/Then）的用户故事撰写 PRD；规划 OKR，设计带通过/不通过标准的实验，起草带回滚标准的发布计划
+- 拒绝编造数字：每个数字都可追溯到一个已引用的来源、一个标注了区间的假设，或你自己给出的带日期的估计值
+- 一轮对抗式审查会在你被要求据此行动之前，核查每份 PRD、优先级排序或发布计划
+- 支持任意语言；可与 design-thinking（用户洞察）、market-researcher（市场事实）、strategy-board（公司级战略押注）自然组合使用
+
+**触发短语：** "帮我排一下路线图优先级"、"给……写一份 PRD"、"用 RICE 给这些功能打分"、"规划这个季度的 OKR"、"为……设计一个实验"、"规划这次发布"、"分诊这些反馈"
+
+**安装：**
+```bash
+npx skills add tronghieu/agent-skills --skill product-manager
 ```
 
 ### slidewright

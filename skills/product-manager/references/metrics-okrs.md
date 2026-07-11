@@ -1,6 +1,6 @@
 # Define-Metrics & Plan-OKRs: North Star, Metrics Tree, OKRs
 
-The Gauge lens. Read `references/pm-discipline.md` first. Metrics work has
+The Gauge lens (Kim). Read `references/pm-discipline.md` first. Metrics work has
 its own fabrication trap: **baselines**. An OKR that moves a metric "from
 X to Y" where X was never measured is fiction with a progress bar.
 

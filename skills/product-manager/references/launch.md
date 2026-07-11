@@ -1,7 +1,7 @@
 # Plan-Launch: Risk-Scaled Launch Plans with Pre-Committed Rollback
 
-The Ramp lens. Read `references/pm-discipline.md` first. The Judge launch
-audit runs before the plan is executed. The through-line of this play:
+The Ramp lens (Phong). Read `references/pm-discipline.md` first. The Judge (Bao)
+launch audit runs before the plan is executed. The through-line of this play:
 **decide the abort conditions while you are still calm.** A team watching
 a live dashboard at T+2h will rationalize any number it sees; the same
 team a week earlier writes honest thresholds.
@@ -132,7 +132,7 @@ not left to memory. Three questions, written into the launch file:
    the live dashboard/export.
 2. **What did we learn?** Assumption statuses updated (`validated (E#)` /
    `falsified`), surprises logged, new feedback routed to
-   `feedback-log.md` for the Echo lens.
+   `feedback-log.md` for the Echo lens (Thanh).
 3. **What now?** Iterate / expand / hold / retire — appended to
    `decisions.md` with a revisit-trigger, and the backlog entry updated.
 

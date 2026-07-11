@@ -1,6 +1,6 @@
 # Pricing & Packaging (Light)
 
-The Compass lens. Read `references/pm-discipline.md` first. This play is
+The Compass lens (Sao). Read `references/pm-discipline.md` first. This play is
 deliberately **light**: value metric, packaging, and a disciplined
 price-setting process. It does not do full monetization strategy — unit
 economics modeling, price-elasticity studies, competitive pricing war

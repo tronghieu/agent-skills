@@ -1,9 +1,9 @@
 # Write-PRD: Problem Framing, Story Mapping, Stories, and MoSCoW
 
-The Scope lens. Read `references/pm-discipline.md` first. A PRD is the
+The Scope lens (Minh). Read `references/pm-discipline.md` first. A PRD is the
 artifact engineers and designers will act on for weeks — which makes it
 the most expensive place in the workspace for an untraceable claim to
-hide. The Judge PRD audit runs before user sign-off.
+hide. The Judge (Bao) PRD audit runs before user sign-off.
 
 ## Contents
 
@@ -68,7 +68,7 @@ each testable, each with a reason)
 (A# links; what falsifies this spec and which experiment E# is watching it)
 
 ## Launch note
-(risk class guess for the Ramp lens; anything with migration/irreversibility
+(risk class guess for the Ramp lens (Phong); anything with migration/irreversibility
 flagged early)
 
 ## Open questions

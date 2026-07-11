@@ -15,6 +15,7 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 | [diataxis-writer](#diataxis-writer) | Write, restructure, classify, and review documentation using the Diataxis framework |
 | [fiction-studio](#fiction-studio) | A complete prose-fiction writing studio run by a team of named specialist agents |
 | [market-researcher](#market-researcher) | Citation-disciplined desk market research — go/no-go scans and deep-dive sizing, competitors, demand, and trends |
+| [product-manager](#product-manager) | A disciplined product-manager copilot that runs your product's operating loop — prioritization, PRDs, OKRs, experiments, launches, feedback triage — in a persistent per-product workspace where every number declares where it came from |
 | [slidewright](#slidewright) | Build interactive presentation websites — slide decks projected to a room |
 | [socratic-questor](#socratic-questor) | Socratic questioning partner (Gadfly) for deep learning through dialogue |
 | [strategy-board](#strategy-board) | A C-level strategy advisory board run by named specialist agents — from raw question to defended recommendation |
@@ -155,6 +156,27 @@ Citation-disciplined desk market research: quick go/no-go market scans and modul
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
+### product-manager
+
+A disciplined product-manager copilot for a living product, not a one-shot document generator: it captures opportunities as job stories, prioritizes with RICE plus sensitivity analysis, writes PRDs with story maps and testable user stories, plans OKRs, experiments, and launches with rollback criteria, and triages feedback — while refusing to invent numbers.
+
+**Skill README:** [product-manager](./skills/product-manager/README.md)
+
+**What it does:**
+- Runs the product's operating loop end to end — opportunities → RICE prioritization → PRD → story map → OKRs → experiments → launch plan → feedback triage — inside one persistent per-product workspace
+- Captures opportunities as job stories and prioritizes them with RICE scoring plus a sensitivity analysis on the inputs, so ranking never hinges on a single guessed number
+- Writes PRDs with story maps and testable (Given/When/Then) user stories; plans OKRs, designs experiments with pass/fail criteria, and drafts launch plans with rollback criteria
+- Refuses to invent numbers: every figure traces to a cited source, a labelled assumption with a range, or your own dated estimate
+- An adversarial audit checks each PRD, prioritization, or launch plan before you're asked to act on it
+- Works in any language; composes naturally with design-thinking (user discovery), market-researcher (market facts), and strategy-board (company-level bets)
+
+**Trigger phrases:** "prioritize our roadmap", "write a PRD for...", "score these features with RICE", "plan OKRs for this quarter", "design an experiment for...", "plan this launch", "triage this feedback"
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill product-manager
 ```
 
 ### slidewright

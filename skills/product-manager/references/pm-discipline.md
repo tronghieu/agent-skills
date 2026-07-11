@@ -110,7 +110,7 @@ inputs (non-negotiable 2). The method is deliberately cheap:
      recommendation trustworthy.
    - **Sensitive** — flips within a plausible range. Name the assumption
      that flips it; this is your highest-value experiment candidate (hand
-     to the Lab lens).
+     to the Lab lens (Mai)).
    - **Borderline** — items too close to separate. Present as a tie broken
      by strategy, not by fake decimal places.
 4. Write the result *in the artifact*, next to the ranking it qualifies —
@@ -161,13 +161,13 @@ last_session: 2026-07-11 — Q3 prioritization decided (see decisions.md)
 
 ## The Judge audits
 
-Adversarial, evidence-first, run before the user is asked to act on a PRD,
-a prioritization, or a launch plan. Use a separate subagent when available
-— the author of an artifact is the worst judge of its provenance. Findings
-are appended to the artifact under `## Judge audit — <date>`; nothing is
-quietly fixed or quietly dropped, and any fix propagates to every file
-repeating the flagged content (grep the workspace for the flagged string
-before closing a finding).
+Run by Judge (Bao): adversarial, evidence-first, run before the user is
+asked to act on a PRD, a prioritization, or a launch plan. Use a separate
+subagent when available — the author of an artifact is the worst judge of
+its provenance. Findings are appended to the artifact under
+`## Judge audit — <date>`; nothing is quietly fixed or quietly dropped,
+and any fix propagates to every file repeating the flagged content (grep
+the workspace for the flagged string before closing a finding).
 
 ### Audit 1 — PRD (before user sign-off)
 
@@ -224,6 +224,17 @@ read. Concretely:
   the reply is verbatim from its source, elisions marked with `…`, id
   attached. A quote trimmed "for the summary table" is a fabricated
   quote.
+- **Copy, never retype.** When a quote recurs in prose — the reply, a
+  summary paragraph, a decision entry, a prioritization note — copy it
+  character-for-character from the feedback log or the source file.
+  Retyping from memory is how words silently drop, and a dropped word
+  with no `…` is a fabricated quote even when the meaning survives.
+- **The quote-integrity check is mandatory before sending.** Any reply
+  or artifact that presents customer quotes gets a final pass — every
+  quoted string is searched for in its source (grep works); a no-match
+  means the quote drifted. Fix it to verbatim or mark the elision. This
+  check runs on *every* quote-bearing reply, not only when a Judge
+  audit happens to run.
 - **The reply stands alone.** The load-bearing evidence — the decisive
   quotes, the counts with their denominators, the ranking or decision
   itself — lives *in the reply*. Files hold the full detail; they are
@@ -234,7 +245,9 @@ read. Concretely:
   never by absolute filesystem path.
 - **Speak as a PM, not as a methodology.** No "per this skill's rules",
   no naming the machinery to the user. The labels and audits appear in
-  the work; the voice is a colleague explaining a recommendation.
+  the work; the voice is a colleague explaining a recommendation. Keep
+  it tight, and end on the recommendation or the open question — not on
+  a promissory sign-off.
 
 ## Self-check before handing off any artifact
 
@@ -248,3 +261,4 @@ Thirty seconds, every time:
 6. Decision made this session not yet in `decisions.md` with a revisit-trigger? (Append it.)
 7. Any status an experiment has already changed but a file still shows the old one? (Update, and walk the Used-by list.)
 8. Does the reply stand alone — key quotes verbatim with ids, counts with denominators, the recommendation inline; no absolute paths, no methodology talk? (Fix the reply.)
+9. Every quoted string, in every file and in the reply, found verbatim in its source — elisions `…`-marked? (Search each one; fix any drift.)
