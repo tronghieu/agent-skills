@@ -17,6 +17,7 @@ Bộ sưu tập skills dành cho các AI coding agent. Tương thích với [Cla
 | [fiction-studio](#fiction-studio) | Một xưởng viết truyện hư cấu hoàn chỉnh, vận hành bởi đội agent chuyên gia được đặt tên |
 | [market-researcher](#market-researcher) | Nghiên cứu thị trường bàn giấy kỷ luật trích dẫn — quét nhanh go/no-go và đào sâu quy mô thị trường, đối thủ, nhu cầu, xu hướng |
 | [product-manager](#product-manager) | Một PM copilot kỷ luật, vận hành trọn vòng lặp sản phẩm — ưu tiên hóa, PRD, OKR, thí nghiệm, ra mắt, xử lý feedback — trong một workspace bền vững theo từng sản phẩm, nơi mọi con số đều khai rõ nguồn gốc |
+| [project-manager](#project-manager) | Một PMO/PM copilot kỷ luật, vận hành vòng lặp triển khai dự án — charter, lên kế hoạch, ước lượng, rủi ro, báo cáo tiến độ trung thực, kiểm soát scope — trong một workspace bền vững theo từng dự án, nơi mọi status và ước lượng đều khai rõ bằng chứng |
 | [slidewright](#slidewright) | Dựng website thuyết trình tương tác — slide deck để chiếu lên màn lớn |
 | [socratic-questor](#socratic-questor) | Người bạn đặt câu hỏi Socrates (Gadfly) để học sâu thông qua đối thoại |
 | [strategy-board](#strategy-board) | Một hội đồng cố vấn chiến lược cấp C do các agent chuyên gia được đặt tên vận hành — từ câu hỏi thô đến khuyến nghị đã được bảo vệ |
@@ -198,6 +199,27 @@ Một PM copilot kỷ luật cho một sản phẩm đang sống, không phải 
 **Cài đặt:**
 ```bash
 npx skills add tronghieu/agent-skills --skill product-manager
+```
+
+### project-manager
+
+Một PMO/PM copilot kỷ luật cho một dự án đang sống, không phải công cụ sinh timeline dùng một lần: skill vận hành charter, lên kế hoạch, ước lượng, quản lý rủi ro, báo cáo tiến độ và kiểm soát thay đổi scope, tất cả trong một workspace bền vững theo từng dự án, nơi mọi màu status, phần trăm hoàn thành và ước lượng đều khai rõ bằng chứng.
+
+**README của skill:** [project-manager](./skills/project-manager/README.vi.md)
+
+**Chức năng:**
+- Vận hành trọn vòng lặp triển khai đầu-cuối — charter → lịch trình/WBS hoặc backlog → ước lượng theo khoảng → sổ rủi ro (ROAM) → báo cáo tiến độ → cổng kiểm soát thay đổi scope → giao tiếp stakeholder → retro — tất cả trong một workspace `_project/` bền vững, không ràng buộc phương pháp luận (predictive, agile, hybrid)
+- Mọi màu RAG, phần trăm hoàn thành, ngày dự báo và ước lượng đều mang nhãn bằng chứng (`EV#`), giả định được gắn nhãn (`A#`), hoặc `(user, <ngày>)` — một màu status không nhãn bị coi là lỗi, không phải một bản tóm tắt
+- Ước lượng luôn là một khoảng, không phải một con số điểm, được đối chiếu với bài học của chính dự án hoặc một reference class trước khi đưa ra, với buffer là dòng riêng hiển thị chứ không giấu vào bên trong task
+- Thay đổi scope, ngày, hoặc ngân sách phải qua cổng — đánh giá tác động kèm người có thẩm quyền quyết định được nêu tên trước khi chấp nhận — và baseline cũ luôn được giữ lại, không bao giờ bị ghi đè
+- Chín lăng kính mang tên các triết gia Hy Lạp (Plato·Anchor, Aristotle·Frame, Pythagoras·Gauge, Epictetus·Watch, Diogenes·Pulse, Zeno·Gate, Socrates·Bridge, Heraclitus·Loop, Solon·Judge) tự động chuyển đổi theo đúng thời điểm cần, cộng thêm một bản tổng hợp portfolio trên nhiều dự án
+- Hoạt động bằng bất kỳ ngôn ngữ nào; trong kiểm thử mù trên các tình huống PM thực tế (báo cáo tiến độ dưới áp lực, phản biện ước lượng dựa trên lịch sử, kiểm soát scope creep) đạt 100% so với 76% của cùng một AI không có skill
+
+**Câu kích hoạt:** "khởi động dự án này", "lập kế hoạch dự án / timeline / WBS", "ước lượng việc này mất bao lâu", "tôi có thể cam kết ngày nào", "dựng sổ rủi ro", "chạy pre-mortem", "viết báo cáo tiến độ tuần này", "deadline trễ rồi, giờ sao", "review portfolio dự án của tôi"
+
+**Cài đặt:**
+```bash
+npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 ### slidewright

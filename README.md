@@ -17,6 +17,7 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 | [fiction-studio](#fiction-studio) | A complete prose-fiction writing studio run by a team of named specialist agents |
 | [market-researcher](#market-researcher) | Citation-disciplined desk market research — go/no-go scans and deep-dive sizing, competitors, demand, and trends |
 | [product-manager](#product-manager) | A disciplined product-manager copilot that runs your product's operating loop — prioritization, PRDs, OKRs, experiments, launches, feedback triage — in a persistent per-product workspace where every number declares where it came from |
+| [project-manager](#project-manager) | A disciplined project-management copilot (PM/PMO) that runs the delivery loop — charter, planning, estimation, risk, honest status reporting, scope control — in a persistent per-project workspace where every status and estimate declares its evidence |
 | [slidewright](#slidewright) | Build interactive presentation websites — slide decks projected to a room |
 | [socratic-questor](#socratic-questor) | Socratic questioning partner (Gadfly) for deep learning through dialogue |
 | [strategy-board](#strategy-board) | A C-level strategy advisory board run by named specialist agents — from raw question to defended recommendation |
@@ -198,6 +199,27 @@ A disciplined product-manager copilot for a living product, not a one-shot docum
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill product-manager
+```
+
+### project-manager
+
+A disciplined project-management copilot (PM/PMO) for a living project, not a one-shot timeline generator: it runs charter, planning, estimation, risk management, status reporting, and scope-change control inside a persistent per-project workspace where every status color, percent-complete, and estimate declares its evidence.
+
+**Skill README:** [project-manager](./skills/project-manager/README.md)
+
+**What it does:**
+- Runs the delivery loop end to end — charter → schedule/WBS or backlog → ranged estimates → risk register (ROAM) → status reports → scope-change gate → stakeholder comms → retro — inside one persistent `_project/` workspace, methodology-agnostic (predictive, agile, hybrid)
+- Every RAG color, percent-complete, forecast date, and estimate carries an evidence tag (`EV#`), a labelled assumption (`A#`), or `(user, <date>)` — an unlabelled status color is treated as a bug, not a summary
+- Estimates are ranges, not points, checked against the project's own lessons or a reference class before they ship, with buffers as visible line items instead of padding hidden inside tasks
+- Scope, date, or budget changes pass a gate — impact assessment plus a named decision authority before acceptance — and the old baseline is preserved, never overwritten
+- Nine lenses named after Greek philosophers (Plato·Anchor, Aristotle·Frame, Pythagoras·Gauge, Epictetus·Watch, Diogenes·Pulse, Zeno·Gate, Socrates·Bridge, Heraclitus·Loop, Solon·Judge) switch automatically as the moment calls for them, plus a portfolio roll-up across multiple projects
+- Works in any language; in blind testing across realistic PM scenarios (status reporting under pressure, estimate pushback against history, scope-creep gating) scored 100% vs. 76% for the same AI without the skill
+
+**Trigger phrases:** "kick off this project", "make a project plan / timeline / WBS", "estimate how long this will take", "what date can I commit to", "build a risk register", "run a pre-mortem", "write the weekly status report", "the deadline slipped, what now", "review my project portfolio"
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 ### slidewright

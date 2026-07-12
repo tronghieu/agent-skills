@@ -17,6 +17,7 @@
 | [fiction-studio](#fiction-studio) | 一个完整的小说创作工作室，由一支被命名的专家智能体团队运行 |
 | [market-researcher](#market-researcher) | 具备引用纪律的桌面市场调研 —— 快速 go/no-go 扫描，以及市场规模、竞品、需求、趋势的深度模块 |
 | [product-manager](#product-manager) | 一个严谨的产品经理（PM）copilot，运行产品的完整操作闭环 —— 优先级排序、PRD、OKR、实验、发布、反馈分诊 —— 全部置于一个持久化的单产品工作区中，且每个数字都注明来源 |
+| [project-manager](#project-manager) | 一个严谨的项目管理（PM/PMO）copilot，运行交付闭环 —— 章程、计划、估算、风险、如实的进度报告、范围控制 —— 全部置于一个持久化的单项目工作区中，且每个状态和估算都注明证据 |
 | [slidewright](#slidewright) | 构建交互式演示网站 —— 投影到房间的幻灯片 |
 | [socratic-questor](#socratic-questor) | 苏格拉底式问答伙伴（牛虻），通过对话实现深度学习 |
 | [strategy-board](#strategy-board) | 由被命名的专家智能体运行的 C 级战略顾问委员会 —— 从原始问题到经过答辩的建议方案 |
@@ -198,6 +199,27 @@ npx skills add tronghieu/agent-skills --skill market-researcher
 **安装：**
 ```bash
 npx skills add tronghieu/agent-skills --skill product-manager
+```
+
+### project-manager
+
+一个面向持续演进项目的严谨 PM/PMO copilot，而非一次性的时间线生成器：它把章程、计划、估算、风险管理、进度报告与范围变更控制，全部置于一个持久化的单项目工作区中，且每个状态颜色、完成百分比和估算都注明证据。
+
+**技能 README：** [project-manager](./skills/project-manager/README.zh.md)
+
+**功能：**
+- 端到端运行交付闭环 —— 章程 → 进度表/WBS 或待办列表 → 区间估算 → 风险登记册（ROAM）→ 进度报告 → 范围变更控制关卡 → 干系人沟通 → 复盘 —— 全部置于一个持久化的 `_project/` 工作区中，不绑定特定方法论（预测型、敏捷、混合型）
+- 每个 RAG 状态颜色、完成百分比、预测日期和估算都带有证据标签（`EV#`）、已标注的假设（`A#`）或 `(user, 日期)` —— 没有标签的状态颜色被视为一个缺陷，而非一份摘要
+- 估算始终是区间而非单一数值，在给出之前会对照项目自身的经验教训或参考类别进行核查，缓冲时间是可见的独立条目，而非藏在任务里的水分
+- 范围、日期或预算的变更必须通过关卡 —— 先做影响评估，再交由指定的决策者拍板 —— 且旧的基线始终保留，绝不被覆盖
+- 九个以希腊哲学家命名的视角（Plato·Anchor、Aristotle·Frame、Pythagoras·Gauge、Epictetus·Watch、Diogenes·Pulse、Zeno·Gate、Socrates·Bridge、Heraclitus·Loop、Solon·Judge）会根据当下场景自动切换，另外还支持跨多个项目的组合（portfolio）汇总
+- 支持任意语言；在贴近真实场景的盲测中（压力下的进度报告、基于历史数据的估算反驳、范围蔓延的关卡拦截），得分为 100%，而未使用该技能的同一 AI 为 76%
+
+**触发短语：** "启动这个项目"、"做一份项目计划/时间线/WBS"、"估算这个要多久"、"我能承诺哪个日期"、"建一份风险登记册"、"做一次事前验尸（pre-mortem）"、"写这周的进度报告"、"截止日期又延了，现在怎么办"、"回顾一下我的项目组合"
+
+**安装：**
+```bash
+npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 ### slidewright

@@ -4,3 +4,7 @@ __pycache__/
 
 .DS_Store
 .tmp
+
+# skill-building scratch (eval runs, iteration workspaces) — not shipped with skills
+*-workspace/
+evals/
