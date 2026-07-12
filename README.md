@@ -9,6 +9,7 @@ A collection of skills for AI coding agents. Compatible with [Claude Code](https
 | Skill | What it does |
 |-------|---------------|
 | [cv-scorer](#cv-scorer) | Score candidate CVs on a 100-point scale against a Job Description |
+| [critical-thinking](#critical-thinking) | Audit the reasoning of any document — memo, proposal, analysis — and show exactly which claims don't hold up, while sharpening the reader's own judgment |
 | [data-scientist](#data-scientist) | Act as a rigorous, end-to-end data scientist — frame, explore, test, model, and communicate |
 | [deep-reader](#deep-reader) | Deep-read long books and papers using Adler's method, with page-anchored notes as external memory |
 | [design-thinking](#design-thinking) | A friendly design-thinking facilitator that walks you through Empathize→Define→Ideate→Prototype→Test as an ongoing project — it designs the research, you run it, and every insight is backed by evidence |
@@ -38,6 +39,26 @@ Score candidate CVs on a 100-point scale against a Job Description.
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill cv-scorer
+```
+
+### critical-thinking
+
+Audit the reasoning of any document — memo, proposal, investment analysis, board paper, article, or your own draft — and get back what holds, what doesn't, and exactly which sentences the problems live in.
+
+**Skill README:** [critical-thinking](./skills/critical-thinking/README.md)
+
+**What it does:**
+- Dissects a document into its reasoning skeleton — claims, evidence, unstated assumptions, logical gaps — with every finding anchored to an exact quoted sentence, never a vague accusation
+- Runs a commit-first coaching loop: asks for the user's own read before revealing its audit, then shows what they caught and what they missed, so every audit doubles as deliberate practice for the user's own judgment
+- Names what it can't judge instead of bluffing, and separates "the reasoning fails" from "I personally disagree" — both are labelled honestly, never blurred together
+- Four modes: quick audit (minutes, top issues), deep audit (load-bearing decisions), draft review (fortifies the user's own writing before a tough audience, checks for missing go/no-go criteria), and progress review (tracks recurring blind spots and calibration over time in a persistent reasoning profile)
+- Works in any language; in blind testing across four realistic scenarios met 25/26 quality criteria vs. 12/26 for the same AI without the skill
+
+**Trigger phrases:** "audit this argument", "is this analysis sound", "poke holes in this proposal", "review the logic of my draft", "what's wrong with this reasoning", "phản biện giúp tôi", "soi lập luận này"
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill critical-thinking
 ```
 
 ### data-scientist

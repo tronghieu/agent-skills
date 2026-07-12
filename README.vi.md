@@ -9,6 +9,7 @@ Bộ sưu tập skills dành cho các AI coding agent. Tương thích với [Cla
 | Skill | Chức năng |
 |-------|-----------|
 | [cv-scorer](#cv-scorer) | Chấm điểm CV ứng viên trên thang 100 điểm so với Mô tả Công việc |
+| [critical-thinking](#critical-thinking) | Soi lập luận của bất kỳ tài liệu nào — memo, đề xuất, bản phân tích — chỉ ra chính xác luận điểm nào không đứng vững, đồng thời giúp người đọc tự sắc bén hơn |
 | [data-scientist](#data-scientist) | Đóng vai một nhà khoa học dữ liệu đầu-cuối, nghiêm ngặt — khung câu hỏi, khám phá, kiểm định, xây model, và truyền đạt |
 | [deep-reader](#deep-reader) | Đọc sâu sách và bài báo dài bằng phương pháp của Adler, dùng ghi chú neo theo trang làm bộ nhớ ngoài |
 | [design-thinking](#design-thinking) | Một người điều phối tư duy thiết kế thân thiện, đồng hành cùng bạn qua vòng lặp Empathize→Define→Ideate→Prototype→Test như một dự án lâu dài — skill thiết kế nghiên cứu, bạn thực hiện, mọi insight đều có bằng chứng đi kèm |
@@ -38,6 +39,26 @@ Chấm điểm CV ứng viên trên thang 100 điểm so với Mô tả Công vi
 **Cài đặt:**
 ```bash
 npx skills add tronghieu/agent-skills --skill cv-scorer
+```
+
+### critical-thinking
+
+Soi lập luận của bất kỳ tài liệu nào — memo, đề xuất, bản phân tích đầu tư, tài liệu trình hội đồng quản trị, bài viết, hay bản nháp của chính bạn — và nhận lại cái gì đứng vững, cái gì không, và chính xác vấn đề nằm ở câu nào.
+
+**README của skill:** [critical-thinking](./skills/critical-thinking/README.vi.md)
+
+**Chức năng:**
+- Bóc tách tài liệu thành khung lập luận của nó — luận điểm, bằng chứng, giả định không nói ra, lỗ hổng logic — với mọi phát hiện đều trỏ về đúng một câu trích dẫn, không bao giờ là một lời buộc tội mơ hồ
+- Chạy vòng lặp huấn luyện commit-first: hỏi ý kiến của người dùng trước khi để lộ bản soi của chính nó, rồi cho thấy họ tự bắt được gì và bỏ sót gì, để mỗi lượt soi cũng là một bài luyện tập cho khả năng phán đoán của người dùng
+- Thừa nhận cái nó không đánh giá được thay vì bịa, và tách bạch "lập luận này sai" khỏi "tôi cá nhân không đồng ý" — cả hai đều được gắn nhãn trung thực, không bao giờ nhập nhằng
+- Bốn chế độ: soi nhanh (vài phút, vấn đề lớn nhất), soi sâu (quyết định trọng yếu), soi bản nháp (củng cố bài viết của người dùng trước một độc giả khó tính, kiểm tra tiêu chí đi tiếp/dừng lại còn thiếu), và xem lại tiến bộ tư duy (theo dõi điểm mù lặp lại và độ chuẩn xác của sự tự tin theo thời gian trong một hồ sơ tư duy bền vững)
+- Hoạt động ở bất kỳ ngôn ngữ nào; trong kiểm tra mù trên bốn kịch bản thực tế, đạt 25/26 tiêu chí chất lượng, so với 12/26 của cùng một AI không dùng skill
+
+**Câu kích hoạt:** "audit this argument", "poke holes in this proposal", "review the logic of my draft", "phản biện giúp tôi", "soi lập luận này", "tài liệu này có lỗ hổng gì", "đánh giá đề xuất này giúp tôi"
+
+**Cài đặt:**
+```bash
+npx skills add tronghieu/agent-skills --skill critical-thinking
 ```
 
 ### data-scientist

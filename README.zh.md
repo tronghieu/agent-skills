@@ -9,6 +9,7 @@
 | 技能 | 功能简介 |
 |------|----------|
 | [cv-scorer](#cv-scorer) | 根据职位描述（JD）对候选人简历进行百分制评分 |
+| [critical-thinking](#critical-thinking) | 审查任意文件——备忘录、提案、分析报告——的论证逻辑，准确指出哪些论点站不住脚，同时让读者自己的判断力更敏锐 |
 | [data-scientist](#data-scientist) | 担任严谨的端到端数据科学家 —— 界定问题、探索、检验、建模并传达结论 |
 | [deep-reader](#deep-reader) | 使用 Adler 的方法深度阅读长篇书籍和论文，以按页码锚定的笔记作为外部记忆 |
 | [design-thinking](#design-thinking) | 一位亲切的设计思维引导者，陪您走过 Empathize→Define→Ideate→Prototype→Test 这个持续进行的项目 —— 由它设计研究方案，由您执行，每条洞察都带着自己的证据 |
@@ -38,6 +39,26 @@
 **安装：**
 ```bash
 npx skills add tronghieu/agent-skills --skill cv-scorer
+```
+
+### critical-thinking
+
+审查任意文件——备忘录、提案、投资分析、董事会文件、文章，或你自己的草稿——的论证逻辑，告诉你哪些站得住、哪些站不住，以及问题具体出在哪一句话里。
+
+**技能 README：** [critical-thinking](./skills/critical-thinking/README.zh.md)
+
+**功能：**
+- 将文件拆解为其论证骨架——论点、证据、未言明的假设、逻辑漏洞——每个发现都精确对应一句原文引用，绝不含糊指控
+- 运行"先表态再揭晓"的教练式循环：先请用户说出自己的判断，再揭示审查结果，并展示用户自己发现了什么、漏掉了什么，让每次审查同时成为一次判断力训练
+- 遇到自己判断不了的地方会如实说明，而不是靠猜；并把"论证站不住"和"我个人不认同"区分开，两者都会被如实标注，绝不混为一谈
+- 四种模式：快速审查（几分钟内给出最主要问题）、深度审查（面向重大决策）、草稿审阅（在发给挑剔读者之前加固用户自己的论证，检查是否缺少继续/停止的决策标准）、思维进度回顾（在持久化的思维档案中追踪反复出现的盲点及判断把握的准确度）
+- 支持任意语言；在覆盖四个真实场景的盲测中，达成 26 项质量标准中的 25 项，而同一个 AI 不使用该技能时只达成 12 项
+
+**触发短语：** "audit this argument"、"poke holes in this proposal"、"review the logic of my draft"、"帮我审一下这份提案的论证"、"这份报告的逻辑站得住吗"、"phản biện giúp tôi"、"soi lập luận này"
+
+**安装：**
+```bash
+npx skills add tronghieu/agent-skills --skill critical-thinking
 ```
 
 ### data-scientist
