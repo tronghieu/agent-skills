@@ -34,6 +34,120 @@ You do not need to learn special commands beyond that. Share your goal and any u
 | [strategy-board](./skills/strategy-board/README.md) | Examine a major business decision from several expert viewpoints, including opportunity, competition, finance, execution, and risk. |
 | [system-prompt-creator](./skills/system-prompt-creator/README.md) | Define how an AI assistant should behave, so it gives more consistent, useful responses for a specific job. |
 
+## Explore each skill
+
+### cv-scorer
+
+Compare one or many CVs with a job description using the same criteria for everyone. It highlights strong matches, missing requirements, and concerns such as contradictions or inflated claims, so shortlisting is fairer and faster.
+
+```bash
+npx skills add tronghieu/agent-skills --skill cv-scorer
+```
+
+### critical-thinking
+
+Examine a proposal, report, or argument before acting on it. It separates claims from evidence, finds assumptions and gaps in the reasoning, and points to the exact passages that need attention—helping you make a better-informed decision or strengthen a draft.
+
+```bash
+npx skills add tronghieu/agent-skills --skill critical-thinking
+```
+
+### data-scientist
+
+Turn data into a clear answer to questions such as “what changed?”, “why did it change?”, or “what may happen next?”. It checks data quality, tests whether a result is meaningful, and explains uncertainty and trade-offs, so decisions are based on evidence rather than a persuasive-looking chart.
+
+```bash
+npx skills add tronghieu/agent-skills --skill data-scientist
+```
+
+### deep-reader
+
+Read long books, research papers, and reports with care instead of producing a superficial summary. It builds organised notes tied to the source, checks quotations, and creates a dependable overview that you can return to later without starting again from the beginning.
+
+```bash
+npx skills add tronghieu/agent-skills --skill deep-reader
+```
+
+### design-thinking
+
+Help you understand the people you are designing for before deciding on a solution. It supports interviews, research plans, customer insights, ideas, prototypes, and tests, while clearly distinguishing real evidence from assumptions that still need validation.
+
+```bash
+npx skills add tronghieu/agent-skills --skill design-thinking
+```
+
+### diataxis-writer
+
+Make documentation easier to use by matching it to the reader’s need: learning something new, completing a task, looking up a fact, or understanding the bigger picture. This helps turn scattered guides and knowledge bases into clear, useful material people can actually follow.
+
+```bash
+npx skills add tronghieu/agent-skills --skill diataxis-writer
+```
+
+### fiction-studio
+
+Support fiction writing from an early idea to a finished manuscript. It gives focused help with plot, characters, setting, scenes, dialogue, continuity, and editing, so a story stays compelling and coherent as it develops.
+
+```bash
+npx skills add tronghieu/agent-skills --skill fiction-studio
+```
+
+### market-researcher
+
+Research a market using sources you can check: its size, competitors, demand signals, and relevant trends. It helps you judge whether an opportunity deserves further investment while making clear what is known, what is assumed, and what still needs customer research.
+
+```bash
+npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
+### product-manager
+
+Help product teams decide what to build and why. It turns customer needs and opportunities into priorities, product plans, experiments, launch plans, and feedback actions, making the reasoning behind each decision clear instead of relying on guesswork.
+
+```bash
+npx skills add tronghieu/agent-skills --skill product-manager
+```
+
+### project-manager
+
+Keep a project moving from idea to delivery with a realistic plan, estimates, risks, owners, status updates, and controlled changes. It makes progress and problems visible early, so the team can respond before a deadline, budget, or scope gets out of hand.
+
+```bash
+npx skills add tronghieu/agent-skills --skill project-manager
+```
+
+### slidewright
+
+Create presentation slides that support a talk instead of overwhelming the audience. It helps shape the story, choose clear layouts, and make text and visuals readable across a room, so the speaker’s key message lands.
+
+```bash
+npx skills add tronghieu/agent-skills --skill slidewright
+```
+
+### socratic-questor
+
+Help you understand a subject by asking well-timed questions rather than simply giving answers. It adapts to your responses, uncovers gaps in understanding, and guides you to reason through the topic yourself—useful for learning that lasts.
+
+```bash
+npx skills add tronghieu/agent-skills --skill socratic-questor
+```
+
+### strategy-board
+
+Give a major business decision the scrutiny of a well-rounded advisory team. It considers market opportunity, competition, innovation, finance, execution, scenarios, and risk, then helps you compare real options and understand the consequences of each one.
+
+```bash
+npx skills add tronghieu/agent-skills --skill strategy-board
+```
+
+### system-prompt-creator
+
+Help you describe how an AI assistant should work for a particular job: its role, tone, inputs, limits, tools, and expected outputs. The result is a clearer set of instructions that makes the assistant more consistent and useful in day-to-day use.
+
+```bash
+npx skills add tronghieu/agent-skills --skill system-prompt-creator
+```
+
 ## Installation
 
 ### Install all skills
