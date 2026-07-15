@@ -6,6 +6,15 @@ AI is useful for many tasks, but general advice can be inconsistent or miss impo
 
 This collection helps with everyday work such as choosing candidates, understanding data and customers, planning products and projects, preparing presentations, learning, writing, and making important business decisions.
 
+## Use a skill
+
+Start by selecting a skill, then describe what you need in your own words.
+
+- **Codex and ChatGPT:** Type `$`, then choose a skill—for example, `$market-researcher Help me assess this business idea.`
+- **Claude, Antigravity, and Gemini:** Type `/`, choose a skill, then describe your need.
+
+You do not need to learn special commands beyond that. Share your goal and any useful context, files, or questions as you normally would.
+
 ## Skills
 
 | Skill | How it helps |

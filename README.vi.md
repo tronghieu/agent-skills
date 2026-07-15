@@ -6,6 +6,15 @@ AI có thể hỗ trợ nhiều việc, nhưng lời khuyên chung chung thườ
 
 Bộ sưu tập này hỗ trợ những công việc thường gặp như chọn ứng viên, hiểu dữ liệu và khách hàng, lên kế hoạch sản phẩm và dự án, chuẩn bị bài thuyết trình, học tập, viết lách và ra quyết định kinh doanh quan trọng.
 
+## Cách Dùng Skill
+
+Hãy chọn skill trước, rồi mô tả điều bạn cần bằng ngôn ngữ bình thường.
+
+- **Codex và ChatGPT:** Gõ `$`, rồi chọn một skill — ví dụ: `$market-researcher Hãy đánh giá ý tưởng kinh doanh này.`
+- **Claude, Antigravity và Gemini:** Gõ `/`, chọn một skill rồi mô tả nhu cầu của bạn.
+
+Bạn không cần học thêm câu lệnh đặc biệt nào. Hãy chia sẻ mục tiêu cùng các thông tin, tệp hoặc câu hỏi liên quan như bình thường.
+
 ## Các Skill Hiện Có
 
 | Skill | Giúp bạn làm gì |
