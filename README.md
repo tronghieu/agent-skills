@@ -19,20 +19,20 @@ You do not need to learn special commands beyond that. Share your goal and any u
 
 | Skill | How it helps |
 |---|---|
-| [cv-scorer](./skills/cv-scorer/README.md) | Compare candidates fairly against a role, highlight the strongest matches, and surface concerns that deserve a closer look. |
-| [critical-thinking](./skills/critical-thinking/README.md) | Check whether a proposal, report, or argument is supported by sound evidence; reveal weak assumptions before they become costly decisions. |
-| [data-scientist](./skills/data-scientist/README.md) | Turn data into trustworthy answers: explain what changed, test whether a result is meaningful, and show the trade-offs behind a recommendation. |
-| [deep-reader](./skills/deep-reader/README.md) | Work through long books and papers carefully, creating clear notes and dependable summaries that remain useful for later questions. |
-| [design-thinking](./skills/design-thinking/README.md) | Understand people’s real needs, turn research into useful insights, and test possible solutions before committing to them. |
-| [diataxis-writer](./skills/diataxis-writer/README.md) | Make help materials, guides, and knowledge bases easier to follow by giving each reader the information they need at the right moment. |
-| [fiction-studio](./skills/fiction-studio/README.md) | Develop a story from a rough idea to a polished manuscript, with focused help on plot, characters, setting, dialogue, and editing. |
-| [market-researcher](./skills/market-researcher/README.md) | Assess an opportunity with sourced evidence: market size, competitors, demand signals, and trends—so a business idea can be judged with more confidence. |
-| [product-manager](./skills/product-manager/README.md) | Decide what to build next, turn ideas into clear plans, learn from customer feedback, and prepare launches with fewer surprises. |
-| [project-manager](./skills/project-manager/README.md) | Bring a project from plan to delivery with realistic timelines, visible risks, clear ownership, and honest progress updates. |
-| [slidewright](./skills/slidewright/README.md) | Create engaging presentation slides that are clear from the back of a room and support the speaker’s message. |
-| [socratic-questor](./skills/socratic-questor/README.md) | Learn deeply through thoughtful questions that help you form your own understanding instead of simply receiving an answer. |
-| [strategy-board](./skills/strategy-board/README.md) | Examine a major business decision from several expert viewpoints, including opportunity, competition, finance, execution, and risk. |
-| [system-prompt-creator](./skills/system-prompt-creator/README.md) | Define how an AI assistant should behave, so it gives more consistent, useful responses for a specific job. |
+| [cv-scorer](#cv-scorer) | Compare candidates fairly against a role, highlight the strongest matches, and surface concerns that deserve a closer look. |
+| [critical-thinking](#critical-thinking) | Check whether a proposal, report, or argument is supported by sound evidence; reveal weak assumptions before they become costly decisions. |
+| [data-scientist](#data-scientist) | Turn data into trustworthy answers: explain what changed, test whether a result is meaningful, and show the trade-offs behind a recommendation. |
+| [deep-reader](#deep-reader) | Work through long books and papers carefully, creating clear notes and dependable summaries that remain useful for later questions. |
+| [design-thinking](#design-thinking) | Understand people’s real needs, turn research into useful insights, and test possible solutions before committing to them. |
+| [diataxis-writer](#diataxis-writer) | Make help materials, guides, and knowledge bases easier to follow by giving each reader the information they need at the right moment. |
+| [fiction-studio](#fiction-studio) | Develop a story from a rough idea to a polished manuscript, with focused help on plot, characters, setting, dialogue, and editing. |
+| [market-researcher](#market-researcher) | Assess an opportunity with sourced evidence: market size, competitors, demand signals, and trends—so a business idea can be judged with more confidence. |
+| [product-manager](#product-manager) | Decide what to build next, turn ideas into clear plans, learn from customer feedback, and prepare launches with fewer surprises. |
+| [project-manager](#project-manager) | Bring a project from plan to delivery with realistic timelines, visible risks, clear ownership, and honest progress updates. |
+| [slidewright](#slidewright) | Create engaging presentation slides that are clear from the back of a room and support the speaker’s message. |
+| [socratic-questor](#socratic-questor) | Learn deeply through thoughtful questions that help you form your own understanding instead of simply receiving an answer. |
+| [strategy-board](#strategy-board) | Examine a major business decision from several expert viewpoints, including opportunity, competition, finance, execution, and risk. |
+| [system-prompt-creator](#system-prompt-creator) | Define how an AI assistant should behave, so it gives more consistent, useful responses for a specific job. |
 
 ## Explore each skill
 
