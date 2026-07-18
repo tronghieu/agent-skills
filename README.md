@@ -20,6 +20,7 @@ You do not need to learn special commands beyond that. Share your goal and any u
 | Skill | How it helps |
 |---|---|
 | [cv-scorer](#cv-scorer) | Compare candidates fairly against a role, highlight the strongest matches, and surface concerns that deserve a closer look. |
+| [brainstorm-coach](#brainstorm-coach) | Generate real ideas for a name, a campaign, a feature, or anything you're stuck on — your ideas come first, the AI builds on them without taking over. |
 | [critical-thinking](#critical-thinking) | Check whether a proposal, report, or argument is supported by sound evidence; reveal weak assumptions before they become costly decisions. |
 | [data-scientist](#data-scientist) | Turn data into trustworthy answers: explain what changed, test whether a result is meaningful, and show the trade-offs behind a recommendation. |
 | [deep-reader](#deep-reader) | Work through long books and papers carefully, creating clear notes and dependable summaries that remain useful for later questions. |
@@ -51,6 +52,24 @@ Score candidate CVs on a 100-point scale against a Job Description.
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill cv-scorer
+```
+
+### brainstorm-coach
+
+A brainstorming partner that puts your ideas first: every round, you go first and your idea is captured verbatim, then the AI adds clearly-labeled ideas of its own on top — never rewording or replacing what you said, and never judging an idea while you're still generating.
+
+**Skill README:** [brainstorm-coach](./skills/brainstorm-coach/README.md)
+
+**What you get:**
+- Commit-first flow: your idea is captured first and verbatim with (user)/(AI) attribution, no judgment during divergence — even pushback becomes a question, not a verdict, until the structured critique pass later
+- A library of ~20 named techniques (SCAMPER, Six Thinking Hats, reversal, thinking by analogy, question storming, role playing, "what if," and more), grouped by the kind of thinking they're good for, with the agent explaining why it picked one
+- A full diverge→converge arc: open generation, then grouping and reasoned ranking, ending in Immediate/Future/Moonshots/Insights
+- **Party mode:** an opt-in small panel of role-lenses (stakeholder, operator, outsider, provocateur) that builds on your ideas and replies as one labeled digest instead of a flood of separate voices
+- Hands off to the rest of the skill family at the right moment — problem-solver, design-thinking, market-researcher, strategy-board, critical-thinking
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill brainstorm-coach
 ```
 
 ### critical-thinking
