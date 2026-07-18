@@ -19,15 +19,16 @@ You do not need to learn special commands beyond that. Share your goal and any u
 
 | Skill | How it helps |
 |---|---|
-| [cv-scorer](#cv-scorer) | Compare candidates fairly against a role, highlight the strongest matches, and surface concerns that deserve a closer look. |
 | [brainstorm-coach](#brainstorm-coach) | Generate real ideas for a name, a campaign, a feature, or anything you're stuck on — your ideas come first, the AI builds on them without taking over. |
 | [critical-thinking](#critical-thinking) | Check whether a proposal, report, or argument is supported by sound evidence; reveal weak assumptions before they become costly decisions. |
+| [cv-scorer](#cv-scorer) | Compare candidates fairly against a role, highlight the strongest matches, and surface concerns that deserve a closer look. |
 | [data-scientist](#data-scientist) | Turn data into trustworthy answers: explain what changed, test whether a result is meaningful, and show the trade-offs behind a recommendation. |
 | [deep-reader](#deep-reader) | Work through long books and papers carefully, creating clear notes and dependable summaries that remain useful for later questions. |
 | [design-thinking](#design-thinking) | Understand people’s real needs, turn research into useful insights, and test possible solutions before committing to them. |
 | [diataxis-writer](#diataxis-writer) | Make help materials, guides, and knowledge bases easier to follow by giving each reader the information they need at the right moment. |
 | [fiction-studio](#fiction-studio) | Develop a story from a rough idea to a polished manuscript, with focused help on plot, characters, setting, dialogue, and editing. |
 | [market-researcher](#market-researcher) | Assess an opportunity with sourced evidence: market size, competitors, demand signals, and trends—so a business idea can be judged with more confidence. |
+| [problem-solver](#problem-solver) | Helps you find the real cause of a problem before you rush to fix it — asks the right questions, checks the cheapest guesses first, and keeps a written record so you can pick up again later. |
 | [product-manager](#product-manager) | Decide what to build next, turn ideas into clear plans, learn from customer feedback, and prepare launches with fewer surprises. |
 | [project-manager](#project-manager) | Bring a project from plan to delivery with realistic timelines, visible risks, clear ownership, and honest progress updates. |
 | [slidewright](#slidewright) | Create engaging presentation slides that are clear from the back of a room and support the speaker’s message. |
@@ -36,23 +37,6 @@ You do not need to learn special commands beyond that. Share your goal and any u
 | [system-prompt-creator](#system-prompt-creator) | Define how an AI assistant should behave, so it gives more consistent, useful responses for a specific job. |
 
 ## Explore each skill
-
-### cv-scorer
-
-Score candidate CVs on a 100-point scale against a Job Description.
-
-**Skill README:** [cv-scorer](./skills/cv-scorer/README.md)
-
-**What you get:**
-- Scores CVs across 5 weighted criteria: JD Matching, Work Experience, Project & Impact, Education, CV Quality
-- Detects red flags: repetitive content, inflated metrics, contradictory information
-- Outputs structured JSON with per-criterion scores, highlights, red flags, and a recommendation (Recommend / Maybe / Pass)
-- Supports batch processing: scores multiple CVs independently then ranks them
-
-**Install:**
-```bash
-npx skills add tronghieu/agent-skills --skill cv-scorer
-```
 
 ### brainstorm-coach
 
@@ -87,6 +71,23 @@ Audit the reasoning of any document — memo, proposal, investment analysis, boa
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill critical-thinking
+```
+
+### cv-scorer
+
+Score candidate CVs on a 100-point scale against a Job Description.
+
+**Skill README:** [cv-scorer](./skills/cv-scorer/README.md)
+
+**What you get:**
+- Scores CVs across 5 weighted criteria: JD Matching, Work Experience, Project & Impact, Education, CV Quality
+- Detects red flags: repetitive content, inflated metrics, contradictory information
+- Outputs structured JSON with per-criterion scores, highlights, red flags, and a recommendation (Recommend / Maybe / Pass)
+- Supports batch processing: scores multiple CVs independently then ranks them
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill cv-scorer
 ```
 
 ### data-scientist
@@ -193,6 +194,24 @@ Citation-disciplined desk market research: quick go/no-go market scans and modul
 **Install:**
 ```bash
 npx skills add tronghieu/agent-skills --skill market-researcher
+```
+
+### problem-solver
+
+A step-by-step problem-solving partner: before it suggests any fix, it helps you pin down exactly what's happening, rule out the wrong explanations, and confirm the real cause — using simple questions and cheap checks instead of a confident-sounding guess.
+
+**Skill README:** [problem-solver](./skills/problem-solver/README.md)
+
+**What you get:**
+- Never makes up facts about your situation — anything it treats as true either came from you, or it's clearly marked as "still just a guess," so you always know what's actually confirmed
+- Picks the right way to dig into the problem based on how it looks — a simple chain of "why" questions for one clear symptom, a wider look at many possible causes when there's no obvious chain, or a closer look at repeating patterns when a problem keeps coming back no matter what you try
+- Keeps more than one possible explanation on the table until a real check settles it, instead of locking onto the first guess that sounds plausible
+- Walks through the whole process step by step — understanding the problem, narrowing it down, finding the cause, coming up with fixes, deciding between them, and planning the rollout — checking in with you before moving to the next step, then brings in **brainstorm-coach** to generate real ideas for the fix once the cause is confirmed
+- Remembers where you left off, so if checking something takes real time (like running a small trial or watching a week of data), you can come back later and pick up right where you stopped
+
+**Install:**
+```bash
+npx skills add tronghieu/agent-skills --skill problem-solver
 ```
 
 ### product-manager
