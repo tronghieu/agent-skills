@@ -22,7 +22,11 @@ broadcasters instead of one facilitated instrument.
 Casting is choosing 3–4 role-lenses *for this topic*, not picking from a
 fixed roster. A lens is a single vantage point on the problem — who
 experiences it, who has to deliver it, who's never seen it before, who's
-willing to question it. Fill these four slots, in order:
+willing to question it. Fill these four slots, in order — and hold the
+**total at 3–4 roles**, because the cap is what keeps the digest small
+enough for the user to actually answer. Count before you cast: a fifth
+lens always feels justified in the moment and always costs more than it
+adds.
 
 **(a) 1–2 stakeholder lenses.** The person who buys, uses, or lives with
 the outcome. Pull this from the topic itself, not from a generic "the
@@ -30,8 +34,10 @@ user" — a café's stakeholder is the specific customer segment that walks
 in the door (the student who nurses one coffee for four hours is a
 different lens than the commuter grabbing something to go). Use two
 stakeholder slots when the topic visibly has two different people living
-with the outcome (a borrower and a lender, an employee and their manager);
-use one when it doesn't.
+with the outcome (a borrower and a lender, an employee and their manager)
+— and when you do, **drop one of the other slots** (usually the outsider,
+or fold its instinct into the provocateur) so the total stays at four;
+use one stakeholder when the topic doesn't demand two.
 
 **(b) One operator/realist lens.** Whoever has to build, run, staff, or
 maintain what the session is imagining — the barista during the rush, the
@@ -108,10 +114,11 @@ teaches the user which categories of idea are safe to offer next time,
 and pre-filtering is the death of divergence. Real objections aren't
 lost — they're the entire subject of the red-team round below.
 
-**Worked example** — topic: a community tool-lending library. Cast:
-the borrower (stakeholder), the lender (stakeholder), the volunteer
-coordinator (operator), a video-game loot/rental designer (outsider),
-and the provocateur.
+**Worked example** — topic: a community tool-lending library. Cast (4 —
+two stakeholders, so the outsider slot is dropped and its
+break-the-frame instinct folds into the provocateur): the borrower
+(stakeholder), the lender (stakeholder), the volunteer coordinator
+(operator), and the provocateur.
 
 - Prompt: "What could make people actually try borrowing before buying?"
 - *(user)*: "A trial partnership with the local hardware store — borrow
@@ -129,10 +136,11 @@ and the provocateur.
   - *(AI:coordinator)* Turn the trial partnership into a standing monthly
     slot with one store, rather than a one-off — same tool category,
     same weekend, so it's schedulable instead of ad hoc.
-  - *(AI:outsider)* Borrow a loot-box framing from games — the "free tool
-    from surplus" pick is randomized within a category the borrower
+  - *(AI:provocateur)* Borrow a loot-box framing from games — the "free
+    tool from surplus" pick is randomized within a category the borrower
     chooses, which makes surplus stock feel like a discovery mechanic
-    instead of leftovers.
+    instead of leftovers. (The dropped outsider slot's instinct, carried
+    by the provocateur.)
   - *(AI:provocateur)* What if nobody ever bought a tool at all — what
     would the library need to offer so borrowing beat owning outright,
     not just undercut it on price?

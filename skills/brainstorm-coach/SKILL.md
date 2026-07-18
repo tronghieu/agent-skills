@@ -60,8 +60,13 @@ Every round of every technique follows the same beat:
    extensions of their ideas, variations, and genuinely new directions.
    Keep it to 2–4 additions per round — enough to spark, not enough to
    drown.
-4. **Return the floor** — end with the next prompt or an invitation to
-   riff on any of the additions.
+4. **Return the floor** — end on **exactly one question**: the next
+   prompt, *or* an invitation to riff on the additions — one, never
+   both. Tacking a second offer onto the ending ("…or want to try
+   another angle next?") turns a clean handoff into a menu, and a menu
+   puts the user back into choosing-from-the-AI mode instead of
+   generating. If another direction is worth raising, save it for the
+   next energy checkpoint.
 
 **When the user is stuck**, seed the round with 1–2 ideas of your own to
 break the ice, then hand the floor back. Stuck is a state, not a
@@ -192,8 +197,11 @@ directory. Structure:
 ## Parking lot            — tangents and questions worth a later session
 ```
 
-Write to it as the session runs. If the user declined a document, keep
-the same structure in-conversation for the final summary.
+Write to it as the session runs. When mentioning the document in a
+reply, refer to it by its filename, not a full absolute path — the
+path is machinery, the filename is the deliverable. If the user
+declined a document, keep the same structure in-conversation for the
+final summary.
 
 ## Anti-patterns this skill exists to prevent
 
