@@ -1,115 +1,85 @@
-# Problem Solver (Chẩn Đoán Vấn Đề)
+# Problem Solver
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
-Một người bạn đồng hành chẩn đoán cho AI agent của bạn — trước khi giúp bạn sửa bất cứ điều gì, nó giúp bạn tìm ra thứ thật sự đang hỏng và vì sao. Cứ hình dung nó là kỷ luật đứng giữa "có gì đó không ổn" và "đây là việc cần làm": biến một lời than phiền mơ hồ thành một phát biểu vấn đề chính xác, đã được xác nhận, truy ra nguyên nhân thật thay vì câu chuyện nghe có vẻ hợp lý đầu tiên, và chỉ sau đó mới chuyển sang tìm giải pháp.
+Biến một sự cố vận hành, kỹ thuật, quy trình hoặc kinh doanh chưa rõ nguyên nhân thành chẩn đoán có thể kiểm tra và kế hoạch xử lý đúng nguyên nhân.
 
-## Vì Sao Skill Này Tồn Tại
-
-Hỏi một AI thông thường "vì sao doanh số giảm?" và nó sẽ đưa cho bạn một lời giải thích nghe rất tự tin chỉ trong một hơi thở — nghe hợp lý, có cấu trúc, và thường là bịa hoàn toàn, vì AI chẳng có quyền truy cập vào dữ liệu, đội ngũ, hay khách hàng của bạn. Một chuỗi nguyên nhân gọn gàng được dựng từ những sự thật bịa đặt còn tệ hơn một câu "tôi chưa biết" trung thực, vì nó khiến bạn đi sửa sai chỗ với sự tự tin tuyệt đối.
-
-Skill này làm ngược lại: **sự thật đến từ bạn, giả định luôn được gắn nhãn, và không có gì được gọi là nguyên nhân cho đến khi thực tế xác nhận điều đó.** Mọi luận điểm nhân quả trong phiên làm việc đều đi kèm nhãn `[verified]` (đã xác minh) hoặc `[assumed]` (giả định), mọi giả định trọng yếu đều được ghi vào sổ kèm cách kiểm tra rẻ nhất, và ít nhất hai giả thuyết đối lập luôn được giữ sống cho đến khi bằng chứng — không phải một cuộc bỏ phiếu, không phải linh cảm — chọn ra người thắng cuộc. Nếu bạn xin giải pháp trước khi biết nguyên nhân, nó sẽ nói thẳng điều đó và để bạn chọn, thay vì âm thầm bỏ qua phần khó.
-
-## Bạn Có Thể Yêu Cầu Gì
-
-**Có gì đó đang hỏng và bạn không biết vì sao** — trường hợp cốt lõi.
-> "Doanh số giảm 15% tháng trước và chúng tôi không biết vì sao."
-> "Đơn hàng cứ bị trễ hoài. Tôi đã thử vài cách, chẳng cách nào ăn thua."
-
-**Có gì đó cứ lặp lại, hoặc các bản sửa cứ thất bại.**
-> "Con bug này cứ quay lại dù đã vá bao nhiêu lần."
-> "Mỗi lần sửa xong tỷ lệ rớt ở bước onboarding, lại có chỗ khác hỏng."
-
-**Bạn muốn một phiên tìm nguyên nhân gốc có cấu trúc.**
-> "Chạy giúp tôi five whys cho sự cố này."
-> "Làm post-mortem cùng tôi — hệ thống production sập 2 tiếng hôm qua."
-
-**Bạn xin giải pháp, nhưng nguyên nhân chưa rõ.**
-> "Cho tôi ý tưởng để cứu doanh số đang giảm." *(skill sẽ chỉ ra đây là một yêu cầu chẩn đoán đang đội lốt brainstorm, và để bạn tự chọn hướng đi)*
-
-Nó hoạt động y hệt vậy dù bạn viết bằng tiếng Việt, tiếng Anh, hay bất kỳ ngôn ngữ nào khác:
-> "Why do orders keep arriving late and we don't know why?"
-> "Find the root cause of our dropping sales for me."
-
-Bạn không cần gọi tên một phương pháp cụ thể — "chúng tôi không biết vì sao X cứ xảy ra hoài" là đủ để bắt đầu.
-
-## Một Phiên Làm Việc Trông Như Thế Nào
-
-**Frame (Định hình).** Một lượt hỏi thăm gọn gàng, không phải một biểu mẫu: chuyện gì đang xảy ra theo cách quan sát được, bắt đầu từ khi nào, ai/cái gì bị ảnh hưởng và đang tốn kém ra sao, đã thử gì rồi, và "đã sửa xong" sẽ trông như thế nào. Nếu tin nhắn mở đầu của bạn đã trao sẵn một manh mối sắc — một ranh giới cộng với một thay đổi trùng thời điểm — nó sẽ đề xuất một cách kiểm tra rẻ cho manh mối đó ngay trong câu trả lời đầu tiên, thay vì để dành. Sau đó nó đọc lại cho bạn phát biểu vấn đề đã được tinh gọn, đã tách hết mọi giả định-về-nguyên-nhân hay giải pháp-nhảy-cóc ẩn bên trong, và chờ bạn xác nhận trước khi đi tiếp.
-
-**Bound (Khoanh vùng).** Một lượt phân tích Is/Is-Not: vấn đề xuất hiện ở đâu so với không xuất hiện ở đâu, khi nào so với khi nào không, ai so với ai không. Manh mối sắc nhất nằm ở chỗ khác biệt giữa hai cột.
-
-**Diagnose (Chẩn đoán).** Nó chọn phương pháp phù hợp với hình dạng của vấn đề — Five Whys cho một triệu chứng có khả năng là một chuỗi nguyên nhân tuyến tính, fishbone khi có nhiều yếu tố góp phần khả dĩ, causal loops khi vấn đề cứ quay lại hoặc càng sửa càng tệ — rồi cùng bạn dựng cây nguyên nhân, từng câu hỏi một, gắn nhãn `[verified]` hoặc `[assumed]` cho từng liên kết ngay khi nó xuất hiện. Ít nhất hai ứng viên đối lập luôn được giữ trên bàn cho đến khi một phép kiểm tra phân tách được chúng. Không có gì chuyển sang giải pháp cho đến khi nguyên nhân dẫn đầu được xác minh, hoặc bạn chủ động chọn tiến tới với rủi ro đã biết.
-
-**Solve (Giải quyết).** Khi nguyên nhân đã được xác nhận, nó tạo ra các giải pháp nhắm thẳng vào *nguyên nhân đó* — chuyển giao cho brainstorm-coach để phát triển ý tưởng thật sự đa hướng nếu skill đó đã được cài. Mọi giải pháp đều nêu rõ nguyên nhân gốc nó nhắm tới; bất cứ giải pháp nào không làm được điều đó sẽ bị gắn nhãn là một bản vá triệu chứng, không phải một cách sửa thật sự.
-
-**Decide (Quyết định).** Bạn đặt ra tiêu chí (hiệu quả, chi phí, thời gian, rủi ro — của bạn có thể khác). Mọi điểm số đều trích dẫn bằng chứng hoặc được gắn nhãn trung thực "chưa biết — giả định". Một khuyến nghị duy nhất, kèm điều gì sẽ làm thay đổi nó.
-
-**Plan (Lên kế hoạch).** Một cách triển khai (mặc định là thí điểm khi độ tin cậy chưa cao), người phụ trách cho các bước đầu tiên, các chỉ số thành công gắn lại với "đã sửa xong" nghĩa là gì từ bước Frame, và các "pivot trigger" — quy tắc rõ ràng cho việc khi nào một kế hoạch không hiệu quả có nghĩa là chẩn đoán sai, chứ không chỉ là cần thực thi mạnh hơn.
-
-## Kỷ Luật Bằng Chứng
-
-Đây là phần khiến skill này đáng tin thay vì chỉ nói hay. Ba quy tắc xuyên suốt mọi giai đoạn:
-
-- Không có gì được phát biểu như một sự thật về thế giới của bạn trừ khi chính bạn nói ra hoặc cho xem. Một sự thật còn thiếu trở thành một câu hỏi hoặc một nhãn `[assumed]` — không bao giờ là một phỏng đoán được điền vào cho đủ.
-- Mỗi ứng viên nguyên nhân gốc đều mang theo một phép kiểm tra: "nếu đây đúng là nguyên nhân, ta sẽ thấy ___" cộng với cách rẻ nhất để kiểm tra xem nó có sai không. Một nguyên nhân mà không gì có thể bác bỏ được ("do thiếu giao tiếp") thì chưa phải là một chẩn đoán.
-- Độ tin cậy *giảm xuống* cũng được tính là tiến bộ. Một giả định được kiểm tra và loại bỏ vừa cứu bạn khỏi việc xây giải pháp trên cát — và skill xem đó là một chiến thắng, nói thẳng ra, chứ không phải một bước lùi.
-
-## Một Ví Dụ Cụ Thể
-
-> **Bạn:** Đơn hàng cứ trễ hoài, chắc khoảng 1/4. Bắt đầu từ đầu tháng 6. Đã nhắc nhân viên làm nhanh hơn nhưng không ăn thua.
->
-> **Agent:** Một câu hỏi làm rõ nhanh trước khi tôi chốt phát biểu vấn đề — sự trễ có tập trung vào một loại đơn nào đó không, hay dàn đều? Và có gì khác thay đổi từ đầu tháng 6 không — thực đơn, nhân sự, đơn vị giao hàng?
->
-> **Bạn:** Bạn nhắc mới nhớ, chủ yếu là đơn bánh custom. Và đúng là có một bài đăng thực đơn lên xu hướng đúng khoảng thời gian đó.
->
-> **Agent:** Thông tin này hữu ích — đây là phát biểu tôi muốn bạn xác nhận: *"Từ đầu tháng 6, khoảng 1/4 đơn hàng đến trễ, tập trung ở đơn bánh custom; một bài đăng thực đơn lên xu hướng đúng tuần đó."* Đúng không? Nếu đúng, một cách kiểm tra rẻ trước khi đi tiếp: nếu khối lượng đơn bánh custom tăng vượt quá năng lực chuẩn bị, thời gian chuẩn bị trung bình cho mỗi bánh custom sẽ tiến dần đến hoặc vượt qua khung giờ giao hàng — bạn có thể bấm giờ 5 đơn tiếp theo không?
->
-> **Bạn:** Đúng vậy đó. Tôi sẽ bấm giờ 5 đơn tiếp theo.
->
-> **Agent:** *(ghi lại kế hoạch, đánh dấu "năng lực chuẩn bị so với khối lượng đơn bánh custom" là ứng viên `[assumed]` dẫn đầu kèm phép kiểm tra đang chờ, giữ "đơn vị giao hàng xuống cấp" sống như một giả thuyết đối lập, và tạm dừng ở đây cho đến khi bạn quay lại với kết quả bấm giờ.)*
-
-## Phương Pháp, Khớp Với Hình Dạng Của Vấn Đề
-
-`references/diagnosis.md` chứa kho phương pháp — Five Whys, fishbone, causal loops và system archetypes, cộng thêm force-field và phân tích ràng buộc (constraint) cho các nỗ lực thay đổi bị mắc kẹt — mỗi phương pháp kèm khi nào nên dùng và một ví dụ minh họa. Agent chọn dựa trên hình dạng thật sự của vấn đề bạn đang gặp (một triệu chứng vs. nhiều yếu tố góp phần vs. một vấn đề "chống trả" mọi lần sửa), không bao giờ chọn theo thói quen hay để trông có vẻ kỹ lưỡng.
-
-## Kết Hợp Với Các Skill Khác Trong Gia Đình
-
-Skill này nằm trong một gia đình nhỏ các skill (github.com/tronghieu/agent-skills) được xây để nhường lời cho nhau đúng lúc. Nếu skill tiếp theo chưa được cài, agent chỉ nhắc tên nó, cho biết có thể cài từ cùng kho lưu trữ, rồi tiếp tục với một phiên bản nhẹ hơn ngay trong hội thoại.
-
-| Khi nào | Sẽ chuyển sang |
-|---|---|
-| Nguyên nhân đã được xác minh và bạn cần phát triển ý tưởng thật sự đa hướng trên đó | **brainstorm-coach** |
-| "Vấn đề" thật ra là về việc người dùng của bạn là ai và họ cần gì | **design-thinking** |
-| Bản chẩn đoán hoặc bản quyết định cần được kiểm tra lại lập luận | **critical-thinking** |
-| Cách sửa đã lớn thành một canh bạc chiến lược cấp công ty | **strategy-board** |
-| Một nguyên nhân hoặc giải pháp phụ thuộc vào dữ kiện thị trường bạn chưa có | **market-researcher** |
-| Kế hoạch đang trở thành một dự án nhiều tuần thật sự cần theo dõi | **project-manager** |
-
-## Bắt Đầu
-
-Cài đặt bằng cách dán dòng này vào terminal:
+## Cài đặt
 
 ```bash
 npx skills add tronghieu/agent-skills --skill problem-solver
 ```
 
-Sau đó chỉ cần nói cho AI agent của bạn biết cái gì đang hỏng:
+## Bắt đầu với vấn đề thực tế
 
 ```text
-Doanh số giảm 15% tháng trước và chúng tôi không biết vì sao.
+/problem-solver Đơn hàng bắt đầu giao trễ từ tháng Sáu; chỉ đơn bánh đặt riêng liên quận bị ảnh hưởng. Nên kiểm tra gì trước?
 ```
 
 ```text
-Chuyện này cứ lặp lại dù đã thử đủ cách — giúp tôi tìm nguyên nhân thật sự.
+/problem-solver Tỷ lệ chuyển đổi giảm 18% tháng này. Chúng tôi đổi giá, onboarding và nhắm quảng cáo; hãy giúp tách các nguyên nhân.
 ```
 
 ```text
-Làm post-mortem cùng tôi về sự cố hôm qua.
+/problem-solver Sự cố production cứ quay lại sau mỗi hotfix. Hãy chẩn đoán nguyên nhân gốc trước khi đề xuất cách sửa tiếp theo.
 ```
 
-```text
-Sales dropped 15% last month and we don't know why.
-```
+## Vì sao không chỉ hỏi chatbot thông thường cách sửa?
 
-Bạn không cần phải nói "problem solver" — "chúng tôi không biết vì sao X cứ xảy ra hoài" là đủ để nó bắt lấy mạch chuyện.
+Một cuộc chat thông thường có thể tạo ra câu chuyện hợp lý, đầy tự tin từ các dữ kiện còn thiếu. Problem Solver tách điều bạn đã quan sát khỏi điều mới chỉ nghi ngờ, yêu cầu phép kiểm tra rẻ nhất có thể bác bỏ lời giải thích hàng đầu, và không coi một cách sửa hấp dẫn là bằng chứng cho nguyên nhân. Vì vậy, một phép kiểm tra thất bại vẫn là tiến bộ hữu ích—không phải điều bị che đi bằng câu trả lời bóng bẩy.
+
+## Khi nào nên dùng
+
+Dùng khi có lỗi, chậm trễ, tái diễn hoặc thay đổi nhưng nguyên nhân chưa rõ/chưa được kiểm chứng: mẫu giao trễ, chỉ số giảm, incident lặp lại, thay đổi bị đình trệ, hoặc post-mortem cần đi đến hành động. Skill phù hợp với operator, kỹ sư, product/process lead, manager và chủ doanh nghiệp có thể cung cấp quan sát hoặc kiểm tra thực tế.
+
+Đây không phải lựa chọn đầu tiên nếu không có gì hỏng và bạn chỉ cần ý tưởng mở, hoặc nếu câu hỏi thực chất là hiểu nhu cầu và hành vi người dùng.
+
+Nếu bạn xin cách sửa khi chưa biết nguyên nhân, skill nói rõ các ý tưởng có thể nhắm sai chỗ, đề nghị một lượt Định khung nhanh và để bạn chủ động bỏ qua chẩn đoán với rủi ro đó; nếu bỏ qua, công việc chuyển sang Brainstorm Coach.
+
+## Mô hình tư duy: chẩn đoán trước, giải pháp sau
+
+Skill dựa trên ba nguồn sự thật:
+
+- **Sự thật** bạn biết trực tiếp hoặc dữ liệu/tài liệu bạn kiểm tra được mang nhãn `[verified]`.
+- **Giả thuyết**, gồm cả linh cảm của bạn và của người hỗ trợ, mang nhãn `[assumed]` cho đến khi thực tế xác nhận.
+- **Kiểm chứng** chỉ xảy ra khi bạn đối chiếu với thế giới thật; thấy có vẻ hợp lý không phải kiểm chứng.
+
+Giả định mang tính quyết định được ghi độ tin cậy, tác động nếu sai và phép kiểm tra rẻ nhất. Mỗi ứng viên nguyên nhân gốc phải dự đoán điều sẽ quan sát được và nêu quan sát rẻ nhất có thể bác bỏ nó. Ít nhất hai lời giải thích đối thủ được giữ lại đến khi bằng chứng phân biệt chúng.
+
+## Diễn biến một phiên làm việc
+
+1. **Định khung** — làm rõ triệu chứng quan sát được, thời điểm bắt đầu, tác động, cách đã thử và dấu hiệu “đã sửa xong”; tách sự thật khỏi nguyên nhân và giải pháp được cài sẵn.
+2. **Khoanh vùng** — so sánh vấn đề **có** và **không có** ở đâu, khi nào, với ai/cái gì và dưới dạng nào. Khác biệt là manh mối mạnh nhất.
+3. **Chẩn đoán** — dùng một hoặc hai phương pháp hợp hình dạng: Five Whys cho chuỗi khả dĩ, fishbone cho nhiều yếu tố, causal loop cho mô thức tái diễn/tự làm nặng hơn, force-field/constraint là phần bổ sung cho thay đổi tổ chức.
+4. **Giải pháp** — tạo phương án nhắm vào nguyên nhân đã kiểm chứng và truy vết từng phương án về nguyên nhân đó. Miếng vá triệu chứng cần thiết được gắn nhãn và đi kèm sửa chữa nguyên nhân.
+5. **Quyết định** — so sánh trực tiếp hai phương án, hoặc dùng ma trận khi có từ ba phương án; mỗi điểm số phải có bằng chứng hoặc ghi `unknown — assumption`. Bạn là người quyết định.
+6. **Kế hoạch** — chọn pilot, triển khai theo giai đoạn, hoặc hiếm khi là big-bang dễ đảo ngược; nêu người phụ trách, chỉ số thành công kế thừa, kiểm tra giả định mở, điểm rà soát và điều kiện đổi hướng.
+
+Mức độ quy trình tăng theo mức độ rủi ro: vấn đề nhỏ có thể gộp các pha đầu, còn vấn đề tốn kém hoặc lặp lại dùng toàn bộ pipeline. Nếu lời mở đầu đã có ranh giới sắc nét và thay đổi xảy ra cùng thời điểm, skill có thể đề nghị ngay phép kiểm tra phân biệt rẻ thay vì bắt bạn điền bảng hỏi.
+
+## Điểm dừng, con người và cộng tác
+
+Có đúng ba cổng: bạn xác nhận problem statement đã tinh chỉnh; ứng viên nguyên nhân hàng đầu được kiểm chứng—hoặc bạn chấp nhận rõ ràng rủi ro khi tiếp tục; và bạn ra quyết định cuối cùng. Skill không đóng vai stakeholder hay bịa điều họ sẽ nói. Câu hỏi theo góc nhìn chỉ giúp mở rộng fishbone, còn bạn vẫn là nguồn sự thật.
+
+Ở pha Giải pháp, skill bàn giao sang [Brainstorm Coach](../brainstorm-coach/README.vi.md) nếu có để brainstorm phân kỳ theo nguyên nhân. Nếu chưa có, nó tiếp tục một lượt lên ý tưởng nhẹ, ưu tiên ý tưởng của bạn; không bị chặn vì thiếu skill bổ trợ. Skill không thiết lập một nhóm multi-agent hay “party” thường trực.
+
+## Trải nghiệm và đầu ra
+
+Hãy mang theo điều bạn biết: triệu chứng và quy mô quan sát được, thời điểm, trường hợp bị/không bị ảnh hưởng, thay đổi gần đây, cách đã thử, dữ liệu/tài liệu, ràng buộc và định nghĩa thành công. “Chưa biết” là câu trả lời hợp lệ và trở thành khoảng trống cần kiểm tra.
+
+Với vấn đề kéo dài qua nhiều cuộc trò chuyện, skill thường duy trì workspace gọn gồm statement và boundary, diagnosis và phép kiểm tra, assumption log, phương án truy vết nguyên nhân, quyết định và kế hoạch. Khi bạn quay lại, nó đọc trạng thái đó trước, tóm tắt phép kiểm tra đang chờ, cập nhật nhãn/độ tin cậy theo bằng chứng mới rồi tiếp tục đúng pha, không bắt đầu lại. Với vấn đề nhanh, cùng cấu trúc có thể ở ngay trong cuộc trò chuyện.
+
+Bạn nhận được: problem statement đã xác nhận; ranh giới Is/Is-Not; cause tree có nhãn với các ứng viên đối thủ và phép kiểm tra; assumption log; phương án truy vết về nguyên nhân; khuyến nghị có xét bằng chứng; và kế hoạch triển khai kèm chỉ số cùng điều kiện đổi hướng.
+
+## Skill bổ trợ
+
+- [Brainstorm Coach](../brainstorm-coach/README.vi.md) — sau khi đã kiểm chứng nguyên nhân, để mở rộng giải pháp.
+- [Design Thinking](../design-thinking/README.vi.md) — khi bất định thực sự nằm ở nhu cầu, cảm nhận, adoption hoặc hành vi người dùng.
+- [Critical Thinking](../critical-thinking/README.vi.md) — để kiểm tra lập luận của chẩn đoán hoặc quyết định.
+- [Strategy Board](../strategy-board/README.vi.md) — khi cách sửa đã thành một đặt cược chiến lược cấp công ty.
+- [Market Researcher](../market-researcher/README.vi.md) — khi nguyên nhân hay phương án phụ thuộc dữ kiện thị trường bạn chưa có.
+- [Project Manager](../project-manager/README.vi.md) — khi kế hoạch trở thành dự án nhiều tuần, nhiều luồng việc và stakeholder.
+
+## Giới hạn
+
+Problem Solver không thể tự xem hệ thống của bạn hoặc kiểm chứng dữ kiện bạn chưa cung cấp/chưa kiểm tra. Nó không dựng chuỗi nguyên nhân đẹp mắt, không bảo đảm can thiệp sẽ thành công và không thay thế phán đoán chuyên môn, an toàn, pháp lý hay vận hành. Bạn có thể hành động trước khi kiểm chứng xong, nhưng nhánh đó được đánh dấu rõ là có rủi ro và nên dùng pilot có thể đảo ngược cùng điều kiện đổi hướng.

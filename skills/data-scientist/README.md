@@ -1,168 +1,93 @@
-# Data Scientist Skill
+# Data Scientist
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Language:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
-This skill turns your AI agent into a working **data scientist** — mind and method — for any question that starts with a dataset and ends with a decision.
+Turn a real business decision and its data into defensible evidence, uncertainty-aware conclusions, and a decision-ready report.
 
-## What Is the Data Scientist Skill?
-
-This is not a wrapper around a data-science library. The agent writes its own analysis code, freely, in whatever language and tooling the environment offers — the skill supplies the discipline that code gets written inside: what to check before trusting a column, what to run before believing a metric, what a claim needs before it ships. References teach method and judgment, two bundled scripts standardize the two steps most often done sloppily, and checklists gate every claim before it reaches a reader.
-
-**You advise; the user decides.** Every engagement ends in a recommendation with quantified trade-offs ("lower the threshold to 0.4 and you catch 15% more fraud but wrongly block 3% of good customers") — never in the agent making the business call. Full optimization problems (pricing engines, resource-allocation solvers) are out of scope: the skill surfaces the levers and their costs, then hands the lever back. Scope is Data Scientist only — no Data Engineering pipelines, no MLOps/deployment infrastructure.
-
-## Why Use It?
-
-- **No number without executed code.** Every mean, count, or correlation traces to the printed output of code that actually ran. A confident fabricated statistic is this skill's single worst failure mode, and it's built to refuse that shortcut.
-- **Data looked at before it's analyzed.** No schema, column name, or user description is trusted at face value — `scripts/profile_data.py` runs first, even when the ask is straight for a model.
-- **Baseline before complexity.** No gradient boosting, no neural nets, no tuning until a dummy baseline and a linear model have run — "92% accuracy" is meaningless until you know the majority class gets 90%.
-- **Every estimate carries uncertainty.** A point estimate without a confidence interval, error bar, or cross-validation spread is treated as unfinished work.
-- **Leakage checked before any metric is believed.** `checklists/leakage.md` runs before a validation score is reported — leakage is the most expensive silent failure in applied data science.
-- **Red-teamed before it ships.** Every conclusion that could drive a decision goes through an adversarial review pass — `checklists/analysis-review.md` — looking for leakage, confounders, and alternative explanations, before it reaches the deliverable.
-
-## The Four Questions
-
-Every engagement is routed by which level the user's question actually lives at:
-
-| Level | Question | Primary flow |
-|---|---|---|
-| Descriptive | What happened? | Explore |
-| Diagnostic | Why did it happen? | Inquire |
-| Predictive | What is likely to happen? | Predict |
-| Prescriptive | What should we do about it? | Recommendation section of any flow |
-
-Users often ask at one level while needing another — asking for a model when they need a diagnosis. `references/framing.md` is read before the question is accepted as asked.
-
-## The Six Flows
-
-| User's ask sounds like | Flow | Deliverable |
-|---|---|---|
-| "Help me reduce churn", a vague business goal | **Full engagement** | `insight-report.md` |
-| "Explore this dataset", "what's in this file?" | **Explore** | `eda-report.md` |
-| "Is A better than B?", "is this significant?", sample size | **Inquire** | stats results + interpretation |
-| "Build a model to predict X", forecast | **Predict** | `model-card.md` + `experiment-log.md` |
-| "Review this analysis / notebook / model" | **Review** | critique report |
-| "Write this up for my boss / stakeholders" | **Communicate** | `insight-report.md` |
-
-The short flows are entry points into the full pipeline, not separate methods — Explore is phases 2-3 of a full engagement, Predict is phases 4-5, and so on.
-
-**Review deserves its own emphasis.** Acting as an expert validator — of a human's notebook or another AI's analysis — is where a data scientist's judgment matters most. It runs as an adversarial pass: assume the analysis is wrong and try to prove it.
-
-## The Review Gate
-
-Whatever the flow, before any conclusion that could drive a decision leaves the agent's hands, it switches hats: stop being the analyst who produced the result, become the reviewer trying to kill it. `checklists/analysis-review.md` walks leakage, confounders, alternative explanations, and whether the result survives a different data split. Findings from this pass land in the deliverable's Limitations section, not a private note — an analysis that hasn't survived its own red team isn't done.
-
-## Bundled Scripts
-
-Two scripts standardize the two steps most often done sloppily. Both need `pandas`/`numpy`; the baseline runner also needs `scikit-learn`. Both write a markdown report for the workspace plus a JSON file for the agent to read.
-
-**`scripts/profile_data.py`** — first contact with any dataset. Shape, types, missing patterns, cardinality, distributions, duplicates, correlations, and a warnings section (constant columns, ID-like columns, class imbalance, placeholder values, leakage-suspect correlations):
-
-```bash
-python scripts/profile_data.py data.csv --target churn --out ds-workspace/my-project
-```
-
-**`scripts/baseline_model.py`** — the mandatory floor for any Predict flow. Runs a dummy baseline and a linear model in leak-safe cross-validated pipelines (all preprocessing fit inside folds), auto-detects task type, uses time-based splits when given `--time-col`, group splits with `--group-col`, and scans for mechanical leakage (single features that predict the target suspiciously well, duplicate rows across folds):
-
-```bash
-python scripts/baseline_model.py data.csv --target churn --time-col signup_date --out ds-workspace/my-project
-```
-
-Anything beyond the baseline — feature engineering, gradient boosting, tuning — is written by hand, guided by `references/modeling.md`, and must beat the baseline to justify the added complexity.
-
-## The Workspace
-
-Each engagement gets a working directory so artifacts accumulate instead of scattering:
-
-```text
-ds-workspace/{project-slug}/
-  project-brief.md      # from templates/ — framing, written first
-  data-profile.md        # output of profile_data.py
-  eda-report.md          # findings + hypotheses
-  experiment-log.md      # every model run: config, data, results — append-only
-  model-card.md          # the model that ships
-  insight-report.md      # the deliverable for decision-makers
-```
-
-Skeletons are copied from `templates/` as each phase begins. The experiment log is the poor man's MLflow: if a result isn't logged with enough detail to reproduce it, it doesn't exist.
-
-## How to Trigger
-
-Ask your AI agent tasks like:
-
-```text
-Analyze this CSV and tell me what's driving the drop in retention this quarter.
-```
-
-```text
-Is the conversion lift in variant B statistically significant, or could this be noise?
-```
-
-```text
-Build me a model to predict which customers are likely to churn next month.
-```
-
-```text
-Here's my notebook — review it before I present these numbers to leadership.
-```
-
-**Trigger phrases:** "analyze this dataset", "explore this CSV", "what drove this change?", "is this difference significant?", "A/B test", "build a model to predict...", "review this analysis/notebook", "write this up for stakeholders", "phân tích dữ liệu", "xây model dự đoán", "kiểm định A/B"
-
-## File Structure
-
-```text
-data-scientist/
-  SKILL.md                          # Entry point: non-negotiables, routing, workspace, scripts
-  references/
-    workflow.md                     # Full phase-by-phase pipeline guidance
-    framing.md                      # Turning a business ask into the right question
-    eda.md                          # Exploratory data analysis
-    statistics.md                   # Hypothesis tests, comparisons, causal claims, sample size
-    modeling.md                     # Building predictive models
-    evaluation.md                   # Choosing metrics; judging model quality
-    interpretation.md               # Explaining what drives a model or an effect
-    communication.md                # Writing for stakeholders
-  checklists/
-    data-quality.md                 # Gate: before analysis begins
-    leakage.md                      # Gate: before believing any model metric
-    analysis-review.md              # Gate: before any conclusion ships; the Review flow
-  templates/                        # project-brief, eda-report, experiment-log, model-card,
-                                     # insight-report
-  scripts/
-    profile_data.py                 # Dataset profiling: structure, quality, warnings
-    baseline_model.py               # Leak-safe dummy + linear baselines with CV
-```
-
-Engagements themselves are written to `ds-workspace/{project-slug}/`, accumulating the artifacts listed above as each phase completes.
-
-## Installation
-
-### 1. Using CLI (Recommended)
+## Install
 
 ```bash
 npx skills add tronghieu/agent-skills --skill data-scientist
 ```
 
-### 2. Manual Installation (For Non-Technical Users)
+## Try it
 
-1. **Download:** Go to the `skills/` folder in this repository and download `data-scientist.zip`.
-2. **Extract & Copy:** Extract `data-scientist.zip` and copy the `data-scientist` folder into one of the following directories:
+```text
+/data-scientist Explore orders.csv: what is in it, can we trust it, and what hypotheses should we test?
+```
 
-**For a Specific Project:**
-Copy the `data-scientist` folder to `.agents/skills/` or `.claude/skills/` in your project's root directory.
+```text
+/data-scientist Is variant B's conversion lift real? Include the effect size, confidence interval, and sample-size implications.
+```
 
-**Globally (Available for all projects):**
-* **Mac / Linux:** `~/.agents/skills/` or `~/.claude/skills/`
-* **Windows:** `%USERPROFILE%\.agents\skills\` or `%USERPROFILE%\.claude\skills\` (usually `C:\Users\<YourUsername>`)
+```text
+/data-scientist Build a baseline to forecast weekly demand from sales.parquet; errors during stockouts cost more than overstocking.
+```
 
-## Example Usage
+```text
+/data-scientist Red-team this churn notebook before leadership sees it: reproduce the key numbers and find leakage or confounders.
+```
 
-> **You:** Here's `orders.csv`. Can you tell me why revenue per user dropped last month?
->
-> **Agent:** Running `profile_data.py` first — before I look for a "why," I want to know what's actually in this file. [profiles the data, flags that `discount_code` is 40% missing and `user_id` is not unique]
->
-> **Agent:** Retention looks flat but average order value dropped 18%. That's a diagnostic question, so I'm treating this as an Inquire flow — comparing order value across the periods with a proper significance test rather than eyeballing the trend line.
->
-> *(runs the comparison, checks for confounders — did the mix of products change, did a discount campaign end)*
->
-> **Agent:** The drop survives controlling for product mix; it lines up with the discount campaign ending on the 14th. Before I write this up, running it through the review checklist — is there a simpler explanation, does this hold on a different date cut. [confirms, then drafts `insight-report.md` with the finding, the confidence interval, and what to check next if you want to act on it.]
+## Why not use a normal chatbot?
 
+A normal chatbot may jump to a chart, a p-value, or a sophisticated model. This skill starts by establishing the decision, data grain, coverage, and information available at decision time. It requires computed evidence, uncertainty around estimates, a simple baseline before added complexity, and a review that tries to disprove the conclusion. The result is not merely plausible analysis—it is analysis whose caveats and trade-offs are visible to the decision owner.
+
+## Who it is for and when to use it
+
+Use it when you have a CSV, Parquet, Excel file, query result, API extract, notebook, or existing model and need to:
+
+- Explore and audit an unfamiliar dataset before trusting it.
+- Diagnose a changed metric, while separating association from cause.
+- Design or interpret A/B tests, comparisons, confidence intervals, or sample sizes.
+- Build and judge a classification, regression, scoring, segmentation, or forecast baseline.
+- Review an analysis, notebook, or model before it informs a decision.
+- Translate technical findings into a concise report for stakeholders.
+
+It suits analysts, data scientists, product and business teams, and decision owners who need evidence they can interrogate—not just an attractive narrative.
+
+## How the engagement works
+
+The skill first frames the work as descriptive (what happened), diagnostic (why), predictive (what is likely next), or prescriptive (which trade-off to choose). It confirms the decision at stake, unit of analysis, target definition, timing of usable information, success bar, and cost of each error. If a requested model cannot change an action, it can redirect the work to the more useful question.
+
+Then it follows a rigorous path:
+
+1. **Audit the data.** Confirm provenance, row grain, coverage, keys, definitions, missingness, outliers, target integrity, and whether the data is fit for purpose.
+2. **Explore with a question.** Investigate distributions, segments, time structure, and plausible explanations; end with falsifiable, ranked hypotheses rather than a dump of charts.
+3. **Analyze or predict.** Use appropriate tests and effect sizes for diagnostic questions, or compare a predictive model with simple baselines using a split that mirrors deployment.
+4. **Validate before believing.** Attach confidence intervals or cross-validation spread; check assumptions, multiple comparisons, practical significance, calibration, performance by important segments, and data leakage.
+5. **Red-team before sharing.** Deliberately switch from analyst to adversarial reviewer: recheck decisive arithmetic, selection effects, confounders, causal wording, alternative splits or definitions, and what could overturn the result.
+6. **Communicate the decision.** Lead with the answer in business units, the uncertainty, evidence, quantified options, and specific limitations. The skill recommends; the decision owner chooses.
+
+## Evidence and uncertainty discipline
+
+Every reported number must trace to executed analysis. Estimates carry a confidence interval, error range, or validation spread. Observational patterns are described as **associations**; causal language is reserved for randomized experiments or a clearly defended causal design. A highly accurate-looking model is treated as suspect until feature timing and validation leakage have been checked.
+
+For predictions, a more complex model must earn its place by outperforming dummy and linear baselines by more than normal validation variation. A threshold is presented as business choices—what is gained, what it costs, and who is affected—not assumed to be 0.5 or selected for you.
+
+## What to provide and how to collaborate
+
+Share the data or its location, the decision or question, target population and period, known definitions or constraints, and relevant context such as a data dictionary. For predictive work, say when a prediction is made, which inputs are legitimately available then, how it will be used, and which error is more costly.
+
+Expect focused clarification before analysis when those choices are unclear. You can also bring an existing notebook or results: the review route independently checks load-bearing numbers and ranks issues as fatal, material, or minor, with concrete fixes.
+
+## What you receive
+
+Depending on the route, the work produces a concise set of reproducible artifacts:
+
+| Artifact | Purpose |
+| --- | --- |
+| Project brief | Decision, target, grain, success bar, and explicit assumptions |
+| Data profile and EDA report | Data-quality verdict, key findings, ranked hypotheses, and leakage watchlist |
+| Statistical interpretation | Effect sizes, uncertainty, assumptions, and practical meaning |
+| Experiment log and model card | Comparable runs, validation design, baseline comparison, operating trade-offs, and limitations |
+| Insight or critique report | Answer first; supporting evidence, recommendation options, and what could change the conclusion |
+
+## Useful companion skills
+
+- [Critical Thinking](../critical-thinking/README.md) — use alongside a high-stakes recommendation when you want a broader challenge to the argument, assumptions, and decision logic.
+- [Market Researcher](../market-researcher/README.md) — use when the question also needs cited external market, competitor, or industry evidence; this skill then analyzes the data you have.
+- [Diataxis Writer](../diataxis-writer/README.md) — use after the analysis when a durable tutorial, how-to, reference, or explanation document is needed for different readers.
+
+## Limits
+
+This skill does not replace data engineering, production MLOps, domain validation, privacy/security work, or legal and ethical review. It does not make the business decision or build a full pricing or resource-allocation optimizer. Weak, incomplete, biased, or nonrepresentative data may lead to a "not fit for purpose" conclusion; that is a valid outcome, not a reason to overstate certainty.

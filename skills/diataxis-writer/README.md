@@ -1,116 +1,80 @@
-# Diataxis Writer Skill
+# Diataxis Writer
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Language:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
-This skill helps an agent write, restructure, and review documentation using the
-Diataxis framework.
+Diataxis is a documentation framework that separates pages by what the reader needs now: **learn** through practice, **do** a task, **look up** facts, or **understand** a concept. This skill uses that distinction to turn mixed, hard-to-navigate documentation into pages with a clear promise—easier to use and easier to maintain.
 
-## What Is Diataxis?
-
-Diataxis is a documentation framework organized around the reader's real need.
-Instead of putting every related piece of information on one page, Diataxis
-separates documentation into four types:
-
-| Document type | When the reader wants to | Goal |
-| --- | --- | --- |
-| Tutorial | Learn through practice | Guide the reader along a safe path toward initial competence |
-| How-to guide | Complete a specific task | Provide clear steps to reach an outcome |
-| Reference | Look up accurate information | Provide complete, consistent, scannable facts |
-| Explanation | Understand context or reasons | Explain concepts, decisions, tradeoffs, and mental models |
-
-The core idea is that each document should make one clear promise to the reader.
-A tutorial should not try to become an API reference. A how-to guide should not
-be stretched by architecture explanations. A reference page should not force the
-reader through a long story before they can find the field, option, or command
-they need.
-
-## Benefits
-
-- **Reduces confusing, overgrown docs**: Diataxis separates learning, doing,
-  lookup, and understanding into distinct reader goals.
-- **Improves reader experience**: readers find the kind of document that matches
-  what they are trying to do instead of filtering through unrelated material.
-- **Makes review easier**: reviewers can ask "which reader job does this page
-  serve?" before editing details.
-- **Improves maintainability**: each page has a clearer scope and promise, so
-  updates are less likely to sprawl.
-- **Applies beyond technical docs**: it works well for onboarding, knowledge
-  bases, process docs, manuals, runbooks, product docs, API docs, and operational
-  guides.
-
-## Why Use Diataxis?
-
-Many docs are frustrating not because they lack information, but because they
-mix several purposes in one place. A newcomer needs guided steps. Someone
-handling a task needs concise instructions. Someone looking something up needs
-tables, fields, defaults, and constraints. Someone trying to understand needs
-context and reasons.
-
-Diataxis forces the writer to choose the main reader goal before writing. That
-makes documentation more natural to navigate, easier to read, and less likely to
-contradict itself.
-
-## When To Use This Skill
-
-Use this skill when you need to:
-
-- write new documentation with Diataxis;
-- review a confusing or overgrown document;
-- split a "getting started" page into tutorial, how-to, reference, and
-  explanation pages;
-- redesign a knowledge base or docs site;
-- write onboarding docs, process docs, runbooks, manuals, product docs, or API
-  docs.
-
-Do not apply Diataxis mechanically to marketing copy, sales proposals, legal
-contracts, press releases, fiction, or writing whose main job is emotional
-persuasion. Those formats can borrow some Diataxis thinking, but they should not
-be forced into the framework.
-
-## Quick Usage
-
-In an agent that supports skills, ask for tasks like:
-
-```text
-Review this document with Diataxis and suggest how to split it.
-```
-
-```text
-Write a getting-started tutorial for this internal tool.
-```
-
-```text
-Create reference docs for this CLI command and keep them easy to scan.
-```
-
-The skill also includes a heuristic script for classifying Diataxis signals in a
-document:
-
-Run it from the skill directory:
-
-```bash
-bash ./scripts/classify-doc.sh path/to/doc.md
-```
-
-The script is only a quick diagnostic aid. The final decision should still be
-based on the reader job and documentation context.
-
-## Installation
-
-### 1. Using CLI (Recommended)
+## Quick install
 
 ```bash
 npx skills add tronghieu/agent-skills --skill diataxis-writer
 ```
 
-### 2. Manual Installation (For Non-Technical Users)
+## Quick examples
 
-1. **Download:** Go to the `skills/` folder in this repository and download `diataxis-writer.zip`.
-2. **Extract & Copy:** Extract `diataxis-writer.zip` and copy the `diataxis-writer` folder into one of the following directories:
+```text
+/diataxis-writer Review this getting-started guide. Identify mixed sections and propose a tutorial, how-to, reference, and explanation structure.
+```
 
-**For a Specific Project:**
-Copy the `diataxis-writer` folder to `.agents/skills/` or `.claude/skills/` in your project's root directory.
+```text
+/diataxis-writer Turn this deployment procedure into a task-focused how-to guide. Keep prerequisites, verification, and recovery guidance.
+```
 
-**Globally (Available for all projects):**
-* **Mac / Linux:** `~/.agents/skills/` or `~/.claude/skills/`
-* **Windows:** `%USERPROFILE%\.agents\skills\` or `%USERPROFILE%\.claude\skills\` (usually `C:\Users\<YourUsername>`)
+```text
+/diataxis-writer Create scannable reference documentation for these CLI options, defaults, constraints, and examples.
+```
+
+```text
+/diataxis-writer Explain this authentication design for new engineers, including its mental model, tradeoffs, and consequences.
+```
+
+## Why not simply ask a chatbot to “improve the docs”?
+
+That broad request can improve wording while leaving the page’s purpose unclear—or mix beginner teaching, task steps, lookup facts, and rationale together. This skill starts with the reader’s job, gives each page one primary promise, and identifies material to keep, move, split, or link. The result is a documentation structure, not just smoother prose.
+
+## Who this is for
+
+Technical writers, developer advocates, documentation owners, product and engineering teams, knowledge managers, and operators maintaining user-facing or internal documentation.
+
+## Use it for
+
+- Onboarding tutorials, help-center articles, and internal process docs
+- How-to guides, runbooks, configuration, migration, and troubleshooting docs
+- API, command, policy, and configuration reference
+- Conceptual explanations, architecture context, and design rationale
+- Auditing a confusing page or reorganizing a documentation set
+
+## The four Diataxis quadrants
+
+| Reader intent | Document type | Page promise |
+| --- | --- | --- |
+| Learn by doing | Tutorial | Follow a guided path toward basic competence. |
+| Complete a task | How-to guide | Reach a specific outcome. |
+| Look up facts | Reference | Find accurate, complete information quickly. |
+| Understand context | Explanation | Understand concepts, decisions, and tradeoffs. |
+
+## How classification and restructuring work
+
+1. Name the reader, their immediate goal, and the page’s implied promise.
+2. Classify the existing content by the four reader intents.
+3. Choose one primary type for each page; supporting material belongs in a related page or a concise link.
+4. Keep, move, split, or rewrite mixed sections, then connect the resulting pages so readers can move between learning, doing, lookup, and understanding.
+5. Check that the title, opening, structure, and depth deliver the promised reader job.
+
+For detailed patterns and templates, see [Diataxis patterns](./references/diataxis-patterns.md).
+
+## What to bring and what you receive
+
+Bring the document or documentation set, intended readers, product or process context, and the outcome you want. Existing examples, support questions, and search data can help.
+
+You receive a classification, section-level mixed-purpose findings, a target information architecture, and either a concrete rewrite plan or rewritten content. Reviews also include a verification checklist.
+
+## Complementary skills
+
+- Use [Deep Reader](../deep-reader/README.md) **before this skill** when a large or dense document set needs careful, traceable reading; it establishes the source understanding that a restructure depends on.
+- Use [Critical Thinking](../critical-thinking/README.md) when the documentation makes important claims or recommendations; it tests the evidence and reasoning, while Diataxis organizes the reader experience.
+- Use [System Prompt Creator](../system-prompt-creator/README.md) when the resulting documentation process must become repeatable behavior in an LLM product; it turns the desired workflow and guardrails into a testable system prompt.
+
+## Limits
+
+Diataxis is useful when documentation’s job is to help people learn, do, look up, or understand. It is not a universal format for marketing copy, sales proposals, legal contracts, press releases, fiction, or other persuasion-first writing. A page can draw on more than one kind of information, but it should still have one dominant reader job.

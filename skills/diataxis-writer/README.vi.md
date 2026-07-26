@@ -1,112 +1,80 @@
-# Diataxis Writer Skill
+# Diataxis Writer
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
-Skill này giúp agent viết, tái cấu trúc và review tài liệu theo framework
-Diataxis.
+Diataxis là framework tổ chức tài liệu theo nhu cầu tức thời của người đọc: **học** qua thực hành, **làm** một việc, **tra cứu** dữ kiện hoặc **hiểu** một khái niệm. Skill này dùng sự phân biệt đó để biến tài liệu lẫn lộn, khó điều hướng thành các trang có lời hứa rõ ràng—dễ dùng hơn và dễ bảo trì hơn.
 
-## Diataxis là gì?
-
-Diataxis là một framework tổ chức tài liệu dựa trên nhu cầu thật sự của người
-đọc. Thay vì gom mọi thông tin liên quan vào cùng một trang, Diataxis chia tài
-liệu thành 4 loại chính:
-
-| Loại tài liệu | Khi người đọc muốn | Mục tiêu |
-| --- | --- | --- |
-| Tutorial | Học qua thực hành | Dẫn người đọc đi theo một lộ trình an toàn để đạt năng lực ban đầu |
-| How-to guide | Hoàn thành một việc cụ thể | Đưa ra các bước rõ ràng để đạt một kết quả |
-| Reference | Tra cứu thông tin chính xác | Cung cấp dữ liệu đầy đủ, nhất quán, dễ quét |
-| Explanation | Hiểu bối cảnh hoặc lý do | Giải thích khái niệm, quyết định, tradeoff và mô hình tư duy |
-
-Điểm cốt lõi của Diataxis là: mỗi tài liệu nên có một lời hứa rõ ràng với người
-đọc. Một trang tutorial không nên cố trở thành API reference. Một trang how-to
-không nên bị kéo dài bởi giải thích kiến trúc. Một trang reference không nên bắt
-người đọc đi qua một câu chuyện dài trước khi tìm thấy field hoặc option họ cần.
-
-## Ưu điểm
-
-- **Giảm tài liệu rối và dài quá mức**: Diataxis giúp tách "học", "làm", "tra
-  cứu" và "hiểu" thành các mục tiêu riêng.
-- **Cải thiện trải nghiệm người đọc**: người đọc tìm đúng loại tài liệu cho việc
-  họ đang làm, thay vì phải tự lọc thông tin.
-- **Dễ review chất lượng hơn**: có thể hỏi "trang này đang phục vụ reader job
-  nào?" trước khi sửa nội dung chi tiết.
-- **Dễ bảo trì hơn**: mỗi trang có phạm vi và lời hứa rõ ràng, nên việc cập nhật
-  ít kéo theo thay đổi lan man.
-- **Phù hợp với nhiều loại knowledge work**: không chỉ technical docs, mà cả
-  onboarding, knowledge base, process docs, manuals, runbooks, product docs và
-  operational guides.
-
-## Tại sao nên dùng Diataxis?
-
-Nhiều tài liệu gây khó chịu không phải vì thiếu thông tin, mà vì trộn nhiều mục
-đích trong cùng một chỗ. Một người mới cần được dẫn từng bước. Một người đang xử
-lý task cần chỉ dẫn ngắn và chính xác. Một người tra cứu cần bảng, field,
-default, constraint. Một người muốn hiểu cần bối cảnh và lý do.
-
-Diataxis buộc người viết chọn mục tiêu chính trước khi viết. Nhờ vậy tài liệu có
-cấu trúc tự nhiên hơn, dễ đọc hơn và ít mâu thuẫn hơn.
-
-## Khi nào nên dùng skill này?
-
-Dùng skill này khi cần:
-
-- viết tài liệu mới theo Diataxis;
-- review một tài liệu đang rối hoặc quá dài;
-- tách một trang "getting started" thành tutorial, how-to, reference và
-  explanation;
-- thiết kế lại knowledge base hoặc docs site;
-- viết onboarding docs, process docs, runbooks, manuals, product docs hoặc API
-  docs.
-
-Không nên áp dụng máy móc cho marketing copy, sales proposal, legal contract,
-press release, fiction, hoặc nội dung chủ yếu nhằm thuyết phục cảm xúc. Các loại
-tài liệu đó có thể mượn một phần tư duy phân loại của Diataxis, nhưng không nên
-bị ép vào framework này.
-
-## Cách dùng nhanh
-
-Trong một agent hỗ trợ skills, hãy yêu cầu các việc như:
-
-```text
-Review tài liệu này theo Diataxis và đề xuất cách tách lại.
-```
-
-```text
-Viết một tutorial getting started cho công cụ nội bộ này.
-```
-
-```text
-Tạo reference docs cho CLI command này, giữ nó dễ tra cứu.
-```
-
-Skill cũng có script heuristic để phân loại tín hiệu Diataxis trong tài liệu:
-
-Chạy lệnh từ thư mục của skill:
-
-```bash
-bash ./scripts/classify-doc.sh path/to/doc.md
-```
-
-Script này chỉ hỗ trợ chẩn đoán nhanh. Quyết định cuối cùng vẫn nên dựa trên
-reader job và ngữ cảnh tài liệu.
-
-## Cài Đặt
-
-### 1. Dùng CLI (Khuyến nghị)
+## Cài đặt nhanh
 
 ```bash
 npx skills add tronghieu/agent-skills --skill diataxis-writer
 ```
 
-### 2. Cài Đặt Thủ Công (Cho người dùng cơ bản)
+## Ví dụ nhanh
 
-1. **Tải về:** Truy cập thư mục `skills/` trong kho lưu trữ này và tải file `diataxis-writer.zip`.
-2. **Giải nén & Copy:** Giải nén file `diataxis-writer.zip` và copy thư mục `diataxis-writer` vào một trong các vị trí sau:
+```text
+/diataxis-writer Review hướng dẫn getting started này. Hãy tìm các phần bị trộn và đề xuất cấu trúc tutorial, how-to, reference và explanation.
+```
 
-**Cho một dự án cụ thể:**
-Copy thư mục `diataxis-writer` vào `.agents/skills/` hoặc `.claude/skills/` trong thư mục gốc dự án của bạn.
+```text
+/diataxis-writer Chuyển quy trình deploy này thành how-to guide tập trung vào tác vụ. Giữ lại điều kiện tiên quyết, cách kiểm tra và hướng dẫn khôi phục.
+```
 
-**Cài đặt toàn cục (Dùng cho mọi dự án):**
-* **Mac / Linux:** `~/.agents/skills/` hoặc `~/.claude/skills/`
-* **Windows:** `%USERPROFILE%\.agents\skills\` hoặc `%USERPROFILE%\.claude\skills\` (thường là `C:\Users\<Tên_Của_Bạn>`)
+```text
+/diataxis-writer Tạo tài liệu reference dễ quét cho các CLI option, giá trị mặc định, giới hạn và ví dụ này.
+```
+
+```text
+/diataxis-writer Giải thích thiết kế xác thực này cho kỹ sư mới, gồm mental model, tradeoff và hệ quả.
+```
+
+## Vì sao không chỉ bảo chatbot “cải thiện tài liệu”?
+
+Một yêu cầu rộng như vậy có thể làm câu chữ mượt hơn nhưng vẫn để mục đích của trang mơ hồ—hoặc trộn việc dạy người mới, các bước làm việc, dữ kiện tra cứu và lý do vào cùng một chỗ. Skill này bắt đầu từ reader job, đặt một lời hứa chính cho mỗi trang và chỉ ra nội dung cần giữ, chuyển, tách hoặc liên kết. Kết quả là cấu trúc tài liệu, không chỉ là văn phong trau chuốt hơn.
+
+## Skill này dành cho ai
+
+Technical writer, developer advocate, người sở hữu tài liệu, đội product và engineering, knowledge manager và operator đang duy trì tài liệu cho người dùng hoặc nội bộ.
+
+## Khi nào nên dùng
+
+- Tutorial onboarding, bài viết help center và tài liệu quy trình nội bộ
+- How-to guide, runbook, tài liệu cấu hình, migration và troubleshooting
+- Reference cho API, command, policy và configuration
+- Explanation về khái niệm, bối cảnh kiến trúc và lý do thiết kế
+- Audit một trang khó hiểu hoặc tổ chức lại cả bộ tài liệu
+
+## Bốn nhóm Diataxis
+
+| Ý định của người đọc | Loại tài liệu | Lời hứa của trang |
+| --- | --- | --- |
+| Học qua thực hành | Tutorial | Đi theo một lộ trình có hướng dẫn để có năng lực cơ bản. |
+| Hoàn thành một việc | How-to guide | Đạt một kết quả cụ thể. |
+| Tra cứu dữ kiện | Reference | Tìm thông tin chính xác, đầy đủ thật nhanh. |
+| Hiểu bối cảnh | Explanation | Hiểu khái niệm, quyết định và đánh đổi. |
+
+## Cách phân loại và tái cấu trúc
+
+1. Xác định người đọc, mục tiêu trước mắt và lời hứa ngầm của trang.
+2. Phân loại nội dung hiện có theo bốn ý định của người đọc.
+3. Chọn một loại chính cho mỗi trang; nội dung hỗ trợ nên thuộc một trang liên quan hoặc một liên kết ngắn gọn.
+4. Giữ, chuyển, tách hoặc viết lại các phần bị trộn, rồi liên kết các trang kết quả để người đọc đi được giữa học, làm, tra cứu và hiểu.
+5. Kiểm tra title, phần mở đầu, cấu trúc và độ sâu có thực hiện đúng reader job đã hứa hay không.
+
+Xem pattern và template chi tiết tại [Diataxis patterns](./references/diataxis-patterns.md).
+
+## Bạn cần cung cấp gì và sẽ nhận được gì
+
+Hãy đưa tài liệu hoặc bộ tài liệu, độc giả mục tiêu, bối cảnh sản phẩm hoặc quy trình và kết quả mong muốn. Ví dụ hiện có, câu hỏi support và dữ liệu tìm kiếm có thể giúp ích.
+
+Bạn sẽ nhận được phân loại, các phát hiện theo section về nội dung lẫn mục đích, kiến trúc thông tin mục tiêu, cùng kế hoạch viết lại cụ thể hoặc nội dung đã viết lại. Bản review cũng có checklist kiểm tra.
+
+## Skill bổ trợ
+
+- Dùng [Deep Reader](../deep-reader/README.vi.md) **trước skill này** khi bộ tài liệu lớn hoặc dày cần được đọc kỹ và có thể truy nguyên; nó tạo nền tảng hiểu nguồn mà việc tái cấu trúc cần có.
+- Dùng [Critical Thinking](../critical-thinking/README.vi.md) khi tài liệu đưa ra claim hoặc khuyến nghị quan trọng; skill này kiểm tra bằng chứng và lập luận, còn Diataxis tổ chức trải nghiệm người đọc.
+- Dùng [System Prompt Creator](../system-prompt-creator/README.vi.md) khi quy trình làm tài liệu cần trở thành hành vi lặp lại trong sản phẩm LLM; nó chuyển workflow và guardrail mong muốn thành system prompt có thể kiểm thử.
+
+## Giới hạn
+
+Diataxis phù hợp khi tài liệu có nhiệm vụ giúp con người học, làm, tra cứu hoặc hiểu. Đây không phải định dạng phổ quát cho marketing copy, sales proposal, legal contract, press release, fiction hoặc nội dung đặt thuyết phục lên hàng đầu. Một trang có thể dùng thông tin từ nhiều loại, nhưng vẫn nên có một reader job chính.

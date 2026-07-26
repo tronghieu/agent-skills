@@ -1,65 +1,64 @@
-# CV Scorer Skill
+# CV Scorer
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Languages:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
-This skill evaluates candidate CVs (resumes) against a specific Job Description (JD) and provides a structured score out of 100 with clear hiring recommendations.
+Compare one or more CVs with a job description (JD) through a visible 100-point rubric—decision support for a human reviewer, never a hiring decision-maker.
 
-## What is CV Scorer?
-
-CV Scorer is an intelligent resume screening tool. Instead of manually reading dozens of resumes to find a match, you can feed a Job Description and one or more CVs to the AI. It will analyze the candidate's experience, skills, and qualifications, and output an objective score based on how well they fit the role.
-
-## Why Use It?
-
-- **Saves Time**: Quickly filter through piles of applications.
-- **Objective Evaluation**: Uses a consistent, unbiased scoring rubric for all candidates.
-- **Finds Red Flags**: Automatically flags potential issues such as unexplained career gaps, exaggerated metrics, or repetitive content.
-- **Actionable Recommendations**: Categorizes candidates into *Recommend* (interview), *Maybe* (keep on hold), or *Pass* (not a fit).
-- **Supports Batch Processing**: Feed multiple CVs to get a ranked list of the best candidates from highest to lowest score.
-
-## How It Works
-
-1. **Provide Inputs**: You input the **Job Description (JD)** and one or more **CVs** (text, Markdown, or PDF format).
-2. **Analysis**: The AI extracts key requirements (must-have vs. nice-to-have skills, experience levels, education) from the JD.
-3. **Scoring**: The AI rates the CV out of 100 points based on 5 criteria:
-   - **Job Matching (30 pts)**: Alignment of core skills and tools.
-   - **Work Experience (25 pts)**: Relevancy of background and seniority.
-   - **Project & Impact (15 pts)**: Concrete achievements and metrics.
-   - **Education & Certifications (15 pts)**: Relevant degrees or credentials.
-   - **CV Quality (15 pts)**: Formatting, clarity, and professionalism.
-4. **Recommendation**: Gives a direct verdict (Recommend: $\ge 70$, Maybe: $50-69$, Pass: $< 50$).
-
-## How to Trigger
-
-Ask your AI agent tasks like:
-
-```text
-Score these candidate resumes against this job description.
-```
-
-```text
-Screen this CV and highlight any red flags.
-```
-
-```text
-Rate the following candidates for the Software Engineer role and rank them.
-```
-
-## Installation
-
-### 1. Using CLI (Recommended)
+## Install
 
 ```bash
 npx skills add tronghieu/agent-skills --skill cv-scorer
 ```
 
-### 2. Manual Installation (For Non-Technical Users)
+## Try it
 
-1. **Download:** Go to the `skills/` folder in this repository and download `cv-scorer.zip`.
-2. **Extract & Copy:** Extract `cv-scorer.zip` and copy the `cv-scorer` folder into one of the following directories:
+```text
+/cv-scorer Score this CV against the attached Senior Backend Engineer JD.
 
-**For a Specific Project:**
-Copy the `cv-scorer` folder to `.agents/skills/` or `.claude/skills/` in your project's root directory.
+/cv-scorer Compare these five CVs with this Product Manager JD, then rank them.
 
-**Globally (Available for all projects):**
-* **Mac / Linux:** `~/.agents/skills/` or `~/.claude/skills/`
-* **Windows:** `%USERPROFILE%\.agents\skills\` or `%USERPROFILE%\.claude\skills\` (usually `C:\Users\<YourUsername>`)
+/cv-scorer Review this Data Analyst CV against the JD. Show missing must-haves and facts to verify.
+
+/cv-scorer Score these marketing candidates for this role; apply the same rubric to every CV.
+```
+
+Unlike an ordinary chatbot response, CV Scorer makes the criteria, weights, evidence comments, and recommendation label visible so a reviewer can inspect and challenge the result.
+
+## Who it helps
+
+Recruiters, hiring managers, and small hiring teams can use it for a structured first-pass review, a consistent batch comparison, or preparing questions about missing and contradictory information. It is not a substitute for interviews, reference checks, or an employer's hiring process.
+
+## How scoring works
+
+The skill first extracts the JD's must-haves, nice-to-haves, experience, education, and special requirements. It then compares those requirements with facts stated in each CV; it should avoid filling gaps with assumptions. Each criterion receives a 1–10 score and is weighted into a total out of 100.
+
+| Criterion | Weight | Maximum |
+| --- | ---: | ---: |
+| JD matching | ×3 | 30 |
+| Work experience | ×2.5 | 25 |
+| Project and impact | ×1.5 | 15 |
+| Education | ×1.5 | 15 |
+| CV quality | ×1.5 | 15 |
+
+The detailed bands cover JD coverage, relevance and progression, credible project metrics, education or credentials, and CV structure and consistency. Read the complete [scoring rubric](./references/scoring-rubric.md) when you need the exact bands or deductions.
+
+The default labels are **Recommend** (70+), **Maybe** (50–69), and **Pass** (under 50). They are prompts for human review—not automatic interview, rejection, or employment decisions.
+
+## Inputs and results
+
+Provide a complete JD and one or more CVs in text, Markdown, or PDF. The response follows the [output format](./references/output-format.md): a JSON score breakdown, comments for every criterion, summary, highlights, and possible red flags. With several CVs, it scores each independently first, then returns a highest-to-lowest batch ranking. Responses match your language.
+
+Treat a red flag, missing detail, or apparent contradiction as a question to verify, not a finding of dishonesty. Review the cited CV facts behind every score, especially candidates near a threshold.
+
+## Complementary skills
+
+- Use [Critical Thinking](../critical-thinking/README.md) when you need to audit the reasoning in a hiring memo, policy, or recommendation; it separates claims, evidence, assumptions, and gaps with findings anchored to source text.
+- Use [Deep Reader](../deep-reader/README.md) for a long hiring policy, portfolio, or supporting document (roughly 50+ pages); its multi-pass notes keep a large document traceable before you rely on it in a review.
+
+## Limits and responsible use
+
+- The same rubric applied consistently does **not** make a score objective or unbiased, and a CV cannot establish future job performance.
+- Do not infer or evaluate protected or sensitive attributes—such as age, gender, ethnicity, disability, religion, or other personal factors unrelated to the job.
+- Do not reject a candidate solely from a generated score or ranking. A qualified human must review the evidence and make the decision.
+- CVs are incomplete, self-reported records; verify material claims through appropriate, lawful hiring steps.
+- Follow applicable employment law, privacy obligations, and your organization's policy, including any required documentation or additional review.

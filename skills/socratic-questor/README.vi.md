@@ -1,63 +1,73 @@
-# Skill Đối Thoại Socrates (Socratic Questor - Gadfly)
+# Socratic Questor
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
-Skill này kích hoạt một người bạn đồng hành học tập đặc biệt mang tên **Gadfly**, giúp bạn thấu hiểu bất kỳ chủ đề nào bằng cách đặt câu hỏi thay vì giải thích trực tiếp.
+Học bằng cách suy nghĩ thành lời cùng Gadfly, người bạn đối thoại Socrates giúp bạn tự khám phá và kiểm tra ý tưởng qua câu hỏi thay vì bài giảng.
 
-## Socratic Questor (Gadfly) là gì?
-
-Gadfly được đặt tên theo cách Socrates tự ví mình là "con ruồi trâu của thành Athens" — kẻ liên tục "chích" vào tư duy của mọi người để bắt họ phải suy nghĩ. Thay vì để bạn đọc thông tin một cách thụ động, Gadfly sẽ dẫn dắt bạn tự khám phá kiến thức và làm chủ chủ đề thông qua một chuỗi câu hỏi có cấu trúc.
-
-## Tại sao nên sử dụng?
-
-- **Học tập chủ động (Active Learning)**: Bạn sẽ nhớ lâu và hiểu sâu hơn gấp nhiều lần khi phải tự tìm kiếm câu trả lời và diễn đạt nó bằng ngôn ngữ của chính mình.
-- **Đào sâu bản chất**: Giúp bạn bóc tách những giả định ngầm hiểu, xem xét các bằng chứng thực tế, nhìn nhận dưới nhiều góc độ và hiểu rõ hệ quả của các lập luận.
-- **Tự động điều chỉnh theo trình độ**: Dựa vào câu trả lời của bạn, Gadfly sẽ tự động điều chỉnh độ khó của câu hỏi. Học sinh mới bắt đầu hay chuyên gia đều sẽ nhận được những thử thách tư duy phù hợp.
-- **Rèn luyện tư duy phản biện**: Giúp bạn học cách lập luận logic, chặt chẽ để bảo vệ hoặc điều chỉnh quan điểm của mình.
-- **Hỗ trợ thông minh**: Khi bạn gặp khó khăn, Gadfly sẽ chia nhỏ câu hỏi thành các phần dễ hơn hoặc đưa ra các ví dụ trực quan, nhưng tuyệt đối **không bao giờ** đưa ra đáp án trực tiếp để bảo vệ "hợp đồng Socratic".
-
-## Cách hoạt động
-
-Gadfly dẫn dắt cuộc đối thoại thông qua Khung câu hỏi Socrates gồm 6 bước:
-1. **Làm rõ (Clarification)**: Tìm hiểu những gì bạn đã biết và cách bạn định nghĩa các khái niệm cốt lõi.
-2. **Giả định (Assumptions)**: Kiểm tra các giả định ngầm hiểu đằng sau suy nghĩ của bạn.
-3. **Bằng chứng (Evidence)**: Yêu cầu đưa ra lý do, dẫn chứng hoặc ví dụ cụ thể để củng cố luận điểm.
-4. **Góc nhìn (Perspectives)**: Thử thách bạn nhìn nhận vấn đề từ các quan điểm trái chiều hoặc thay thế.
-5. **Hệ quả (Implications)**: Khám phá những kết luận logic hoặc hệ quả rút ra từ câu trả lời của bạn.
-6. **Siêu câu hỏi (Meta-questions)**: Nhìn lại toàn bộ cuộc thảo luận để tự đánh giá tư duy của mình đã thay đổi ra sao.
-
-## Cách kích hoạt
-
-Yêu cầu AI thực hiện các tác vụ như:
-
-```text
-Dạy tôi về thuyết tương đối bằng phương pháp Socrates.
-```
-
-```text
-Giúp tôi hiểu sâu về cách hoạt động của thị trường chứng khoán.
-```
-
-```text
-Hãy đóng vai Gadfly và đặt câu hỏi để kiểm tra hiểu biết của tôi về lập trình hướng đối tượng.
-```
-
-## Cài Đặt
-
-### 1. Dùng CLI (Khuyến nghị)
+## Cài đặt
 
 ```bash
 npx skills add tronghieu/agent-skills --skill socratic-questor
 ```
 
-### 2. Cài Đặt Thủ Công (Cho người dùng cơ bản)
+## Bắt đầu đối thoại
 
-1. **Tải về:** Truy cập thư mục `skills/` trong kho lưu trữ này và tải file `socratic-questor.zip`.
-2. **Giải nén & Copy:** Giải nén file `socratic-questor.zip` và copy thư mục `socratic-questor` vào một trong các vị trí sau:
+```text
+/socratic-questor Giúp tôi hiểu chi phí cơ hội thông qua câu hỏi.
+/socratic-questor Kiểm tra tôi về lập luận trong bài viết này: [dán văn bản].
+/socratic-questor Tôi cho rằng làm việc từ xa tăng năng suất. Hãy phản biện lập luận của tôi.
+/socratic-questor Hãy hỏi tôi cho đến khi tôi có thể tự giải thích quang hợp.
+```
 
-**Cho một dự án cụ thể:**
-Copy thư mục `socratic-questor` vào `.agents/skills/` hoặc `.claude/skills/` trong thư mục gốc dự án của bạn.
+## Vì sao không dùng chatbot thông thường?
 
-**Cài đặt toàn cục (Dùng cho mọi dự án):**
-* **Mac / Linux:** `~/.agents/skills/` hoặc `~/.claude/skills/`
-* **Windows:** `%USERPROFILE%\.agents\skills\` hoặc `%USERPROFILE%\.claude\skills\` (thường là `C:\Users\<Tên_Của_Bạn>`)
+Chatbot thông thường thường đưa ra một câu trả lời trau chuốt để bạn tiếp nhận. Gadfly làm rõ mô hình hiểu biết hiện tại của bạn, rồi kiểm tra giả định, bằng chứng, góc nhìn khác và hệ quả của nó. Bạn được luyện lập luận—không chỉ nhận thêm một lời giải thích để ghi nhớ.
+
+## Dành cho ai và dùng khi nào
+
+Hãy dùng Socratic Questor nếu bạn là học sinh, người tự học, giáo viên, mentor hoặc chuyên gia muốn xem xét sự hiểu biết của mình qua đối thoại. Skill đặc biệt hữu ích khi bạn muốn:
+
+- học một khái niệm bằng cách tự diễn đạt;
+- kiểm tra xem mình có thể giải thích chủ đề hoặc văn bản nguồn bằng lời của chính mình không;
+- thách thức một nhận định trước khi quyết định dựa vào nó; hoặc
+- khám phá giả định, bằng chứng, quan điểm cạnh tranh và hệ quả.
+
+## Phương pháp đặt câu hỏi
+
+Gadfly theo khung đặt câu hỏi Socrates của Paul & Elder như một phễu linh hoạt:
+
+```text
+Làm rõ → Giả định → Bằng chứng → Góc nhìn → Hệ quả → Siêu phản tư
+```
+
+Phiên đối thoại luôn bắt đầu bằng bước làm rõ để Gadfly nghe cách bạn đóng khung vấn đề. Sau đó, Gadfly theo điều câu trả lời của bạn gợi ra: câu trả lời mơ hồ cần làm rõ thêm; nhận định thiếu căn cứ cần xem xét bằng chứng; lập luận một chiều cần thêm góc nhìn. Trình tự là la bàn, không phải kịch bản. Xem [khung câu hỏi chi tiết](./references/questioning-framework.md).
+
+## Trải nghiệm học tập diễn ra thế nào
+
+Gadfly thân thiện, tò mò và hơi khiêu khích—persona này được đặt theo “con ruồi trâu của Athens” của Socrates. Gadfly ghi nhận ngắn gọn một ý hay, rồi hỏi một hoặc hai câu hỏi thực sự và cho bạn không gian trả lời. Gadfly dùng cùng ngôn ngữ với bạn.
+
+Đối thoại liên tục điều chỉnh theo chất lượng từng câu trả lời:
+
+- **Mới với chủ đề:** làm rõ chậm hơn, câu hỏi nhỏ hoặc cụ thể hơn, và nhiều giàn giáo hơn.
+- **Đã có nền tảng:** phản biện nhẹ nhàng, chú ý kỹ hơn đến giả định và bằng chứng.
+- **Nền tảng vững:** nhanh hơn đến phản biện đối lập, hệ quả và phản tư về lập luận.
+
+Khi bạn mắc kẹt, Gadfly thu hẹp hoặc diễn đạt lại câu hỏi, hoặc dùng tình huống hay phép tương tự cụ thể. Gadfly vẫn không đưa ra đáp án; điều đó giữ nguyên cam kết học bằng tự khám phá.
+
+## Bạn mang đến; bạn sẽ nhận được
+
+| Bạn mang đến | Bạn sẽ nhận được |
+| --- | --- |
+| Một chủ đề để khám phá, như khái niệm, quyết định hoặc nhận định | Chuỗi câu hỏi có nhịp độ phù hợp, mỗi lượt một hoặc hai câu |
+| Hoặc văn bản/tài liệu bạn muốn hiểu | Ghi nhận ngắn gọn rồi các câu hỏi đào sâu dựa trên câu trả lời của bạn |
+| Câu trả lời trung thực, kể cả chưa hoàn chỉnh | Câu hỏi được điều chỉnh theo lập luận bạn thể hiện, không theo nhãn bạn tự nhận |
+
+## Skills bổ trợ
+
+- Dùng [Critical Thinking](../critical-thinking/README.vi.md) khi cần đánh giá có cấu trúc một lập luận sau đối thoại; skill này giúp biến các nhận định và bằng chứng đã lộ ra thành đánh giá có chủ đích.
+- Dùng [Deep Reader](../deep-reader/README.vi.md) khi tài liệu đầu vào là sách hoặc bài báo dài; skill này cung cấp quy trình đọc có hệ thống trước hoặc song song với thảo luận Socrates.
+- Dùng [Diataxis Writer](../diataxis-writer/README.vi.md) khi muốn biến điều đã học thành tài liệu rõ ràng; skill này tách hướng dẫn học, hướng dẫn làm việc, tham chiếu và giải thích theo đúng người đọc.
+
+## Giới hạn
+
+Gadfly dạy bằng câu hỏi, không phải diễn giải trực tiếp. Đây không phải lựa chọn phù hợp khi bạn cần ngay một dữ kiện, lời giải mẫu hoặc kiểm chứng sự thật. Hãy xem các nhận định xuất hiện trong đối thoại là điểm khởi đầu để kiểm tra thêm, nhất là trong bối cảnh quan trọng.

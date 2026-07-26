@@ -1,94 +1,96 @@
 # Critical Thinking
 
-**Language / Ngôn ngữ / 语言:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
+**Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
-Vừa là người soi lập luận, vừa là huấn luyện viên tư duy: đưa cho nó bất kỳ bản memo, đề xuất, hay bản phân tích nào, nó sẽ chỉ thẳng ra câu nào không đứng vững — và đảm bảo dùng nó xong bạn tư duy sắc hơn, chứ không phải lệ thuộc hơn.
-
-## Vì Sao Skill Này Tồn Tại
-
-Mọi memo, slide pitch, hay bản phân tích đầu tư đến tay bạn đều được viết để nghe có vẻ chắc chắn. Sự tự tin thì rẻ — một tài liệu có thể vừa sai vừa được trau chuốt mượt mà, mà bạn thì hiếm khi có vài giờ để lần lại từng bước lập luận trước khi duyệt ngân sách, ký hợp đồng, hay trình lên cấp trên. Phần lớn thời gian bạn quyết định dựa trên cảm giác và niềm tin vào người viết — điều đó ổn, cho đến khi nó không ổn nữa.
-
-Cách xử lý dễ nghĩ tới — "hỏi AI xem cái này có ổn không" — lại có một cái giá âm thầm. Hai nghiên cứu độc lập (một nghiên cứu năm 2025 của Microsoft/CHI về nhân viên tri thức, và một nghiên cứu riêng của Gerlich cùng năm) đều cho ra cùng một kết quả: càng dựa vào AI để tư duy hộ mình, khả năng phán đoán tự thân càng yếu đi theo thời gian. Một công cụ chỉ đưa ra phán quyết sẽ huấn luyện bạn ngừng tự hình thành phán đoán của chính mình. Skill này được xây để bạn có được lượt kiểm tra đó mà không phải trả cái giá ấy — nó hỏi ý kiến của bạn trước khi để lộ ý kiến của nó, để mỗi phiên làm việc là một bài tập cho khả năng phán đoán của bạn, chứ không phải thứ thay thế nó.
-
-## Bạn Có Thể Yêu Cầu Gì
-
-**Soi nhanh** — tài liệu vừa tới tay và bạn cần một cái nhìn trong vài phút, không phải cả giờ.
-> "Nhà cung cấp gửi đề xuất này một tiếng trước cuộc họp ngân sách — cho tôi 3 vấn đề lớn nhất trước khi tôi vào họp."
-> "Cái pitch hợp tác này có đáng gọi điện theo đuổi tiếp không, hay đầy lỗ hổng?"
-
-**Soi sâu** — quyết định đủ lớn để xứng đáng một lượt xem xét thật kỹ.
-> "Hội đồng quản trị bỏ phiếu cho kế hoạch mở rộng 2 triệu đô này tuần sau. Soi kỹ giúp tôi trước khi tôi trình lên họ."
-> "Đội tôi mất ba tuần làm bản case gia nhập thị trường này. Trước khi tôi ký duyệt, cho tôi biết cái gì thực sự chắc chắn và cái gì chỉ là mong muốn."
-
-**Soi lại chính bản nháp của mình** — trước khi gửi cho một người đọc khó tính, để nó củng cố lập luận thay vì chỉ khen.
-> "Mai tôi gửi cái này cho CFO, mà bà ấy sẽ phản biện gắt lắm. Bà ấy sẽ tấn công điểm nào trước?"
-> "Soi bản đề xuất này trước khi đội điều hành thấy nó — và xem tôi đã định nghĩa rõ khi nào thì nên dừng lại chưa."
-
-**Xem lại tiến bộ tư duy** — kiểm tra xem khả năng phán đoán của bạn đang phát triển ra sao theo thời gian.
-> "Tư duy của tôi mấy tháng qua đang đi theo hướng nào? Tôi hay bỏ sót điều gì nhất?"
-
-Skill hoạt động y hệt vậy dù bạn dùng tiếng Việt, tiếng Anh, tiếng Tây Ban Nha, tiếng Trung, tiếng Nhật, tiếng Pháp, hay bất kỳ ngôn ngữ nào — không cần dịch trước bất cứ thứ gì.
-
-## Một Phiên Làm Việc Trông Như Thế Nào
-
-Bạn đưa vào một bản memo — chẳng hạn một đề xuất mở rộng khu vực — và nói qua chuyện gì đang phụ thuộc vào nó: bạn phải đề xuất đồng ý hay không với sếp trước thứ Sáu.
-
-Trước khi nói bất cứ điều gì về tài liệu, nó hỏi bạn hai câu nhanh: lập luận cốt lõi có đứng vững không, bạn tự tin bao nhiêu phần trăm, và theo bạn điểm yếu nhất là gì? Bạn có thể trả lời trong một hai câu, hoặc chỉ cần nói "bỏ qua, tôi đang gấp" — cách nào cũng được, và việc bỏ qua được ghi nhận trung thực chứ không âm thầm lờ đi.
-
-Sau đó bản soi lập luận xuất hiện, phần kết luận đưa ra trước tiên: cái gì đứng vững, cái gì không, và chính xác vấn đề nằm ở câu nào. Nếu bạn đã trả lời hai câu hỏi lúc đầu, nó sẽ cho bạn thấy bạn tự bắt được gì và bỏ sót gì — không chấm điểm, không khen "làm tốt lắm", chỉ là khoảng cách trung thực giữa cái bạn thấy và cái nó thấy. Chính khoảng cách đó là nơi bạn thực sự tiến bộ.
-
-Qua nhiều tuần, nó giữ một file riêng — cứ coi như phòng tập tư duy của riêng bạn — âm thầm theo dõi những kiểu điều bạn hay bỏ sót (giả định không nói ra? dữ liệu chọn lọc có lợi?) và xem độ tự tin bạn tự nhận có khớp với thực tế hay không. Hỏi "tư duy của tôi đang đi thế nào" bất cứ lúc nào, nó sẽ đọc lại file đó cho bạn một cách thẳng thắn, kể cả khi câu trả lời trung thực là "dữ liệu còn quá ít để nói chắc."
-
-## Một Ví Dụ Cụ Thể
-
-> **Bạn:** Đây là bản đề xuất 5 trang của một nhà cung cấp, đòi quyền phân phối độc quyền để đổi lấy việc miễn phí thiết lập. Tôi phải quyết định trước thứ Năm.
->
-> **Agent:** Trước khi tôi soi vào — bạn tự đánh giá thế nào? Lập luận này có đứng vững không, bạn tự tin khoảng bao nhiêu phần trăm, và điểm nào theo bạn là yếu nhất? Nếu đang gấp thì bỏ qua cũng được.
->
-> **Bạn:** Tôi tự tin khoảng 70% là ổn. Điểm yếu nhất chắc là điều khoản độc quyền — cảm giác đánh đổi hơi nhiều chỉ để được miễn phí thiết lập.
->
-> **Agent:** Rõ rồi, tôi ghi lại. Đây là bản soi lập luận — kết luận trước: phần tính toán miễn phí thiết lập thì ổn, nhưng có hai luận điểm khác không đứng vững, và có một giả định ngầm mà không ai nói ra.
->
-> *(bản soi đầy đủ theo sau — mỗi phát hiện đều gắn với đúng câu nó đang nói tới)*
->
-> **Agent:** Bạn đã bắt được điều khoản độc quyền — bản soi cũng đánh giá đó là rủi ro lớn nhất. Còn cái bạn chưa bắt được: tuyên bố "giao hàng nhanh hơn 20%" của nhà cung cấp không có số liệu nào chứng minh trong toàn bộ đề xuất, và cả bản đề xuất ngầm giả định nhà cung cấp hiện tại của bạn không thể đáp ứng được điều khoản này tương đương — mà chưa ai kiểm tra điều đó cả.
-
-## Điều Khiến Nó Đáng Tin
-
-**Mọi phát hiện đều trỏ về đúng một câu trích dẫn.** Không có kiểu "lập luận ở đây yếu" mà không chỉ ra câu nào đang nói tới. Nếu nó không chỉ được vào đúng chữ, đó không phải là một phát hiện — nó không được xuất hiện trong báo cáo.
-
-**Nó thừa nhận cái nó không đánh giá được.** Có những tuyên bố cần dữ liệu chuyên ngành hoặc kiến thức chuyên môn mà người soi không có — một con số benchmark ngành cụ thể, một thông số kỹ thuật nó không kiểm chứng được. Thay vì đoán rồi khoác cho cái đoán đó vẻ ngoài của phân tích, nó nói thẳng: cái này cần kiểm tra thật, đây là chỗ nên đi tìm.
-
-**Nó tách bạch "sai" khỏi "tôi không đồng ý".** Một kết luận có thể được lập luận tốt mà bạn vẫn muốn phản đối — đó là hai vấn đề khác nhau, và bản soi gắn nhãn chúng khác nhau, thay vì khoác một ý kiến cá nhân thành lỗi logic.
-
-**Khi soi lại chính bản nháp của bạn, nó củng cố chứ không đập phá.** Nó nêu trước những gì đang vững về mặt cấu trúc, phác ra cách sửa cho từng lỗ hổng thay vì chỉ gọi tên nó, và kiểm tra xem kế hoạch của bạn có các điểm quyết định thật sự không — tiêu chí đi tiếp/dừng lại rõ ràng, điều kiện để bạn rút lui — vì đó thường là thứ rẻ nhất mà một đề xuất vốn đã mạnh còn thiếu.
-
-Trong kiểm tra mù đối đầu trực tiếp trên bốn kịch bản thực tế — soi một bản memo mở rộng được cài sẵn lỗi (số liệu hoàn vốn mâu thuẫn nhau, kết quả pilot chọn lọc có lợi, một câu nói giảm âm thầm biến thành khẳng định chắc nịch giữa bài), soi lại bản nháp gửi HĐQT của chính CEO, và hai bài test về kỷ luật phán đoán — một AI dùng skill này đạt 25 trên 26 tiêu chí chất lượng. Cùng một AI đó nhưng không dùng skill chỉ đạt 12 trên 26, và lỗi ổn định nhất của nó chính là lỗi quan trọng nhất: lần nào nó cũng đổ ngay toàn bộ phân tích ra, thay vì để người đọc tự tư duy trước.
-
-## Bắt Đầu
-
-Cài đặt một lần:
+Kiểm tra lập luận trong memo, đề xuất, bản phân tích, bài viết hoặc bản nháp—và rèn khả năng tự phán đoán thay vì giao phán đoán cho AI.
 
 ```bash
 npx skills add tronghieu/agent-skills --skill critical-thinking
 ```
 
-Sau đó chỉ cần đưa tài liệu cho AI agent của bạn và nói qua chuyện gì đang phụ thuộc vào nó:
+## Bắt đầu nhanh
+
+Gửi toàn bộ văn bản hoặc lập luận khi có thể và nêu quyết định mà nó cần hỗ trợ. Bắt đầu với một trong các prompt sau:
 
 ```text
-Soi giúp tôi đề xuất của nhà cung cấp này trước cuộc họp 2 giờ chiều — chỉ cần vấn đề lớn nhất.
+/critical-thinking Quick-audit đề xuất nhà cung cấp này. Hôm nay chúng tôi phải quyết định có đưa họ vào shortlist không; hãy nêu ba vấn đề có khả năng thay đổi quyết định nhất.
 ```
 
 ```text
-Soi kỹ bản memo mở rộng này giúp tôi. Hội đồng quản trị bỏ phiếu tuần sau.
+/critical-thinking Deep-audit memo đầu tư này. Lập bản đồ các luận điểm chịu tải, kiểm tra warrant và độ tin cậy của nguồn, rồi cho tôi biết bằng chứng nào sẽ bác bỏ khuyến nghị.
 ```
 
 ```text
-Soi bản nháp của tôi trước khi gửi cho đội điều hành — nó sẽ vỡ ở đâu?
+/critical-thinking Review bản nháp cho hội đồng quản trị của tôi. Giữ phần đang vững, đưa cách sửa cụ thể cho mỗi lỗ hổng quan trọng và steelman phản đối mạnh nhất trước khi gửi cho độc giả khó tính.
 ```
 
 ```text
-Give this expansion memo a full audit before I bring it to the board.
+/critical-thinking Tôi đã hoàn thành tám lượt audit. Hãy progress review: loại lỗi lặp lại, độ hiệu chỉnh tự tin, tỷ lệ skip commit và một điều cần chú ý tiếp theo.
 ```
 
-Bạn không cần phải nói "dùng critical thinking" hay giải thích quy trình gì cả — chỉ cần đưa tài liệu vào và hỏi có nên tin nó không là đủ.
+## Vì sao không chỉ hỏi chatbot?
+
+Chatbot thông thường có thể đưa ra một lời phê bình nghe hợp lý. Skill này khiến việc phản biện có thể kiểm tra lại và hữu ích cho việc học:
+
+- Mỗi phát hiện được neo vào câu trích dẫn nguyên văn và vị trí, để bạn kiểm tra audit thay vì tin vào giọng điệu của nó.
+- Skill tách suy luận lỗi khỏi dữ kiện chưa kiểm chứng, giả định ngầm và bất đồng quan điểm trung thực.
+- Skill chỉ xem các luận điểm chịu tải cho kết luận, rồi xếp vấn đề theo tác động lên quyết định.
+- Mặc định, skill hỏi nhận định của bạn trước để audit trở thành phần so sánh và một bài luyện—không phải thứ thay thế phán đoán của bạn.
+
+Bạn vẫn chịu trách nhiệm cho quyết định. Skill là một lượt kiểm tra đối kháng có cấu trúc đối với lập luận đang được trình bày cho bạn.
+
+## Skill này dành cho ai
+
+Dùng skill này khi bạn cần biết một tài liệu thực sự chứng minh được gì, chỉ ngầm giả định điều gì và cần xác minh gì trước khi hành động. Skill phù hợp với người ra quyết định, analyst, consultant, reviewer, founder và người viết đang xử lý memo đầu tư, đề xuất nhà cung cấp, tài liệu hội đồng quản trị, ghi chú chiến lược, bài bình luận hoặc bản nháp của chính mình.
+
+## Mô hình tư duy: văn phong không phải là lập luận
+
+Audit dựng lại lập luận nằm dưới tài liệu thay vì tóm tắt các mục của nó.
+
+1. **Xác định yêu cầu quyết định.** Skill tách quyết định được yêu cầu (ví dụ “duyệt ngân sách”) khỏi niềm tin dùng để biện minh cho quyết định đó (ví dụ “thị trường này sẽ tăng 30%”).
+2. **Tìm luận điểm chịu tải.** Skill nhận diện khoảng 3–7 luận điểm mà nếu sai, kết luận sẽ sụp đổ, và neo từng luận điểm vào nguyên văn.
+3. **Làm lộ cây cầu suy luận.** Với mỗi luận điểm, bản đồ Toulmin ghi grounds (bằng chứng), warrant (vì sao bằng chứng phải ủng hộ luận điểm), qualifier (mức độ khẳng định) và cách xử lý rebuttal (phản ví dụ). Warrant thường bị ẩn chính là nơi nhiều lập luận trau chuốt bị gãy.
+4. **Thử bác bỏ.** Audit nêu giả định ngầm, kiểm tra độ tin cậy của nguồn và các phương án thay thế, chỉ quét ngụy biện hay thiên kiến có neo nguyên văn sau khi đã lập bản đồ, rồi hỏi bằng chứng quan sát được nào sẽ chứng minh kết luận là sai.
+
+Mỗi phát hiện chỉ có một nhãn trung thực:
+
+| Nhãn | Ý nghĩa |
+| --- | --- |
+| `[GAP]` / `[LEAP]` | Thiếu bằng chứng / có bằng chứng nhưng không suy ra được kết luận |
+| `[ASSUME]` / `[CONFLICT]` | Tiền đề ngầm chịu tải / các phát biểu không thể đồng thời đúng |
+| `[FALLACY]` | Một mẫu suy luận được đặt tên và neo vào trích dẫn—không chỉ là điều auditor không thích |
+| `[OPINION]` / `[CANNOT-ASSESS]` | Bất đồng trung thực / luận điểm cần chuyên môn hoặc dữ liệu ngoài |
+
+Deep audit còn xem xét độ rõ ràng, chính xác, cụ thể, liên quan, chiều sâu, độ rộng, logic, tầm quan trọng, tính công bằng và độ tin cậy của nguồn. Các chiều này không bị gộp thành một điểm số dễ gây yên tâm: tài liệu rõ ràng nhưng kết luận không theo từ bằng chứng vẫn là lập luận yếu.
+
+## Một lượt audit diễn ra thế nào
+
+1. **Gửi tài liệu và mức độ quan trọng.** Nêu quyết định mà tài liệu cần hỗ trợ, cùng tệp còn thiếu, thời hạn hoặc rủi ro cần ưu tiên.
+2. **Chọn độ sâu.** Dùng quick audit để sàng lọc, deep audit cho quyết định hệ trọng, hoặc draft review để củng cố bài viết của bạn.
+3. **Cam kết trước (thông thường).** Trước khi thấy audit, nêu nhận định: Lập luận có đứng vững không? Bạn tự tin bao nhiêu? Điểm yếu nhất là gì? Deep audit hỏi thêm một giả định ngầm. Bạn có thể nói `skip` khi đang gấp.
+4. **Nhận audit.** Báo cáo mở đầu bằng kết luận có thể hành động, rồi đến bản đồ lập luận và phát hiện xếp theo mức độ nghiêm trọng, kèm trích dẫn chính xác. Nó cũng nói rõ phần nào chưa được xem xét thay vì giả vờ đầy đủ.
+5. **So sánh và học.** Nếu đã cam kết trước, báo cáo cho thấy điều bạn bắt được, bỏ sót hoặc nghi ngờ không có cơ sở, rồi đối chiếu mức tự tin với kết quả. Dùng lặp lại có thể tạo reasoning profile tùy chọn, ghi nhận mẫu và độ hiệu chỉnh có bằng chứng—không phán xét tính cách.
+
+## Chọn chế độ
+
+| Chế độ | Dùng khi | Bạn nhận được |
+| --- | --- | --- |
+| **Quick audit** | Tài liệu ngắn, rủi ro thấp hoặc thiếu thời gian | Kết luận, khung lập luận và ba vấn đề có khả năng đổi quyết định nhất |
+| **Deep audit** | Quyết định hoặc tài liệu mang tính chịu tải | Bản đồ đầy đủ, giả định, kiểm tra nguồn và ngụy biện, phép thử khả bác, và câu hỏi gửi tác giả |
+| **Draft review** | Tài liệu là do bạn viết | Phần đã vững, cách sửa các lỗi quan trọng, phản đối mạnh nhất và stage-gate hoặc tiêu chí go/no-go còn thiếu |
+| **Progress review** | Bạn đã dùng skill nhiều lần | Cơ cấu audit, loại lỗi lặp lại, độ hiệu chỉnh tự tin và một mục tiêu luyện tập tiếp theo |
+
+## Bạn sẽ nhận được gì
+
+Hãy chờ một kết luận trước, tiếp theo là bản đồ lập luận và các phát hiện được đánh số theo mức độ nghiêm trọng, không theo thứ tự tài liệu. Deep audit có thể bổ sung sổ giả định, đánh giá khả bác, phần “honest corner” tách riêng `[OPINION]` và `[CANNOT-ASSESS]`, cùng câu hỏi để gửi lại tác giả. Draft review thêm hướng sửa và cấu trúc quyết định; progress review chỉ mô tả những mẫu mà hồ sơ đủ chứng minh.
+
+## Skill nên dùng kèm
+
+- Dùng [Market Researcher](../market-researcher/README.vi.md) khi audit gắn `[CANNOT-ASSESS]` cho quy mô thị trường, dữ kiện đối thủ hay một dữ kiện ngoài khác; hãy xác lập dữ kiện trước rồi audit lại lập luận dựa trên chúng.
+- Dùng [Strategy Board](../strategy-board/README.vi.md) khi audit tài liệu cho thấy đây là một lựa chọn chiến lược cấp công ty cần nhiều góc nhìn điều hành và khuyến nghị đầy đủ.
+- Dùng [Design Thinking](../design-thinking/README.vi.md) khi đề xuất nói “người dùng muốn X”; skill này kiểm tra lập luận đã có, còn Design Thinking tìm hiểu người dùng thực sự cần gì.
+- Dùng [Socratic Questor](../socratic-questor/README.vi.md) khi mục tiêu chuyển sang học một chủ đề bằng đối thoại có hướng dẫn thay vì kiểm tra một lập luận cụ thể.
+
+## Giới hạn
+
+Đây là audit các lập luận có trong tài liệu, không phải bảo đảm mọi dữ kiện chuyên ngành đều đúng. Phần thiếu dữ liệu hoặc chuyên môn sẽ được đánh dấu để kiểm chứng thay vì suy đoán. Trích dẫn giúp công việc có thể kiểm tra, không khiến nó không thể sai; quyết định pháp lý, y tế, tài chính, kỹ thuật hoặc quy định hệ trọng vẫn cần chuyên gia phù hợp review.
