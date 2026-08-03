@@ -49,22 +49,36 @@ since it isn't primary reading.
 - **Never below the floor**, whatever the content. If it still won't fit at the floor, the
   slide has too much on it — split it into two, don't shrink past the floor.
 
-- **Don't use fixed `px`/`rem` for slide text.** Both templates are fluid, so use
-  frame-relative units: `clamp(min, vw/vh, max)` for type, `em`/`%`/`vh` for spacing —
-  the `max` is the projection size you pick from the range above. Fixed px only belongs in
-  a fixed-canvas deck that is then scaled (not the default).
+- **Always use fluid `clamp()` for slide text — not fixed `px`, `rem`, or Tailwind size
+  classes** (`text-sm`, `text-lg`, `text-4xl`). Both templates are fluid: `clamp(min,
+  vw/vh, max)` for type, `em`/`%`/`vh` for spacing. The `max` is the projection size you
+  pick from the range above. Fixed `px` only belongs in a fixed-canvas deck that is then
+  scaled (not the default). Tailwind text utilities (`text-base`, `text-xl`, etc.) map to
+  fixed `rem` values, so they don't scale with the viewport — avoid them for slide content.
 - **Acceptance test:** zoom the screen to ~33% (or stand 3–4 m back). If you can still
   read the bullets, it passes — and nothing is clipped at the slide edges.
 
-Two ways to satisfy the floor:
+### Clamp() cheatsheet — copy-paste these
 
-- **Fluid `clamp()`** (both templates' default): size text as `clamp(min, vw/vh, max)`,
-  where the **`max` is the size you chose from the range above** for that role on that
-  slide. E.g. an ordinary body line `clamp(28px, 2.6vw, 44px)`; the same line on a
-  text-heavy slide tightened to `clamp(28px, 2.4vw, 40px)`; a hero headline opened up to
-  `clamp(56px, 6.4vw, 112px)`. The `min` is a small-window fallback, the `max` is the
-  projection size, the middle scales with the viewport. Slides fill the whole screen at
-  any aspect ratio — no letterbox/pillarbox bars. **Best default.**
+Use these as starting points. Tune the `max` per slide (tighten toward floor on dense
+slides; push toward ceiling on sparse/hero slides):
+
+| Role              | Ordinary slide                      | Text-heavy slide                    | Sparse / hero slide                  |
+| ----------------- | ----------------------------------- | ----------------------------------- | ------------------------------------ |
+| Body / bullet     | `clamp(28px, 2.6vw, 44px)`         | `clamp(28px, 2.4vw, 40px)`         | `clamp(28px, 2.8vw, 48px)`          |
+| Subtitle / lead   | `clamp(30px, 2.9vw, 48px)`         | `clamp(30px, 2.7vw, 44px)`         | `clamp(30px, 3.2vw, 56px)`          |
+| Section head (h2) | `clamp(38px, 3.4vw, 60px)`         | `clamp(38px, 3.0vw, 52px)`         | `clamp(38px, 4.0vw, 68px)`          |
+| Main title (h1)   | `clamp(56px, 6.4vw, 104px)`        | `clamp(56px, 5.6vw, 88px)`         | `clamp(56px, 7.5vw, 120px)`         |
+| Caption / slide # | `clamp(22px, 1.9vw, 36px)`         | `clamp(22px, 1.7vw, 32px)`         | `clamp(22px, 2.0vw, 38px)`          |
+
+In JSX, apply via `style={{ fontSize: 'clamp(28px, 2.6vw, 44px)' }}`. In the HTML
+template, use the same value in inline `style` or in `<style>` overrides.
+
+### Two scaling strategies
+
+- **Fluid `clamp()`** (both templates' default): the `max` is the projection size, the
+  `min` is a small-window fallback, the middle scales with the viewport. Slides fill the
+  whole screen at any aspect ratio — no letterbox/pillarbox bars. **Best default.**
 - **Fixed canvas + scale**: size everything in px on a 1920×1080 stage, then
   `transform: scale()` to fit. Sizes are pixel-exact, but the deck letterboxes/pillarboxes
   on any non-16:9 screen (16:10 laptops, ultrawides, resized windows). Use only when you
@@ -88,6 +102,35 @@ Interaction exists to make the slide change visually while the presenter clicks:
 
 Never: text inputs, "Submit/Save", answer collection, scoring, login, or anything that
 assumes storage (DB, an API call, localStorage for someone's answers).
+
+## Safe-area padding (non-negotiable)
+
+Slide content must never touch the viewport edge — it looks unfinished and is hard to read
+when projected. Both scaffolds enforce a padding floor, and you should not override it to
+zero.
+
+| Slide type    | Vertical padding floor            | Horizontal padding floor          |
+| ------------- | --------------------------------- | --------------------------------- |
+| Normal slide  | `clamp(40px, 5vh, 80px)`          | `clamp(48px, 5vw, 120px)`        |
+| Full-bleed    | `clamp(32px, 4vh, 64px)`          | `clamp(40px, 4vw, 96px)`         |
+
+"Full-bleed" means the **background** fills edge-to-edge (for images, gradients, colour
+blocks), but the **text content** still sits inside the safe area. Think of it like a TV's
+safe-area overlay — the picture goes to the edge, the text doesn't.
+
+More padding than the floor is fine. Less is not. If content needs to touch the edge
+(e.g. a full-bleed photo), the photo itself goes edge-to-edge but any text overlay sits
+inside the safe area.
+
+## Content overflow
+
+If a slide has more content than fits (dense bullets, a big table, a long quote), the
+slide's content area scrolls vertically rather than clipping. This is a safety net, not a
+design goal — prefer splitting into two slides when practical. But clipping is worse than
+scrolling, because the presenter silently loses content without realising.
+
+Both scaffolds set `overflow-y: auto` on the content area. The scrollbar is the browser's
+native default — no custom styling.
 
 ## Required chrome on every deck
 

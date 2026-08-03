@@ -100,14 +100,24 @@ const NAV_HEIGHT = 64
 interface SlideProps {
   children: ReactNode
   className?: string
-  /** fullBleed removes the default padding/max-width for edge-to-edge slides. */
+  /**
+   * fullBleed: the slide's background fills edge-to-edge (for images, gradients,
+   * colour blocks), but content still gets safe-area padding so text never hugs
+   * the viewport edge. The padding is smaller than on a normal slide.
+   */
   fullBleed?: boolean
 }
 
 /**
  * Shared slide frame. Fills the viewport above the nav bar and centres content
- * in a readable column. Author content with projection-legible sizes (see the
- * design-system reference): body text never below ~text-3xl on screen.
+ * in a readable column.
+ *
+ * Safe-area padding is always applied — even on fullBleed slides — so content
+ * never touches the viewport edge. Do not override it to zero.
+ *
+ * If content exceeds the slide height, the inner area scrolls vertically
+ * (browser-native scrollbar). Prefer splitting into more slides when practical,
+ * but clipping is worse than scrolling.
  */
 export default function Slide({ children, className = '', fullBleed = false }: SlideProps) {
   return (
@@ -116,8 +126,17 @@ export default function Slide({ children, className = '', fullBleed = false }: S
       style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }}
     >
       <div
-        className={`flex h-full w-full flex-col ${fullBleed ? '' : 'justify-center px-16 py-14'}`}
-        style={{ maxWidth: fullBleed ? '100%' : '1500px', margin: '0 auto' }}
+        className={`flex h-full w-full flex-col ${
+          fullBleed
+            ? 'px-10 py-8'          /* safe-area: smaller but never zero */
+            : 'justify-center px-16 py-14'
+        }`}
+        style={{
+          maxWidth: fullBleed ? '100%' : '1500px',
+          margin: '0 auto',
+          minHeight: 0,
+          overflowY: 'auto',
+        }}
       >
         {children}
       </div>
@@ -239,7 +258,9 @@ import Slide from '../components/Slide'
 export default function TitleSlide() {
   return (
     <Slide fullBleed>
-      <div className="flex h-full flex-col justify-between px-16 py-14">
+      {/* Slide.tsx applies safe-area padding automatically on fullBleed slides.
+          No need to add px-16 py-14 manually — content is already inset. */}
+      <div className="flex h-full flex-col justify-between">
         <div className="flex items-start justify-between">
           <span className="inline-flex items-center rounded-full bg-[#9d62481a] px-6 py-3 text-2xl font-bold text-[#9d6248]">
             DECK · 2026

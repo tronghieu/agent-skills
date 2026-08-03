@@ -23,18 +23,22 @@ design language.
 
 There is **one operator** (the presenter) on **one machine**. Slides go on a big screen;
 the audience only **looks** — they never click, type, or interact. Everything below
-follows from this. Two failure modes to avoid:
+follows from this. Three failure modes to avoid:
 
 - **Text too small.** Slides are read from across a room, not on a laptop. Never use
-  web-reading sizes (`text-sm`, `16px`). Honour the typography floor (body ≥ ~40px on a
-  1080p canvas). See `references/design-system.md`.
+  web-reading sizes (`text-sm`, `16px`) or fixed Tailwind text classes (`text-4xl`).
+  Always use fluid `clamp()` so text scales with the screen. Honour the typography floor
+  (body ≥ ~40px on a 1080p canvas). See `references/design-system.md`.
+- **Content hugging the edge.** Slide content must never touch the viewport edge — it
+  looks unfinished and is hard to read when projected. Both scaffolds enforce safe-area
+  padding; don't override it to zero. Even `fullBleed` slides keep text content inset.
 - **Building an app.** No input fields, no "Submit", no login, no data collection — there
   is no backend and nowhere for data to go. Interaction is only the presenter clicking to
   reveal/advance content. If a component asks "where does this data go?", it's wrong.
 
-`references/design-system.md` is the heart of this skill — the typography floor, allowed
-interaction, layout recipes, motion, and palette. Read it whenever you design or restyle
-slide content.
+`references/design-system.md` is the heart of this skill — the typography floor, safe-area
+padding, content overflow, layout recipes, motion, and palette. Read it whenever you design
+or restyle slide content.
 
 ## Workflow
 

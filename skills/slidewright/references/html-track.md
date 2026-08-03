@@ -20,6 +20,12 @@ speaker-notes file. Open with `open <deck-name>/index.html`.
   on 16:10 laptops, ultrawides, or resized windows. Type scales with `clamp(min, vw/vh,
   max)` so it stays projection-legible; spacing uses `em`/`%`/`vh`. There is nothing to
   scale on resize.
+- **Safe-area padding.** Each `.slide` has `clamp()`-based padding that keeps content away
+  from the viewport edge — do not override it to zero. See `references/design-system.md`
+  for the floor values.
+- **Content scrolling.** Slide content lives inside a `.slide-content` wrapper with
+  `overflow-y: auto`. If content exceeds the slide height, it scrolls rather than clipping.
+  The scrollbar is the browser default.
 - **Slides** are `<section class="slide">` elements inside `#stage`. The first has
   `class="slide active"`. JS shows one at a time and cross-fades.
 - **Navigation** (required) is the bottom `#nav`: prev/next buttons, a generated dot
@@ -37,7 +43,10 @@ speaker-notes file. Open with `open <deck-name>/index.html`.
   for spacing and max-widths. Pick the `max` from each role's range in
   `references/design-system.md` based on how much content the slide holds — tighten toward
   the floor on text-heavy slides so nothing overflows, open up on sparse/hero slides.
-  Never below the floor (body 40px, caption 32px). Don't hard-code fixed px.
+  Never below the floor (body 40px, caption 32px). Don't hard-code fixed px or use
+  Tailwind text size classes (`text-sm`, `text-base`, `text-4xl`) — they don't scale.
+- Do **not** override the `.slide` padding to zero. Content must stay inside the safe area
+  (see `references/design-system.md` "Safe-area padding").
 - Put images in `assets/` and reference them with a relative path (`assets/foo.png`).
 - For a step reveal, give elements `style="opacity:0"` and flip them on a click/keyboard
   handler — but prefer splitting into more slides; it's simpler and more robust.

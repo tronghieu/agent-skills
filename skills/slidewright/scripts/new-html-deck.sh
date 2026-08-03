@@ -63,11 +63,21 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
     #viewport { position:fixed; inset:0 0 64px 0; overflow:hidden; }
     .slide {
       position:absolute; inset:0;
+      /* Safe-area padding — keeps content away from the viewport edge. Do NOT
+         override to zero; content that hugs the edge looks unfinished and is
+         hard to read when projected. See references/design-system.md. */
       padding:clamp(40px,5.5vh,96px) clamp(48px,6.2vw,140px);
       display:none; flex-direction:column;
       opacity:0; transition:opacity .35s ease;
     }
     .slide.active { display:flex; opacity:1; }
+    /* Scrollable content area — if content exceeds the slide height, it scrolls
+       rather than clipping. The scrollbar is the browser's native default. */
+    .slide-content {
+      flex:1; min-height:0;
+      display:flex; flex-direction:column;
+      overflow-y:auto;
+    }
 
     /* Typography — fluid clamp(min, vw/vh, max). These are MID-RANGE defaults; each
        role has a legible range (see references/design-system.md) and the `max` here is
@@ -104,34 +114,43 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
   <div id="viewport">
 
     <!-- ============ SLIDES ============ -->
-    <!-- Each <section class="slide"> is one slide. The first one needs class "active". -->
+    <!-- Each <section class="slide"> is one slide. The first one needs class "active".
+         Wrap slide content in a <div class="slide-content"> so it scrolls if it overflows.
+         Do NOT remove the .slide padding — content must stay inside the safe area. -->
 
-    <section class="slide active" style="justify-content:space-between;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <span style="display:inline-flex; align-items:center; background:rgba(157,98,72,.1); color:var(--accent); font-weight:700; padding:.45em .85em; border-radius:999px; font-size:clamp(20px,1.7vw,32px);">__NAME__</span>
+    <section class="slide active">
+      <div class="slide-content" style="justify-content:space-between;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <span style="display:inline-flex; align-items:center; background:rgba(157,98,72,.1); color:var(--accent); font-weight:700; padding:.45em .85em; border-radius:999px; font-size:clamp(20px,1.7vw,32px);">__NAME__</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:clamp(20px,3vh,40px);">
+          <h1>__TITLE__</h1>
+          <p class="lead" style="max-width:28em;">Thay câu này bằng một dòng dẫn nói rõ bài này nói về điều gì — ngắn, thẳng, như đang nói trên sân khấu.</p>
+        </div>
+        <p class="caption">Tên người trình bày · Vai trò</p>
       </div>
-      <div style="display:flex; flex-direction:column; gap:clamp(20px,3vh,40px);">
-        <h1>__TITLE__</h1>
-        <p class="lead" style="max-width:28em;">Thay câu này bằng một dòng dẫn nói rõ bài này nói về điều gì — ngắn, thẳng, như đang nói trên sân khấu.</p>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content" style="gap:clamp(24px,4vh,52px); justify-content:center;">
+        <h2>Tiêu đề slide nội dung</h2>
+        <ul>
+          <li>Ý chính thứ nhất — ngắn gọn, mỗi dòng một ý.</li>
+          <li>Ý chính thứ hai — dùng visual thật khi cần minh họa.</li>
+          <li>Ý chính thứ ba — tránh nhồi quá nhiều chữ vào một slide.</li>
+        </ul>
       </div>
-      <p class="caption">Tên người trình bày · Vai trò</p>
     </section>
 
-    <section class="slide" style="gap:clamp(24px,4vh,52px); justify-content:center;">
-      <h2>Tiêu đề slide nội dung</h2>
-      <ul>
-        <li>Ý chính thứ nhất — ngắn gọn, mỗi dòng một ý.</li>
-        <li>Ý chính thứ hai — dùng visual thật khi cần minh họa.</li>
-        <li>Ý chính thứ ba — tránh nhồi quá nhiều chữ vào một slide.</li>
-      </ul>
+    <section class="slide">
+      <div class="slide-content" style="align-items:center; justify-content:center; text-align:center;">
+        <h1 style="max-width:16em;">Một câu trích dẫn lớn để nhấn mạnh.</h1>
+        <p class="caption" style="margin-top:1em;">— Nguồn trích dẫn</p>
+      </div>
     </section>
 
-    <section class="slide" style="align-items:center; justify-content:center; text-align:center;">
-      <h1 style="max-width:16em;">Một câu trích dẫn lớn để nhấn mạnh.</h1>
-      <p class="caption" style="margin-top:1em;">— Nguồn trích dẫn</p>
-    </section>
-
-    <!-- Copy a <section class="slide"> block above to add more slides. -->
+    <!-- Copy a <section class="slide"> block above to add more slides.
+         Always include the <div class="slide-content"> wrapper inside. -->
     <!-- ============ /SLIDES ============ -->
 
   </div>

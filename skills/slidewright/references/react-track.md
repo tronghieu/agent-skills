@@ -39,8 +39,14 @@ src/
 
 - **`Deck`** owns all navigation and the required bottom slider + slide number. You
   rarely edit it; it reads `slides` from `src/slides/index.ts`.
-- **`Slide`** is the frame every slide renders inside. Use `fullBleed` for edge-to-edge
-  layouts (title, full image); omit it for the default centred, padded column.
+- **`Slide`** is the frame every slide renders inside. It always applies safe-area
+  padding so content never touches the viewport edge. Use `fullBleed` for slides where
+  the **background** goes edge-to-edge (title, full image, colour block) — the background
+  fills the frame, but text content still has a smaller safe-area inset. Without
+  `fullBleed`, the slide uses a wider padding and a centred, max-width column.
+
+  If content exceeds the slide height, the inner area scrolls vertically (browser-native
+  scrollbar). Prefer splitting into more slides when practical.
 
 ## Adding / reordering slides
 
@@ -53,14 +59,19 @@ the directory reads top-to-bottom.
 
 ## Typography in JSX
 
-Honour the floor (see design-system.md). Two valid approaches:
+Honour the floor (see design-system.md). Always use fluid `clamp()` — not fixed px, rem,
+or Tailwind text size classes (`text-sm`, `text-base`, `text-4xl` — these are fixed rem
+values that don't scale with the viewport).
 
-- Fluid: `style={{ fontSize: 'clamp(56px, 7.5vw, 100px)' }}` for hero headings,
-  `clamp(26px, 2.8vw, 40px)` for leads, `clamp(40px, 4.6vh, 48px)` for body. These land at
-  a comfortable default — push toward the upper bound only for a single hero line.
-- Tailwind utilities are fine, but avoid `text-sm`/`text-base`/`text-lg` for slide
-  content — those are web-reading sizes. Slide body should be around `text-3xl` on screen,
-  headings larger. (The slide-number in `Deck` is the one exception — it's nav chrome.)
+- Hero heading: `style={{ fontSize: 'clamp(56px, 7.5vw, 100px)' }}`
+- Lead / subtitle: `style={{ fontSize: 'clamp(30px, 2.9vw, 48px)' }}`
+- Body text: `style={{ fontSize: 'clamp(28px, 2.6vw, 44px)' }}`
+- Caption: `style={{ fontSize: 'clamp(22px, 1.9vw, 36px)' }}`
+
+See the full clamp() cheatsheet in `references/design-system.md`. Tune the `max` per
+slide — tighten toward the floor on dense slides, push toward the ceiling on sparse ones.
+
+The slide-number in `Deck` is the one exception — it's nav chrome, not slide content.
 
 ## Tailwind wiring (verify against current docs if it ever breaks)
 
