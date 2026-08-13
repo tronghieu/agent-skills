@@ -69,6 +69,9 @@ cat > src/index.css <<'EOF'
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+:root {
+  --surface-inset: clamp(24px, 2.5vw, 48px);
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, #root { width: 100%; height: 100%; overflow: hidden; }
 body {
@@ -79,6 +82,9 @@ body {
 }
 h1, h2, h3 { font-family: 'Outfit', system-ui, sans-serif; }
 button { font: inherit; }
+/* Apply to every content-bearing visible surface: card, panel, callout,
+   bordered box or text overlay. Outer Slide padding and grid gap are separate. */
+.slide-surface { padding: var(--surface-inset); }
 EOF
 
 cat > src/App.tsx <<'EOF'

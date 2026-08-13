@@ -23,6 +23,9 @@ speaker-notes file. Open with `open <deck-name>/index.html`.
 - **Safe-area padding.** Each `.slide` has `clamp()`-based padding that keeps content away
   from the viewport edge — do not override it to zero. See `references/design-system.md`
   for the floor values.
+- **Surface inset.** Use `.slide-surface` on every content-bearing card, panel, callout,
+  bordered box, or text overlay. It supplies responsive padding inside that visible
+  boundary. A slide's safe-area padding and a grid's `gap` do not pad nested surfaces.
 - **Content scrolling.** Slide content lives inside a `.slide-content` wrapper with
   `overflow-y: auto`. If content exceeds the slide height, it scrolls rather than clipping.
   The scrollbar is the browser default.
@@ -46,7 +49,10 @@ speaker-notes file. Open with `open <deck-name>/index.html`.
   Never below the floor (body 40px, caption 32px). Don't hard-code fixed px or use
   Tailwind text size classes (`text-sm`, `text-base`, `text-4xl`) — they don't scale.
 - Do **not** override the `.slide` padding to zero. Content must stay inside the safe area
-  (see `references/design-system.md` "Safe-area padding").
+  (see `references/design-system.md` "Two-layer padding contract").
+- Whenever an element gains a background, border, outline, shadow, rounded surface, or
+  backdrop blur around content, also give it `.slide-surface` (or an equal/larger explicit
+  padding). Do not count sibling `gap`, child margin, or outer slide padding as that inset.
 - Put images in `assets/` and reference them with a relative path (`assets/foo.png`).
 - For a step reveal, give elements `style="opacity:0"` and flip them on a click/keyboard
   handler — but prefer splitting into more slides; it's simpler and more robust.

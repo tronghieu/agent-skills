@@ -103,7 +103,20 @@ Interaction exists to make the slide change visually while the presenter clicks:
 Never: text inputs, "Submit/Save", answer collection, scoring, login, or anything that
 assumes storage (DB, an API call, localStorage for someone's answers).
 
-## Safe-area padding (non-negotiable)
+## Two-layer padding contract (non-negotiable)
+
+Good spacing has two independent layers. Both must pass:
+
+1. **Viewport → slide content:** the projector/browser edge needs a safe area.
+2. **Visible container → its content:** every card, panel, callout, bordered box, tinted
+   region, blurred overlay, or other content-bearing surface needs its own inner inset.
+
+Padding does not inherit through the layout tree. A padded slide can still contain an
+unpadded card, and that card will still look broken. Likewise, `gap` only separates
+siblings and margin only moves an element from its neighbours; neither creates breathing
+room between a container's boundary and its children.
+
+### Layer 1 — viewport safe area
 
 Slide content must never touch the viewport edge — it looks unfinished and is hard to read
 when projected. Both scaffolds enforce a padding floor, and you should not override it to
@@ -121,6 +134,53 @@ safe-area overlay — the picture goes to the edge, the text doesn't.
 More padding than the floor is fine. Less is not. If content needs to touch the edge
 (e.g. a full-bleed photo), the photo itself goes edge-to-edge but any text overlay sits
 inside the safe area.
+
+### Layer 2 — content-surface inset
+
+Treat a visible boundary as a promise of interior space: if an element paints a
+`background`, `border`, `outline`, `box-shadow`, rounded surface, or backdrop blur around
+content, that same element must own non-zero padding on all four sides.
+
+| Surface type | Recommended inset |
+| ------------ | ----------------- |
+| Card, panel, callout, compare column, quote box | `clamp(24px, 2.5vw, 48px)` on all sides |
+| Compact badge, chip, or pill | about `.45em .85em` |
+| Text panel over full-bleed media | `clamp(24px, 2.5vw, 48px)` on all sides |
+
+The scaffolds expose `--surface-inset` and `.slide-surface`. Use the helper on ordinary
+content surfaces, then add the desired colour, border, radius, or shadow:
+
+```html
+<article class="slide-surface rounded-3xl border border-black/10 bg-white/80">
+  <!-- text and icons now have a real inset from every edge -->
+</article>
+```
+
+```tsx
+<article className="slide-surface rounded-3xl border border-black/10 bg-white/80">
+  {/* content */}
+</article>
+```
+
+For a two-column comparison, put `gap` on the grid **and** `.slide-surface` on each
+column. Nested visible surfaces each own their own inset; outer padding never excuses an
+inner surface from having padding.
+
+Intentional exceptions are narrow: an image/video crop, a decorative wrapper that owns
+no text or primary content, or a background layer may touch its box. If text overlays
+that media, place the text in a nested `.slide-surface` rather than directly against the
+media boundary.
+
+### Spacing acceptance test
+
+Inspect every slide at 1920×1080 and one smaller viewport before handoff:
+
+- No text, icon, chart label, or other primary content crosses the viewport safe area.
+- Every content-bearing element with a visible boundary has padding on all four sides.
+- No card relies on grid `gap`, child margin, or the slide's padding as its inner inset.
+- Full-bleed media may reach an edge; any text overlay remains inside a padded surface.
+- Padding remains visible after resizing; it is not cancelled by a local `p-0`,
+  `padding: 0`, negative margin, or absolute positioning.
 
 ## Content overflow
 
@@ -150,7 +210,9 @@ the React track; the plain-HTML template uses equivalent inline styles.)
 one line each; if a bullet wraps twice, split the slide.
 
 **Two-column compare** — `grid grid-cols-2 gap-12`, each column a card
-(`rounded-3xl p-12`). Use for before/after, problem/solution, myth/reality.
+(`slide-surface rounded-3xl`). The grid gap separates the cards; `.slide-surface` keeps
+content away from each card's own boundary. Use for before/after, problem/solution,
+myth/reality.
 
 **Big stat** — one huge number (`clamp(120px,18vw,260px)`) + a short caption. One stat
 per slide; the number is the whole point.
@@ -158,7 +220,7 @@ per slide; the number is the whole point.
 **Quote** — centred, large italic/serif line, attribution as caption below.
 
 **Full-bleed image** — `fullBleed` slide, image `object-cover` filling the frame, text
-in an overlaid panel with a translucent/blurred background for contrast.
+in an overlaid `.slide-surface` panel with a translucent/blurred background for contrast.
 
 ## Motion (React track: Framer Motion)
 

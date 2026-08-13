@@ -47,6 +47,10 @@ src/
 
   If content exceeds the slide height, the inner area scrolls vertically (browser-native
   scrollbar). Prefer splitting into more slides when practical.
+- **`.slide-surface`** is the inner-inset helper for content-bearing cards, panels,
+  callouts, bordered boxes, and text overlays. Apply it to the element that paints the
+  visible boundary. Grid `gap`, child margin, and the outer `Slide` padding do not create
+  space inside that boundary.
 
 ## Adding / reordering slides
 
@@ -70,6 +74,22 @@ values that don't scale with the viewport).
 
 See the full clamp() cheatsheet in `references/design-system.md`. Tune the `max` per
 slide — tighten toward the floor on dense slides, push toward the ceiling on sparse ones.
+
+For content surfaces, combine the scaffold helper with Tailwind styling:
+
+```tsx
+<div className="grid grid-cols-2 gap-12">
+  <article className="slide-surface rounded-3xl border border-black/10 bg-white/80">
+    {/* content */}
+  </article>
+  <article className="slide-surface rounded-3xl border border-black/10 bg-white/80">
+    {/* content */}
+  </article>
+</div>
+```
+
+The grid gap separates columns; each `.slide-surface` independently keeps its children
+away from its own border.
 
 The slide-number in `Deck` is the one exception — it's nav chrome, not slide content.
 

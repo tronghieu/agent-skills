@@ -50,7 +50,12 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    :root { --accent:#9d6248; --ink:#1f2430; --bg:#f8f3e7; --soft:#6d6a66; }
+    :root {
+      --accent:#9d6248; --ink:#1f2430; --bg:#f8f3e7; --soft:#6d6a66;
+      --slide-pad-y:clamp(40px,5.5vh,96px);
+      --slide-pad-x:clamp(48px,6.2vw,140px);
+      --surface-inset:clamp(24px,2.5vw,48px);
+    }
     * { box-sizing:border-box; margin:0; padding:0; }
     html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); }
     body { font-family:'Plus Jakarta Sans', system-ui, sans-serif; color:var(--ink); }
@@ -66,7 +71,7 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
       /* Safe-area padding — keeps content away from the viewport edge. Do NOT
          override to zero; content that hugs the edge looks unfinished and is
          hard to read when projected. See references/design-system.md. */
-      padding:clamp(40px,5.5vh,96px) clamp(48px,6.2vw,140px);
+      padding:var(--slide-pad-y) var(--slide-pad-x);
       display:none; flex-direction:column;
       opacity:0; transition:opacity .35s ease;
     }
@@ -78,10 +83,14 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
       display:flex; flex-direction:column;
       overflow-y:auto;
     }
+    /* Inner inset for every content-bearing visible surface: cards, panels,
+       callouts, bordered boxes and text overlays. Grid gap and slide padding do
+       not create space inside those boundaries. */
+    .slide-surface { padding:var(--surface-inset); }
 
     /* Typography — fluid clamp(min, vw/vh, max). These are MID-RANGE defaults; each
-       role has a legible range (see references/design-system.md) and the `max` here is
-       the projection size. Tune the `max` PER SLIDE, not these globals:
+       role has a legible range (see references/design-system.md) and the max here is
+       the projection size. Tune the max PER SLIDE, not these globals:
          - text-heavy slide  -> lower the max toward the floor so it doesn't overflow
                                  (body floor 40px; caption 32px; never below)
          - sparse/hero slide -> raise the max toward the ceiling for presence.
@@ -116,7 +125,9 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
     <!-- ============ SLIDES ============ -->
     <!-- Each <section class="slide"> is one slide. The first one needs class "active".
          Wrap slide content in a <div class="slide-content"> so it scrolls if it overflows.
-         Do NOT remove the .slide padding — content must stay inside the safe area. -->
+         Do NOT remove the .slide padding — content must stay inside the safe area.
+         Add .slide-surface to any card/panel/bordered content box so its children
+         also stay inset from that box's own edge. -->
 
     <section class="slide active">
       <div class="slide-content" style="justify-content:space-between;">
@@ -134,7 +145,7 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
     <section class="slide">
       <div class="slide-content" style="gap:clamp(24px,4vh,52px); justify-content:center;">
         <h2>Tiêu đề slide nội dung</h2>
-        <ul>
+        <ul class="slide-surface" style="background:rgba(255,255,255,.72); border:1px solid rgba(0,0,0,.08); border-radius:1em;">
           <li>Ý chính thứ nhất — ngắn gọn, mỗi dòng một ý.</li>
           <li>Ý chính thứ hai — dùng visual thật khi cần minh họa.</li>
           <li>Ý chính thứ ba — tránh nhồi quá nhiều chữ vào một slide.</li>

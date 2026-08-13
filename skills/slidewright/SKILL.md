@@ -29,16 +29,19 @@ follows from this. Three failure modes to avoid:
   web-reading sizes (`text-sm`, `16px`) or fixed Tailwind text classes (`text-4xl`).
   Always use fluid `clamp()` so text scales with the screen. Honour the typography floor
   (body ≥ ~40px on a 1080p canvas). See `references/design-system.md`.
-- **Content hugging the edge.** Slide content must never touch the viewport edge — it
-  looks unfinished and is hard to read when projected. Both scaffolds enforce safe-area
-  padding; don't override it to zero. Even `fullBleed` slides keep text content inset.
+- **Content hugging an edge.** Padding is a two-layer contract. Slide content must stay
+  inside the viewport safe area, and content inside a card, panel, callout, bordered box,
+  or other visible container must stay inset from that container's own edge. A parent
+  slide's padding does not protect a nested container; `gap` and child margins are not a
+  substitute for the container's own padding. Both scaffolds provide safe-area padding
+  and a `.slide-surface` inset helper. Even `fullBleed` slides keep text content inset.
 - **Building an app.** No input fields, no "Submit", no login, no data collection — there
   is no backend and nowhere for data to go. Interaction is only the presenter clicking to
   reveal/advance content. If a component asks "where does this data go?", it's wrong.
 
-`references/design-system.md` is the heart of this skill — the typography floor, safe-area
-padding, content overflow, layout recipes, motion, and palette. Read it whenever you design
-or restyle slide content.
+`references/design-system.md` is the heart of this skill — the typography floor, two-layer
+padding contract, content overflow, layout recipes, motion, and palette. Read it whenever
+you design or restyle slide content.
 
 ## Workflow
 
@@ -49,12 +52,19 @@ or restyle slide content.
    small/quick decks and React for substantial, maintained talks.
 3. **Scaffold** with the matching script — don't hand-assemble the boilerplate.
 4. **Build slides** following `references/design-system.md`: one idea per slide, few
-   words, real visuals, projection-legible type, presenter-only interaction.
+   words, real visuals, projection-legible type, presenter-only interaction, and the
+   two-layer padding contract for both viewport and content containers.
 5. **Keep the required chrome:** a visible bottom navigation slider (dot strip) and slide
    number. Both scaffolds include it — don't remove it.
 6. **Write speaker notes** in the `<deck-name>-notes.md` file the scaffold creates (never
    on the slides themselves).
-7. **Export to PDF** if asked — see `references/export-pdf.md`.
+7. **Run the spacing audit before handoff.** Check every slide at 1920×1080 and at one
+   smaller viewport. No text or primary content may cross the viewport safe area. For
+   every element that draws a visible boundary (`background`, `border`, `outline`,
+   `shadow`, rounded surface, or text-overlay panel), verify that its content has
+   padding on all four sides. Media and purely decorative edge-to-edge layers are the
+   only exceptions; text over them belongs in a nested padded surface.
+8. **Export to PDF** if asked — see `references/export-pdf.md`.
 
 Put each deck in its own folder. Keep any live-demo app as a separate project, not inside
 the deck.

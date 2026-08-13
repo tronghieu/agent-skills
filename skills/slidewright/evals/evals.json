@@ -13,7 +13,8 @@
         "Has a visible bottom navigation control (prev/next or dot strip) AND a slide number/counter",
         "Slide body text is projection-legible: does not use web-reading sizes (text-sm, text-base, 16px, 1rem) for slide body content; titles are large",
         "Contains no text input, textarea, form, or Submit/Save controls (presenter-only interaction)",
-        "Supports keyboard navigation (ArrowRight/ArrowLeft or Space)"
+        "Supports keyboard navigation (ArrowRight/ArrowLeft or Space)",
+        "Keeps primary slide content inside responsive viewport safe-area padding"
       ]
     },
     {
@@ -29,7 +30,8 @@
         "Has a visible navigation slider (dot strip) AND a slide counter",
         "Multiple distinct slides on the Context Engineering topic",
         "Contains no text input, textarea, form, or Submit/Save controls",
-        "Slide content uses projection-legible sizes, not web-reading sizes for body text"
+        "Slide content uses projection-legible sizes, not web-reading sizes for body text",
+        "Keeps primary slide content inside responsive viewport safe-area padding"
       ]
     },
     {
@@ -43,7 +45,23 @@
         "The deck's own typography respects the projection floor: body text is large (no text-sm/text-base/16px/1rem for slide body), titles are very large",
         "Has a visible navigation control AND a slide number/counter",
         "Contains no text input, textarea, form, or Submit/Save controls",
-        "Designed as projection (one presenter controls; audience only views) rather than an interactive web app"
+        "Designed as projection (one presenter controls; audience only views) rather than an interactive web app",
+        "Keeps primary slide content inside responsive viewport safe-area padding"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "nested-surface-padding",
+      "prompt": "Dựng một deck 6 slide về cách đội sản phẩm ưu tiên roadmap. Hãy dùng nhiều card: một slide so sánh 2 cột, một slide có 3 thẻ nguyên tắc, một callout có viền, và một ảnh full-bleed có caption phủ lên ảnh. Tôi muốn giao diện có nền, bo góc và border rõ ràng.",
+      "expected_output": "A 6-slide deck whose primary content stays inside the viewport safe area and whose cards, comparison panels, bordered callout, and image-caption overlay each have their own visible internal padding.",
+      "files": [],
+      "assertions": [
+        "Primary content on every slide stays inside responsive viewport safe-area padding",
+        "Every content-bearing card, panel, callout, bordered box, or rounded/background surface has non-zero padding on all four sides",
+        "The two-column comparison uses both inter-column gap and independent internal padding inside each column",
+        "The full-bleed image may reach the edge, but its caption text sits inside a nested padded overlay surface",
+        "No content surface relies only on grid gap, child margin, or outer slide padding for its internal inset",
+        "No local p-0, padding: 0, negative margin, or absolute positioning cancels the required spacing around primary content"
       ]
     }
   ]
