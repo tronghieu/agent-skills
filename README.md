@@ -33,8 +33,19 @@ Most agent tools use slash commands. Codex and ChatGPT use `$`; in those tools, 
 | Create documentation, prompts, slides, or fiction | [diataxis-writer](./skills/diataxis-writer/README.md), [system-prompt-creator](./skills/system-prompt-creator/README.md), [slidewright](./skills/slidewright/README.md), [fiction-studio](./skills/fiction-studio/README.md) |
 | Learn through guided questions | [socratic-questor](./skills/socratic-questor/README.md) |
 | Compare CVs with a job description | [cv-scorer](./skills/cv-scorer/README.md) |
+| Understand what an autonomous coding run did, or why it stalled | [bmad-run-inspector](./skills/bmad-run-inspector/README.md) |
 
 ## Skills
+
+### bmad-run-inspector
+
+For anyone running `bmad-loop`, an autonomous coding orchestrator, who needs an honest read on a run — watching one in progress or investigating one that finished, failed, or paused overnight. Only useful inside a project that already runs `bmad-loop`.
+
+```bash
+npx skills add tronghieu/agent-skills --skill bmad-run-inspector
+```
+
+[Read the bmad-run-inspector guide](./skills/bmad-run-inspector/README.md)
 
 ### brainstorm-coach
 

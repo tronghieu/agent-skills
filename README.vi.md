@@ -33,8 +33,19 @@ Sau đó gọi skill trong agent:
 | Tạo tài liệu, prompt, slide hoặc truyện | [diataxis-writer](./skills/diataxis-writer/README.vi.md), [system-prompt-creator](./skills/system-prompt-creator/README.vi.md), [slidewright](./skills/slidewright/README.vi.md), [fiction-studio](./skills/fiction-studio/README.vi.md) |
 | Học qua câu hỏi gợi mở | [socratic-questor](./skills/socratic-questor/README.vi.md) |
 | So sánh CV với mô tả công việc | [cv-scorer](./skills/cv-scorer/README.vi.md) |
+| Hiểu một run coding tự động đã làm gì, hoặc vì sao nó bị kẹt | [bmad-run-inspector](./skills/bmad-run-inspector/README.vi.md) |
 
 ## Các skill
+
+### bmad-run-inspector
+
+Dành cho bất kỳ ai đang chạy `bmad-loop` — một orchestrator coding tự động — và cần một cách đọc trung thực về một run: theo dõi run đang chạy, hoặc điều tra run đã hoàn tất, thất bại, hay bị tạm dừng qua đêm. Chỉ hữu ích trong dự án đã dùng `bmad-loop`.
+
+```bash
+npx skills add tronghieu/agent-skills --skill bmad-run-inspector
+```
+
+[Đọc hướng dẫn bmad-run-inspector](./skills/bmad-run-inspector/README.vi.md)
 
 ### brainstorm-coach
 
