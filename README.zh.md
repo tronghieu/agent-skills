@@ -33,8 +33,19 @@ npx skills add tronghieu/agent-skills
 | 创建文档、提示词、幻灯片或小说 | [diataxis-writer](./skills/diataxis-writer/README.zh.md)、[system-prompt-creator](./skills/system-prompt-creator/README.zh.md)、[slidewright](./skills/slidewright/README.zh.md)、[fiction-studio](./skills/fiction-studio/README.zh.md) |
 | 通过引导式提问学习 | [socratic-questor](./skills/socratic-questor/README.zh.md) |
 | 将简历与职位描述进行比较 | [cv-scorer](./skills/cv-scorer/README.zh.md) |
+| 理解自动化编码运行做了什么，或为什么卡住了 | [bmad-run-inspector](./skills/bmad-run-inspector/README.zh.md) |
 
 ## 技能列表
+
+### bmad-run-inspector
+
+适合正在运行 `bmad-loop`（一个自主编码编排工具）的人，需要对某次运行给出诚实的解读——无论是实时观察正在进行的运行，还是排查已完成、失败或过夜暂停的运行。仅在已经使用 `bmad-loop` 的项目中有用。
+
+```bash
+npx skills add tronghieu/agent-skills --skill bmad-run-inspector
+```
+
+[阅读 bmad-run-inspector 指南](./skills/bmad-run-inspector/README.zh.md)
 
 ### brainstorm-coach
 
