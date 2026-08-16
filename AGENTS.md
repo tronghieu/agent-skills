@@ -16,7 +16,7 @@ skills/
   {skill-name}/           # kebab-case directory name
     SKILL.md              # Required: skill definition
     scripts/              # Required: executable scripts
-      {script-name}.sh    # Bash scripts (preferred)
+      {script-name}.sh    # Bash or Python, both first-class (.sh / .py)
   {skill-name}.zip        # Required: packaged for distribution
 ```
 
@@ -24,7 +24,7 @@ skills/
 
 - **Skill directory**: `kebab-case` (e.g., `system-prompt-creator`, `log-monitor`)
 - **SKILL.md**: Always uppercase, always this exact filename
-- **Scripts**: `kebab-case.sh` (e.g., `deploy.sh`, `fetch-logs.sh`)
+- **Scripts**: `kebab-case.sh` for Bash (e.g., `deploy.sh`, `fetch-logs.sh`); `snake_case.py` for new Python scripts (e.g., `profile_data.py`, `board_check.py`) — one older script, `export-deck-pdf.py`, predates this and stays kebab-case
 - **Zip file**: Must match directory name exactly: `{skill-name}.zip`
 
 ### SKILL.md Format
@@ -80,12 +80,15 @@ Skills are loaded on-demand — only the skill name and description are loaded a
 
 ### Script Requirements
 
-- Use `#!/bin/bash` shebang
-- Use `set -e` for fail-fast behavior
-- Write status messages to stderr: `echo "Message" >&2`
-- Write machine-readable output (JSON) to stdout
-- Include a cleanup trap for temp files
-- Reference the script path as `/mnt/skills/user/{skill-name}/scripts/{script}.sh`
+Bash and Python are both first-class — pick whichever fits the job, don't rank one over the other:
+
+- **Bash** for scaffolding and orchestration: creating files/directories, calling other CLIs, idempotent setup that reports created-vs-skipped (e.g., `init-project.sh`).
+- **Python** for analysis tools: parsing, statistics, structured checks whose consumer is an agent reading prose, not a pipeline (e.g., `profile_data.py`, `board_check.py`).
+- Bash scripts use a `#!/bin/bash` shebang and `set -e` for fail-fast behavior. Python scripts use a `#!/usr/bin/env python3` shebang.
+- Status on stderr and machine-readable JSON on stdout are required only for scripts whose output is meant to be consumed programmatically — not for a scaffolder reporting to a human or an analysis tool an agent reads as prose.
+- A script that serves both audiences should offer a `--json` flag (the convention, e.g. `run_probe.py --json`) rather than choosing one output for everyone.
+- Include a cleanup trap only in scripts that create temporary state (e.g. files under `/tmp`); a script that only writes its own permanent output doesn't need one.
+- Reference the script path as `/mnt/skills/user/{skill-name}/scripts/{script}.sh` (or `.py` for Python scripts)
 
 ### Creating the Zip Package
 

@@ -31,7 +31,13 @@ import sys
 
 # --- Capture-mechanism constants: follow from parsing a redrawn terminal
 # pane, not from any particular tool. Hold for any coding CLI.
-ANSI = re.compile(r"\x1b\[[0-9;?]*[a-zA-Z]|\x1b[()][A-B0-2]|\x1b[=>]|\x1b\][^\x07]*\x07")
+# OSC sequences (\x1b]...) end in either BEL or ST (\x1b\\) per the xterm spec;
+# a hyperlink or title-set using the ST form must match too, or its payload
+# leaks into the transcript and misclassifies whatever line it wraps.
+ANSI = re.compile(
+    r"\x1b\[[0-9;?]*[a-zA-Z]|\x1b[()][A-B0-2]|\x1b[=>]"
+    r"|\x1b\](?:[^\x07]*\x07|[^\x1b]*\x1b\\)"
+)
 
 # --- Stack-specific constants: tuned for Claude Code's TUI (spinner words,
 # the "ctrl+o to expand" collapse marker, the ⏺ tool-call glyph, the
@@ -65,13 +71,27 @@ def norm_key(s: str, width: int = 28) -> str:
     return re.sub(r"\s+", "", s)[:width].lower()
 
 
-def reconstruct(path: str, tail_bytes: int | None = None) -> list[str]:
+def _clean_lines(path: str, tail_bytes: int | None = None) -> list[str]:
+    """ANSI-stripped, CR-normalized, blank/noise lines dropped — the painted-frame
+    stream both reconstruct() and collapsed_stats() bucket from.
+    """
     with open(path, "rb") as fh:
         if tail_bytes:
             fh.seek(0, os.SEEK_END)
             fh.seek(max(0, fh.tell() - tail_bytes))
         raw = fh.read().decode("utf-8", "replace")
     clean = ANSI.sub("", raw).replace("\r", "\n")
+    out = []
+    for line in clean.split("\n"):
+        line = line.rstrip()
+        stripped = line.strip()
+        if not stripped or NOISE.match(stripped):
+            continue
+        out.append(line)
+    return out
+
+
+def reconstruct(path: str, tail_bytes: int | None = None) -> list[str]:
     # Prefix key can collide across genuinely different lines (two Bash(...) commands
     # sharing their first 28 chars), so a bucket holds variants, not one winner. A new
     # line either redraws an existing variant (one is a whitespace-stripped prefix of
@@ -80,12 +100,8 @@ def reconstruct(path: str, tail_bytes: int | None = None) -> list[str]:
     # from a redraw and still collapse to one entry.
     buckets: dict[str, list[str]] = {}
     order: list[tuple[str, int]] = []
-    for line in clean.split("\n"):
-        line = line.rstrip()
-        stripped = line.strip()
-        if not stripped or NOISE.match(stripped):
-            continue
-        k = norm_key(stripped)
+    for line in _clean_lines(path, tail_bytes):
+        k = norm_key(line.strip())
         if not k:
             continue
         flat = re.sub(r"\s+", "", line)
@@ -100,6 +116,35 @@ def reconstruct(path: str, tail_bytes: int | None = None) -> list[str]:
             variants.append(line)
             order.append((k, len(variants) - 1))
     return [buckets[k][i] for k, i in order]
+
+
+def collapsed_stats(path: str, tail_bytes: int | None = None) -> tuple[list[int], list[int]]:
+    """Two counts of the '+N lines (ctrl+o to expand)' collapse marker.
+
+    raw: every marker as painted. The pane repaints the same collapsed block on
+    each redraw, so this over-counts — one real block can appear dozens of times.
+    deduped: markers keyed on (marker text, the line painted right before it), so
+    repaints of one block collapse to a single entry while two distinct blocks
+    that happen to hide the same line count both survive. Still an estimate:
+    without timestamps, a genuinely repeated command is indistinguishable from a
+    repaint of one block, so this can over- or under-count in either direction.
+    """
+    lines = _clean_lines(path, tail_bytes)
+    raw = [int(m.group(1)) for line in lines for m in [COLLAPSED.search(line)] if m]
+
+    seen: set[tuple[str, str]] = set()
+    deduped: list[int] = []
+    prev = ""
+    for line in lines:
+        m = COLLAPSED.search(line)
+        if m:
+            key = (line, prev)
+            if key not in seen:
+                seen.add(key)
+                deduped.append(int(m.group(1)))
+        else:
+            prev = line
+    return raw, deduped
 
 
 def classify(lines: list[str]) -> dict[str, list[str]]:
@@ -165,10 +210,13 @@ def main() -> int:
         print(f"reconstructed {len(lines)} logical lines")
 
         if a.collapsed:
-            raw = open(log, "rb").read().decode("utf-8", "replace")
-            hidden = [int(n) for n in COLLAPSED.findall(ANSI.sub("", raw))]
-            print(f"\n## collapsed output: {len(hidden)} markers hiding ~{sum(hidden):,} lines "
+            raw_hidden, hidden = collapsed_stats(log, a.tail_bytes)
+            print(f"\n## collapsed output (estimate): {len(hidden)} markers hiding ~{sum(hidden):,} lines "
                   f"(largest {max(hidden) if hidden else 0})")
+            print(f"   Unfiltered capture: {len(raw_hidden)} markers / {sum(raw_hidden):,} lines — the gap "
+                  f"is the pane repainting the same collapsed block on every redraw.")
+            print("   The deduped figure is still an estimate: without timestamps, a genuinely repeated")
+            print("   command is indistinguishable from a repaint of one block.")
             print("   Those lines were never painted to the pane, so they are not in this file.")
             print("   Test pass/fail counts usually live there — do not infer them from this log.")
 

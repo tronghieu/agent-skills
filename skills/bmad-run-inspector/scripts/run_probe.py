@@ -33,6 +33,13 @@ import time
 
 FAILURE_KINDS = ("error", "crash", "escalat", "stall", "fail", "env_fault", "pause", "budget")
 
+# The engine rewrites heartbeat.json roughly this often while a session is alive.
+HEARTBEAT_INTERVAL_S = 30
+# Bar for calling a heartbeat stale (also reused below as the minimum quiet
+# interval before a flat log is even eligible to be called a hang) — one
+# threshold, not two arbitrary ones.
+STALE_S = 120
+
 
 def sh(cmd: list[str], cwd: str | None = None, timeout: int = 30) -> str:
     try:
@@ -108,6 +115,7 @@ def collect(project: str, run: str) -> dict:
 
     return {
         "run_dir": run,
+        "probed_at": now,
         "run_id": state.get("run_id"),
         "run_type": state.get("run_type"),
         "started_at": state.get("started_at"),
@@ -211,7 +219,7 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
             out.append(f"T2 {k}: stall_armed — the session went idle past its grace window")
         if (h.get("nudges") or 0) > 0:
             out.append(f"T2 {k}: {h['nudges']} stall nudge(s) sent")
-        if active.get(k, True) and h.get("age_s", 0) > 120:
+        if active.get(k, True) and h.get("age_s", 0) > STALE_S:
             out.append(f"T2 {k}: heartbeat {h['age_s']}s old — engine may not be writing")
         if active.get(k, True) and h.get("remaining_s", 1e9) < 600:
             phases = {t.get("phase") for t in cur["tasks"].values()}
@@ -223,12 +231,29 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
         out.append(f"T2 journal carries failure entries: {kinds}")
 
     if prev and prev.get("run_id") == cur["run_id"]:
+        # Missing on a pre-timestamp snapshot: elapsed stays None, so the floor
+        # check below can't suppress anything — same as the old, no-floor behaviour.
+        elapsed = None
+        if isinstance(prev.get("probed_at"), (int, float)) and isinstance(cur.get("probed_at"), (int, float)):
+            elapsed = cur["probed_at"] - prev["probed_at"]
         for name, size in cur["logs"].items():
             delta = size - prev.get("logs", {}).get(name, 0)
             same_phase = prev.get("tasks") == cur["tasks"]
             task_id = os.path.splitext(name)[0]
             if delta == 0 and same_phase and active.get(task_id, True):
-                out.append(f"T3 {name}: no growth and no phase change since last probe — suspect a hang")
+                too_soon = elapsed is not None and elapsed < STALE_S
+                hb_age = cur["heartbeats"].get(task_id, {}).get("age_s")
+                # A heartbeat this fresh is direct evidence the engine is alive and
+                # writing — the log being quiet is just the shape of a long tool call.
+                fresh_heartbeat = hb_age is not None and hb_age <= HEARTBEAT_INTERVAL_S
+                if too_soon or fresh_heartbeat:
+                    continue
+                interval = f"no growth in {elapsed / 60:.0f}m" if elapsed is not None \
+                    else "no growth since last probe (interval unknown)"
+                if hb_age is not None and hb_age > STALE_S:
+                    out.append(f"T3 {name}: {interval}, heartbeat also stale ({hb_age:.0f}s) — suspect a hang")
+                else:
+                    out.append(f"T3 {name}: {interval} and no phase change — suspect a hang")
             if delta > 5 * 1024 * 1024:
                 out.append(f"T3 {name}: grew {delta / 1048576:.1f}MB in one interval — suspect a tool-call loop")
         if prev.get("tasks") == cur["tasks"]:

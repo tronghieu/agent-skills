@@ -70,9 +70,21 @@ phase you want first, then read that range.
 ## What is NOT in the file
 
 **Collapsed tool output.** The CLI shows long results as `… +N lines (ctrl+o to expand)`.
-The hidden lines are never painted, so they never enter the capture. On one measured
-hour-long run this hid ~2,000 lines across ~50 markers, with a single block reaching 237
-lines — evidence of scale, not a figure to expect on yours.
+The hidden lines are never painted, so they never enter the capture. Measured on one
+hour-long run's log (4.35 MB): the deduped count — the figure `--collapsed` leads with —
+was 58 markers hiding ~2,463 lines, largest single block 484. A second run's log gave
+23 markers / ~884 lines, largest 104 — evidence of scale, not a figure to expect on yours.
+
+`--collapsed` prints two figures, and both matter. The gap between them is the same
+mechanic behind "Massive duplication" above: the pane repaints a collapsed block on every
+redraw, so an unfiltered scan counts one block once per repaint. The first log's unfiltered
+count was 78 markers / 4,079 lines against the 58/2,463 deduped above; the second's was
+27/1,093 against 23/884. Dedup keys on the marker text plus the line painted right before
+it, so repeats of one block collapse to a single entry.
+
+Treat the deduped figure as an estimate, not a measurement: without timestamps, a
+genuinely repeated command is indistinguishable from a repaint of one block, so it can
+over- or under-count in either direction. Quote it as an estimate when you report it.
 
 This is where test summaries live. On that same run — a unit-test suite, an end-to-end
 suite, a type checker, and a linter, all executed — the raw log contained **zero** matches
@@ -140,7 +152,7 @@ parent went on to plan thirteen patches from their findings.
 ## Cost accounting
 
 Sum the `subagents` section for delegated spend, and read the last `progress` entry for the
-orchestrating session's own spend. On one measured run, a story that showed `151.7k tokens`
+orchestrating session's own spend. On one measured run, a story that showed `212.0k tokens`
 in the footer had actually spent **~1.1M** once its eight subagents were counted — the footer
 covers one context only. The ratio here is illustrative, not a multiplier to apply; sum your
 own run's `subagents` section before quoting a token figure.
