@@ -185,7 +185,8 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
         reason = lines[0][:160] + ("..." if len(lines[0]) > 160 else "") if lines else ""
         tail = " (full text in state.json's paused_reason)" if reason else ""
         out.append(f"T1 paused at {f.get('paused_stage')} on {f.get('paused_story_key')}: "
-                   f"{reason}{tail} -> `bmad-loop resolve` or `bmad-loop resume`")
+                   f"{reason}{tail} -> `bmad-loop resolve {cur['run_id']}` or "
+                   f"`bmad-loop resume {cur['run_id']}`")
     if cur["pid"] and not cur["pid_alive"] and not (f.get("finished") or f.get("stopped")):
         out.append(f"T1 engine pid {cur['pid']} is dead but the run never finished")
     if cur["attention_files"]:
