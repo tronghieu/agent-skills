@@ -42,26 +42,56 @@ that bite:
 
 That last point decides what you may claim. Test summaries live inside collapsed blocks —
 whatever line your test runner prints for its pass/fail counts is exactly the kind of long
-output the TUI hides. In one measured run, ~50 collapse markers hid ~2,000 lines. So: **never
-report that tests passed or failed based on the log.** You can report which test *commands*
-were launched; whether they passed is inferred elsewhere (see "Deciding whether verify
-passed").
+output the TUI hides. On one measured 4.35 MB log, 58 distinct collapse markers hid roughly
+2,463 lines, the largest single block 484. So: **never report that tests passed or failed
+based on the log.** You can report which test *commands* were launched; whether they passed is
+inferred elsewhere (see "Deciding whether verify passed").
 
-**These heuristics assume the coding CLI inside the pane is Claude Code, and separately assume
-the test stack is Vitest/TypeScript/Node.** The spinner frames, the `Done(N tool uses · T
-tokens · Ns)` footer, and the `… +N lines (ctrl+o to expand)` collapse marker are Claude
-Code's TUI vocabulary, and `scripts/extract_transcript.py` is pattern-matched against it. The
-same script's `results` and `errors` sections are separately pattern-matched against a Vitest
-banner, TypeScript error codes, and Node errno names. Drive a different coding CLI through
-bmad-loop, or run a different test stack (pytest, `go test`, JUnit) under it, and the
+**The heuristics are stack-specific, and they fail quietly.** The spinner frames, the `Done(N
+tool uses · T tokens · Ns)` footer and the `… +N lines (ctrl+o to expand)` collapse marker are
+one coding CLI's TUI vocabulary, and `scripts/extract_transcript.py` is pattern-matched
+against it. That script's `results` and `errors` sections are separately matched against one
+test runner's banner, one type checker's error codes and one runtime's errno names. Drive a
+different coding CLI through bmad-loop, or run a different test stack under it, and the
 classifier does not error on either axis — it degrades silently, matching fewer or none of a
 section's patterns while still returning a result. A clean `--section errors` or `--section
 results` on an unfamiliar CLI or test stack is not evidence of a clean run; an empty section
-is a miss, not good news. Check the constants against a sample of the actual log first, and
-use `bmad-loop adapters` to confirm which coding CLI a run's profile actually selects.
+is a miss, not good news.
+
+Which CLI and which stack a given repo actually runs is therefore the first thing to
+establish, and it is not something this skill can know in advance — the next section is where
+that lives.
 
 Run `scripts/extract_transcript.py --collapsed` to show exactly how much is hidden. Quoting
 that number is a good way to make the limitation concrete for the user instead of hedging.
+
+## Know the project before you read it
+
+This skill ships generic. Everything that varies between repositories lives in a project
+adapter at `_project/bmad-loop/`. Read it before the first inspection; bootstrap it when it
+isn't there.
+
+| File | Holds |
+|---|---|
+| `_project/bmad-loop/environment.toml` | the values: which coding CLI, which test runner and type checker, which multiplexer, whether the dev skill writes `result.json`, which verify steps are non-fatal, what feeds the backlog |
+| `_project/bmad-loop/environment.md` | the knowledge: a dated current-state snapshot, which of the extractor's constants match here and which don't, and the judgment calls a bare value can't carry |
+
+When `environment.toml` is missing:
+
+```bash
+python3 <skill>/scripts/bootstrap_adapter.py --repo-root /path/to/repo
+```
+
+It writes the skeletons, never overwrites an existing file, and prints every value still
+marked `TODO(confirm: …)`. Those TODOs are the point of the scaffold: research each from a
+real file or a real `bmad-loop` command, then put the drafted values and where each came from
+to the user before running a real inspection. An adapter filled with plausible guesses is
+worse than no adapter — a wrong `coding_cli` makes the extractor match nothing and hand back a
+result that reads clean. `references/adapter-bootstrap.md` has the field-by-field sourcing
+table, including which fields simply cannot be answered until a run exists.
+
+When the adapter and a live run disagree, the run wins — and the disagreement is itself a
+finding about the adapter. Report it; don't quietly override either one.
 
 ## Check the CLI before reading the disk
 
@@ -74,8 +104,9 @@ observing a live run — try these first.
 work on an archived run therefore has no CLI shortcut — extract it and read the artifacts by
 hand, starting with the `## Workflow` steps below.
 
-`bmad-loop adapters` names which coding-CLI adapter each profile selects — use it to check
-the Claude Code assumption above before trusting a transcript extraction. `bmad-loop validate`
+`bmad-loop adapters` names which coding-CLI adapter each profile selects — it is where the
+adapter's `orchestrator.coding_cli` comes from, and worth re-running when an extraction looks
+suspiciously empty. `bmad-loop validate`
 reports live host facts a run directory can't: multiplexer availability and version, whether
 the coding CLI's binary is on PATH, hook registration and staleness, git worktree
 cleanliness — worth running when a story fails for reasons that look environmental.
@@ -192,9 +223,10 @@ gives you the verdict, not the test output. Run the verify command from
 Two traps worth naming when you report:
 
 - **`|| true` swallows failures.** Verify commands ending in `|| true` always exit 0 — these
-  are operator-authored, not shipped by bmad-loop, so check `policy_snapshot.verify.commands`
-  for which ones a given project made non-fatal. Their failure is invisible; the only symptom is
-  downstream — a sprint backlog count that never moves even though a story reached `done`.
+  are operator-authored, not shipped by bmad-loop. The adapter's `verify.non_fatal_steps`
+  names the ones a given project made non-fatal; `policy_snapshot.verify.commands` is where
+  that list is derived from and what to re-check when they disagree. Their failure is
+  invisible; the only symptom is downstream — a sprint backlog count that never moves even though a story reached `done`.
 - **Verify runs twice per story and discards output on timeout.** A verify step with no
   output did not necessarily skip; it may have timed out and thrown the evidence away.
 
@@ -236,6 +268,7 @@ Read these when the question goes past the workflow above:
 | `references/run-anatomy.md` | You need the exact key that answers a question — which file, which field, what its values mean |
 | `references/log-forensics.md` | The reconstruction is losing something, or you need to recover data the default sections drop |
 | `references/anomaly-triage.md` | You have a finding and need the threshold's source and the right remedy |
+| `references/adapter-bootstrap.md` | `_project/bmad-loop/` is missing or incomplete, and you need where each field's value legitimately comes from |
 
 ## Honesty rules
 

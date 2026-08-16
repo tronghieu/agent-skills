@@ -1,0 +1,31 @@
+# Project adapter for the bmad-run-inspector skill.
+# Values live HERE only — environment.md references them, never repeats them.
+# Every value below must come from a real file or a real `bmad-loop` command, never a
+# guess: an unconfirmed value stays "TODO(confirm: <what you looked at>)" — a wrong
+# `coding_cli` in particular makes the extractor match nothing and reads as a clean run.
+
+[project]
+name = "TODO(confirm: <what you looked at>)"      # labels the report only — no downstream logic keys off this
+updated = "TODO(confirm: <what you looked at>)"   # YYYY-MM-DD, rewritten in place — bump whenever any value below changes
+
+# bmad-loop's own directory layout — fixed convention, not a project fact to confirm.
+[loop]
+runs_dir = ".bmad-loop/runs"
+archive_dir = ".bmad-loop/archive"
+policy_path = ".bmad-loop/policy.toml"
+
+[orchestrator]
+dev_skill = "TODO(confirm: <what you looked at>)"           # decides whether an absent tasks/<task-id>/result.json is normal or a fault — from policy_snapshot.dev.skill
+coding_cli = "TODO(confirm: <what you looked at>)"          # decides whether the log heuristics apply at all — from `bmad-loop adapters`; get this wrong and the extractor matches nothing but still reads clean
+mux_backend = "TODO(confirm: <what you looked at>)"         # decides the attach/detach instructions — tmux | psmux, from `bmad-loop mux`
+writes_result_json = false  # TODO(confirm: <what you looked at>) — decides, with dev_skill, whether a missing result.json is normal or a fault
+
+[stack]
+test_runner = "TODO(confirm: <what you looked at>)"   # decides whether the `results` section matches anything real
+type_checker = "TODO(confirm: <what you looked at>)"  # decides whether the `errors` section matches anything real — only leave "" once confirmed the project has none
+
+[verify]
+non_fatal_steps = []  # TODO(confirm: <what you looked at>) — verify commands ending in `|| true`, whose failure is invisible in a green run
+
+[backlog]
+source = "TODO(confirm: <what you looked at>)"  # what feeds stories to the loop — mirrors state.json's `source`, explains that value for a reader
