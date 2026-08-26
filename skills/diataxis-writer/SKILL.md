@@ -79,6 +79,32 @@ read `references/diataxis-patterns.md`.
 5. **Verify the result.** Check that each section helps the primary reader job.
    Remove or relocate sections that serve a different job.
 
+## Reader-First Prose
+
+Write for comprehension rather than formality or literary flow.
+
+- Express one main idea per sentence.
+- Prefer 8–20 words per prose sentence.
+- Review every sentence longer than 25 words. Split it unless doing so would
+  weaken accuracy or obscure the relationship between ideas.
+- Prefer simple sentences. Use a subordinate clause only when it communicates
+  a necessary condition, cause, contrast, or qualification more clearly than
+  two separate sentences.
+- Avoid nested subordinate clauses and sentences containing more than two
+  clauses.
+- Move secondary details into a new sentence, list, note, or linked document.
+- Preserve technical terms, contracts, constraints, evidence, and important
+  exceptions. Concision must not remove required meaning.
+- Do not apply sentence-length limits to code, commands, paths, tables,
+  headings, quotations, or generated identifiers.
+- Vary sentence length naturally. Do not turn every sentence into the same
+  short pattern.
+
+Treat word counts as review signals, not mechanical pass/fail rules. For
+Vietnamese, count space-separated tokens consistently even though they do not
+always correspond to lexical words. For languages without space-delimited
+words, rely on the one-idea and clause-count rules instead.
+
 ## Type Guidance
 
 ### Tutorial
@@ -188,3 +214,7 @@ When reviewing an existing document, return:
 - Explanation content develops understanding without pretending to be a procedure.
 - Related-but-different material is linked or separated rather than blended.
 - The output matches the user's language unless they request otherwise.
+- Most prose sentences contain one main clause and one main idea.
+- Sentences longer than 25 words have been reviewed and are necessary.
+- No sentence contains nested qualifications that could be stated separately.
+- Concision has not removed contracts, constraints, evidence, or exceptions.
