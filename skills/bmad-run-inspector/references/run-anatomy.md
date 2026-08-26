@@ -14,8 +14,8 @@ does; see `anomaly-triage.md` for the ones that don't.
 | `logs/<task-id>.log` | per-session terminal capture (see `log-forensics.md`); the `opencode-http` adapter also writes `<task-id>.server.out` and a structured `<task-id>.sse.jsonl` trace instead of a redraw capture | one per tmux/psmux session |
 | `tasks/<task-id>/` | per-session working dir (see below) | one per session |
 | `.probe-snapshot.json` | this skill's own previous-probe snapshot, not written by `bmad-loop` | present after a `scripts/run_probe.py` run |
-| `stop-request.json` | graceful-stop marker | only after `bmad-loop stop` |
-| `ATTENTION` | accumulated human-attention notices, plain text, append-only, `[YYYY-MM-DD HH:MM:SS] title: message` | any `notify` call |
+| `stop-request.json` | pending stop control: `mode` is `graceful` or `hard`; a legacy, malformed or unreadable present body is treated as graceful | while a request is waiting for the engine to consume it |
+| `ATTENTION` | accumulated human-attention notices, plain text, append-only, `[YYYY-MM-DD HH:MM:SS] title: message`; existence does not mean the newest notice is still live | any `notify` call |
 | `crash.txt` | unhandled-exception traceback | only on an uncaught crash |
 | `feedback/<story>-<n>.md` | verify-failure text handed to the repair session | on a fixable retry |
 | `deferred/<story>/<spec-name>` | preserved spec copy of a deferred story | on a deferral |

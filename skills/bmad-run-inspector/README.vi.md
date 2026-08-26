@@ -52,7 +52,7 @@ Các finding được xếp hạng theo mức độ khẩn cấp, không theo th
 
 | Mức | Ví dụ | Cách xử lý thường gặp |
 | --- | --- | --- |
-| **1 — cần người can thiệp ngay** | Engine bị crash, một run pause vì escalation, engine pid đã chết, có file `ATTENTION` | `bmad-loop resolve <run-id>`, `bmad-loop resume <run-id>`, hoặc `bmad-loop diagnose` |
+| **1 — cần người can thiệp ngay** | Engine bị crash, một run pause vì escalation, engine pid đã chết, có notice `ATTENTION` mới hoặc chưa được giải quyết | `bmad-loop resolve <run-id>`, `bmad-loop resume <run-id>`, hoặc `bmad-loop diagnose` |
 | **2 — sắp fail** | Attempt dev cuối cùng trước khi chạm cap của story, review cycle không hội tụ, heartbeat đã cũ, session budget gần cạn giữa lúc đang implement | Theo dõi sát; can thiệp trước khi lượt fail tự động tiếp theo xảy ra |
 | **3 — mục ruỗng âm thầm** | Log vẫn tăng trong khi progress counter đứng yên và không có gì mới đang stream, các tool call giống hệt nhau lặp lại, deferred-work ledger phình to trong khi sweep đang bị tắt | So sánh hai lượt probe; không gì khác trong run tự lộ ra những điều này |
 

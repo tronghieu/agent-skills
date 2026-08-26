@@ -156,7 +156,8 @@ def classify(lines: list[str]) -> dict[str, list[str]]:
             # Spacing varies between redraws, so the same completion can survive
             # bucketing twice ("⎿ Done(...)" vs "Done(...)"). Compare on the
             # space-free form to report each subagent once.
-            entry = f"{m.group(1)} tool uses · {m.group(2)} tokens · {re.sub(r'\s+', '', m.group(3))}"
+            elapsed = re.sub(r"\s+", "", m.group(3))
+            entry = f"{m.group(1)} tool uses · {m.group(2)} tokens · {elapsed}"
             if entry not in out["subagents"]:
                 out["subagents"].append(entry)
         if SPINNER.match(s):
