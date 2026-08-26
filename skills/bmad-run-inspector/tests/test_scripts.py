@@ -131,6 +131,41 @@ class RunProbeAttentionTests(unittest.TestCase):
         self.assertTrue(any(item.startswith("T1 paused at dev") for item in findings))
         self.assertFalse(any("Auto Run Result" in item for item in findings))
 
+    def test_truncation_is_found_in_the_journal_after_a_resume(self):
+        attention = self.probe.attention_state(str(self.run), [])
+        cur = self.cur(attention, tasks={"9-2": {"spec_file": "/repo/spec-9-2.md"}})
+        # What a resumed run looks like: pause fields cleared, journal intact.
+        cur["journal_failures"] = [{
+            "kind": "story-escalated",
+            "story_key": "9-2",
+            "reason": self.probe.ESCALATION_PREFIX + "z" * self.probe.ESCALATION_DETAIL_CAP,
+        }]
+
+        findings = self.probe.diagnose(cur, None, {"dirty_count": 0})
+
+        self.assertTrue(any("journal story-escalated" in item for item in findings))
+        self.assertTrue(any("/repo/spec-9-2.md" in item for item in findings))
+
+    def test_escalated_phase_without_a_pause_is_reported_as_orphaned(self):
+        attention = self.probe.attention_state(str(self.run), [])
+        cur = self.cur(attention, tasks={"9-2": {"phase": "escalated"}})
+
+        findings = self.probe.diagnose(cur, None, {"dirty_count": 0})
+
+        self.assertTrue(any("nothing will re-drive this story" in item for item in findings))
+
+    def test_escalated_phase_while_paused_is_not_yet_orphaned(self):
+        attention = self.probe.attention_state(str(self.run), [])
+        cur = self.cur(
+            attention,
+            flags=self.paused("still blocked"),
+            tasks={"9-2": {"phase": "escalated"}},
+        )
+
+        findings = self.probe.diagnose(cur, None, {"dirty_count": 0})
+
+        self.assertFalse(any("nothing will re-drive this story" in item for item in findings))
+
     def test_joined_escalations_are_measured_per_detail(self):
         joined = "; ".join(["y" * self.probe.ESCALATION_DETAIL_CAP, "second escalation"])
 

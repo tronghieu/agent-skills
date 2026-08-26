@@ -189,6 +189,23 @@ def escalation_truncated(reason: str | None) -> bool:
     return any(len(part) == ESCALATION_DETAIL_CAP for part in [body] + body.split("; "))
 
 
+def truncated_escalation(cur: dict) -> tuple | None:
+    """Locate a truncated escalation reason, live or historical.
+
+    `bmad-loop resume` clears paused_reason outright while journal.jsonl keeps
+    its byte-identical copy forever, so a post-mortem on a resumed run finds
+    nothing unless the journal is consulted too. Returns (story_key, source).
+    """
+    f = cur["flags"]
+    if escalation_truncated(f.get("paused_reason")):
+        return f.get("paused_story_key"), "state.json paused_reason"
+    for j in reversed(cur.get("journal_failures") or []):
+        kind = str(j.get("kind", ""))
+        if ("escalat" in kind or "pause" in kind) and escalation_truncated(j.get("reason")):
+            return j.get("story_key"), f"journal {kind}"
+    return None
+
+
 def attention_signature(attention: dict | None) -> list[tuple]:
     return [
         (item.get("name"), item.get("size"), item.get("newest_notice_at"))
@@ -333,14 +350,16 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
         out.append(f"T1 paused at {f.get('paused_stage')} on {f.get('paused_story_key')}: "
                    f"{reason} -> `bmad-loop resolve {cur['run_id']}` or "
                    f"`bmad-loop resume {cur['run_id']}`")
-        if escalation_truncated(f.get("paused_reason")):
-            spec = (cur["tasks"].get(f.get("paused_story_key")) or {}).get("spec_file")
-            source = spec or "the story's spec (tasks.<k>.spec_file)"
-            out.append(
-                f"T1 escalation detail is cut at {ESCALATION_DETAIL_CAP} chars and every copy "
-                f"in the run dir carries the same cut — read `## Auto Run Result` in {source} "
-                "for the blocker; do not report the pause from the truncated text"
-            )
+    hit = truncated_escalation(cur)
+    if hit:
+        story, found_in = hit
+        spec = (cur["tasks"].get(story) or {}).get("spec_file")
+        source = spec or "the story's spec (tasks.<k>.spec_file)"
+        out.append(
+            f"T1 escalation detail is cut at {ESCALATION_DETAIL_CAP} chars ({found_in}) and "
+            f"every copy in the run dir carries the same cut — read `## Auto Run Result` in "
+            f"{source} for the blocker; do not report it from the truncated text"
+        )
     if cur["pid"] and not cur["pid_alive"] and not (f.get("finished") or f.get("stopped")):
         out.append(f"T1 engine pid {cur['pid']} is dead but the run never finished")
     attention = cur.get("attention") or {}
@@ -384,6 +403,12 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
             out.append(f"T2 {k}: review_cycle {t['review_cycle']}/{max_rev} — review is not converging")
         if (t.get("followup_reviews_spent") or 0) > 0:
             out.append(f"T2 {k}: followup review spent ({t['followup_reviews_spent']})")
+        # `resume` clears the pause without re-arming; `resolve` re-arms. So an
+        # escalated phase outstanding on an unpaused run means someone resumed
+        # past it, and nothing left in the run will pick the story back up.
+        if t.get("phase") == "escalated" and not (f.get("paused_reason") or f.get("paused_stage")):
+            out.append(f"T3 {k}: phase escalated while the run is not paused — resumed past the "
+                       "escalation without re-arming it; nothing will re-drive this story")
 
     for k, h in cur["heartbeats"].items():
         if h.get("stall_armed"):

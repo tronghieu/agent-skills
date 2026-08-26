@@ -6,6 +6,16 @@ Every `bmad-loop` run writes to `.bmad-loop/runs/<run-id>/`. The run id is
 `resolve`, `attach`, `stop`, `diagnose`, `delete`, `archive` — but not every subcommand
 does; see `anomaly-triage.md` for the ones that don't.
 
+| Section | Answers |
+|---|---|
+| The two tables below | Which file holds what, and whether it should be there at all |
+| `state.json` | Structural truth: task phases, attempts, baselines, the frozen policy |
+| `journal.jsonl` | What happened and when — including which fields arrive truncated |
+| `tasks/<task-id>/` | Per-session working dir, heartbeat, session lifecycle |
+| `engine.pid`, `events/` | Whether the engine lives; where hook events actually go now |
+| The story spec | The escalation evidence that lives outside the run directory |
+| What no file in here records | The absences that read as good news and aren't |
+
 | Entry | Purpose | Presence |
 |---|---|---|
 | `state.json` | machine state — authoritative for everything structural | always |
@@ -169,6 +179,11 @@ in the run directory holds the whole blocker.** The wrapper `CRITICAL escalation
 session: ` is added on top of the already-cut detail, so measure the detail rather than the
 whole string. `anomaly-triage.md` has the reading order; "The story spec" below has the
 uncut original.
+
+The journal is where that text survives. `resume` and `resolve` both clear `paused_reason`,
+`paused_stage` and `paused_story_key` from `state.json`, while `journal.jsonl` keeps its copies
+forever — append-only, with no rewrite or compaction path in bmad-loop. On a resumed or finished
+run the journal is therefore the only in-directory record that an escalation happened at all.
 
 Two readings that need care:
 

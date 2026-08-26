@@ -15,12 +15,11 @@ allowed-tools: Read Glob Grep Bash(python3 *) Bash(bmad-loop *) Bash(git *) Bash
 # BMAD Run Inspector
 
 Verified against [bmad-loop 0.11.1](https://github.com/bmad-code-org/bmad-loop/releases/tag/v0.11.1).
-The bundled inspector scripts support Python 3.9+; `bmad-loop` itself currently requires
-Python 3.11+, but it may be installed in an isolated environment while the host's `python3`
-still resolves to the stock macOS 3.9 interpreter.
+The bundled scripts run on Python 3.9+. `bmad-loop` itself needs 3.11+, but it often lives in
+an isolated environment while the host's `python3` is still stock macOS 3.9.
 
-A `bmad-loop` run leaves a directory of evidence behind. This skill is about reading that
-evidence honestly: saying what it proves, and refusing to say what it doesn't.
+A run leaves a directory of evidence. This skill is about reading it honestly: saying what it
+proves, and refusing to say what it doesn't.
 
 ## The one thing to get right
 
@@ -36,30 +35,23 @@ that bite:
 - **Long tool output is collapsed into `… +N lines (ctrl+o to expand)` and never painted.**
   Those lines do not exist in the file.
 
-That last point decides what you may claim. Test summaries live inside collapsed blocks —
-whatever line your test runner prints for its pass/fail counts is exactly the kind of long
-output the TUI hides. On one measured 4.35 MB log, 58 distinct collapse markers hid roughly
-2,463 lines, the largest single block 484. So: **never report that tests passed or failed
-based on the log.** You can report which test *commands* were launched; whether they passed is
-inferred elsewhere (see "Deciding whether verify passed").
+The collapse is what decides your claims. Test summaries live inside collapsed blocks —
+whatever line your test runner prints for pass/fail counts is exactly the long output the TUI
+hides. On one measured 4.35 MB log, 58 collapse markers hid roughly 2,463 lines, largest block
+484. So **never report that tests passed or failed based on the log.** Report which test
+*commands* were launched; the verdict comes from "Deciding whether verify passed" below.
 
-**The heuristics are stack-specific, and they fail quietly.** The spinner frames, the `Done(N
-tool uses · T tokens · Ns)` footer and the `… +N lines (ctrl+o to expand)` collapse marker are
-one coding CLI's TUI vocabulary, and `scripts/extract_transcript.py` is pattern-matched
-against it. That script's `results` and `errors` sections are separately matched against one
-test runner's banner, one type checker's error codes and one runtime's errno names. Drive a
-different coding CLI through bmad-loop, or run a different test stack under it, and the
-classifier does not error on either axis — it degrades silently, matching fewer or none of a
-section's patterns while still returning a result. A clean `--section errors` or `--section
-results` on an unfamiliar CLI or test stack is not evidence of a clean run; an empty section
-is a miss, not good news.
+**The heuristics are stack-specific, and they fail quietly.** `scripts/extract_transcript.py`
+is pattern-matched against one coding CLI's TUI vocabulary — its spinner frames, its `Done(N
+tool uses · T tokens · Ns)` footer, its `… +N lines (ctrl+o to expand)` marker — and its
+`results`/`errors` sections against one test runner's banner, one type checker's error codes,
+one runtime's errno names. Change either axis and the classifier does not error; it degrades
+silently, matching fewer patterns while still returning a result. An empty `--section errors`
+or `--section results` on an unfamiliar CLI or stack is a miss, not good news.
 
-Which CLI and which stack a given repo actually runs is therefore the first thing to
-establish, and it is not something this skill can know in advance — the next section is where
-that lives.
-
-Run `scripts/extract_transcript.py --collapsed` to show exactly how much is hidden. Quoting
-that number is a good way to make the limitation concrete for the user instead of hedging.
+So establish which CLI and which stack the repo runs before reading anything — the next section
+is where that lives. `scripts/extract_transcript.py --collapsed` prints how much is hidden;
+quote that number instead of hedging.
 
 ## Know the project before you read it
 
@@ -78,34 +70,27 @@ When `environment.toml` is missing:
 python3 <skill>/scripts/bootstrap_adapter.py --repo-root /path/to/repo
 ```
 
-It writes the skeletons, never overwrites an existing file, and prints every value still
-marked `TODO(confirm: …)`. Those TODOs are the point of the scaffold: research each from a
-real file or a real `bmad-loop` command, then put the drafted values and where each came from
-to the user before running a real inspection. An adapter filled with plausible guesses is
-worse than no adapter — a wrong `coding_cli` makes the extractor match nothing and hand back a
-result that reads clean. `references/adapter-bootstrap.md` has the field-by-field sourcing
-table, including which fields simply cannot be answered until a run exists.
+It writes skeletons, never overwrites, and prints every value still marked `TODO(confirm: …)`.
+Those TODOs are the point: research each from a real file or a real `bmad-loop` command, then
+show the user the drafted values and their sources before inspecting anything. An adapter of
+plausible guesses is worse than no adapter — a wrong `coding_cli` makes the extractor match
+nothing and hand back a result that reads clean. `references/adapter-bootstrap.md` sources each
+field, including the ones no one can answer until a run exists.
 
 When the adapter and a live run disagree, the run wins — and the disagreement is itself a
 finding about the adapter. Report it; don't quietly override either one.
 
 ## Check the CLI before reading the disk
 
-`bmad-loop` itself answers some questions faster and more reliably than parsing artifacts.
-`list`, `status`, `diagnose`, `validate`, `adapters`, and bare `mux` are safe to run while
-observing a live run — try these first.
+`bmad-loop` answers some questions faster and more reliably than parsing artifacts. `list`,
+`status`, `diagnose`, `validate`, `adapters` and bare `mux` are safe on a live run — try them
+first.
 
-`list` and `status` see only `.bmad-loop/runs/`; a run already moved to
-`.bmad-loop/archive/*.tar.gz` is invisible to both and gets you `no such run`. Post-mortem
-work on an archived run therefore has no CLI shortcut — extract it and read the artifacts by
-hand, starting with the `## Workflow` steps below.
-
-`bmad-loop adapters` names which coding-CLI adapter each profile selects — it is where the
-adapter's `orchestrator.coding_cli` comes from, and worth re-running when an extraction looks
-suspiciously empty. `bmad-loop validate`
-reports live host facts a run directory can't: multiplexer availability and version, whether
-the coding CLI's binary is on PATH, hook registration and staleness, git worktree
-cleanliness — worth running when a story fails for reasons that look environmental.
+| Command | What it gives you |
+|---|---|
+| `list`, `status` | Run state, but only for `.bmad-loop/runs/`. An archived run is invisible to both and returns `no such run` — extract the tarball and read by hand, starting at `## Workflow` |
+| `adapters` | Which coding-CLI adapter each profile selects, and the source of the adapter's `orchestrator.coding_cli`. Re-run it when an extraction comes back suspiciously empty |
+| `validate` | Live host facts no run directory holds: multiplexer availability and version, whether the coding CLI is on PATH, hook registration and staleness, worktree cleanliness. Run it when a story fails for reasons that look environmental |
 
 **Never mutate what you're observing.** Several commands read as harmless and aren't: `mux
 set` writes `policy.toml`; `confirm` and `decisions` act on their target unless called with
@@ -131,11 +116,9 @@ also writes `.probe-snapshot.json` into the run directory so the *next* probe ca
 deltas — that delta is what separates "working" from "hung", and distinguishes a new
 ATTENTION notice from an unchanged append-only file. No single reading can tell you.
 
-Thresholds come from `state.json`'s `policy_snapshot`, not from hardcoded numbers. Every
-project tunes `max_dev_attempts` and `session_timeout_min` differently; a hardcoded 2 turns
-into a false alarm on the next repo. Where the policy key is absent, the probe falls back to
-`max_dev_attempts or 2` and `max_review_cycles or 3` — bmad-loop's own shipped defaults, not
-a hardcoded guess.
+Thresholds come from `state.json`'s `policy_snapshot`, never from memory — every project tunes
+`max_dev_attempts` and `session_timeout_min` differently, so a remembered 2 becomes a false
+alarm on the next repo.
 
 For a live watch, run this on an interval and compare against the previous probe. For
 forensics on a finished run, one probe is enough — go straight to the flags.
@@ -183,10 +166,9 @@ Since the log can't tell you, read `journal.jsonl` — it is authoritative and s
 not reach for `session-end.status` as the verdict; it looks like one and isn't.
 
 **`session-end.status`** (`completed | stalled | timeout | crashed | over_budget | aborted`)
-describes only whether the CLI session ended normally. It says nothing about whether the work
-was accepted: a `completed` session can still be rejected, and a `crashed` or `timeout`
-session can still be salvaged. This is the tempting wrong answer when you're in a hurry —
-resist grepping it and stopping there.
+describes only whether the CLI session ended normally, never whether the work was accepted: a
+`completed` session can still be rejected, a `crashed` or `timeout` one still salvaged. It is
+the tempting answer in a hurry — grepping it and stopping there is the mistake.
 
 The actual verdict, in order:
 
@@ -197,40 +179,39 @@ The actual verdict, in order:
 3. **`tasks.<story>.phase`** in `state.json` — the task's terminal phase should agree with
    whichever of the above fired.
 
-`session-end` is written for every session, including crashed ones — a `finally` block
-guarantees it. So if a session you know was launched has no `session-end`, that absence is
-itself a finding, not a gap to explain away.
-
-Silence anywhere else carries no such guarantee. A journal with no failure entries is not
-proof of success; it is proof that nothing reportable has happened yet.
+A `finally` block writes `session-end` for every session, crashed ones included. So a launched
+session with no `session-end` is itself a finding, not a gap to explain away. Silence anywhere
+else carries no such guarantee: a journal with no failure entries proves only that nothing
+reportable has happened yet.
 
 A story can also land at `story-awaiting-operator` and stay there indefinitely — that is
 terminal, not stuck, and clears only when a human runs `bmad-loop confirm <story-key>`. See
 `references/anomaly-triage.md` for the full handling; don't improvise it here.
 
-A story landing at `story-escalated` pauses the run, and its reason needs one extra step. Do
-not explain that pause from the journal `reason` or the ATTENTION notice: both are cut at 2000
-characters with no marker, and so is `state.json`'s `paused_reason`. The uncut text is in the
-story spec's `## Auto Run Result` section, named by `tasks.<story>.spec_file`. Reading only the
-truncated copies is how a real blocker gets reported as a misclassification —
-`references/anomaly-triage.md` has the reading order.
+A story landing at `story-escalated` pauses the run, and its reason needs one extra step. The
+escalation text is cut at 2000 characters with no marker, and `dev-decision.reason`,
+`story-escalated.reason`, `run-paused.reason`, `state.json`'s `paused_reason` and the ATTENTION
+notice all carry byte-identical copies of that cut — so corroborating them against each other
+is circular and proves nothing. The uncut text is in the story spec's `## Auto Run Result`
+section, named by `tasks.<story>.spec_file`. Reading only the truncated copies is how a real
+blocker gets reported as a misclassification; `references/anomaly-triage.md` has the reading
+order and the matching care about which remedy to offer.
 
-**Watch the field names** — the easiest way to read this wrong: `session-end` carries
-`status`; `dev-decision` carries a differently-named `session_status`. `rc` belongs to
-`plugin-hook` alone. Grepping the wrong key on the wrong kind gets you a plausible-looking
-wrong answer.
+**Watch the field names.** `session-end` carries `status`; `dev-decision` carries a
+differently-named `session_status`; `rc` belongs to `plugin-hook` alone. The wrong key on the
+wrong kind returns a plausible-looking wrong answer.
 
-**Re-run the command yourself** if the user needs the actual failing assertions — the journal
-gives you the verdict, not the test output. Run the verify command from
+**Re-run the command yourself** if the user needs the actual failing assertions. The journal
+gives the verdict, not the test output — run the verify command from
 `policy_snapshot.verify.commands` directly and report that.
 
 Two traps worth naming when you report:
 
-- **`|| true` swallows failures.** Verify commands ending in `|| true` always exit 0 — these
-  are operator-authored, not shipped by bmad-loop. The adapter's `verify.non_fatal_steps`
-  names the ones a given project made non-fatal; `policy_snapshot.verify.commands` is where
-  that list is derived from and what to re-check when they disagree. Their failure is
-  invisible; the only symptom is downstream — a sprint backlog count that never moves even though a story reached `done`.
+- **`|| true` swallows failures.** Verify commands ending in `|| true` always exit 0. They are
+  operator-authored, not shipped by bmad-loop; the adapter's `verify.non_fatal_steps` names a
+  project's, derived from `policy_snapshot.verify.commands` — re-check there when they disagree.
+  The failure is invisible, and the only symptom is downstream: a sprint backlog count that
+  never moves although a story reached `done`.
 - **Verify runs twice per story and discards output on timeout.** A verify step with no
   output did not necessarily skip; it may have timed out and thrown the evidence away.
 
@@ -254,9 +235,8 @@ policy key behind each threshold and the recommended action.
 
 - **Tier 1 — needs a human now.** `crashed`, `crash_error`, `paused_reason`/`paused_stage`
   set, engine pid dead while unfinished, a new or unresolved `ATTENTION` notice, or the run
-  concluding. The file's mere existence is not enough because it is append-only. On an
-  escalation, every copy of the reason in the run directory is cut at the same 2000 characters
-  — read the story spec's `## Auto Run Result` section before explaining the pause.
+  concluding. The file's mere existence is not enough because it is append-only, and an
+  escalation's text needs the extra step above before you explain the pause.
 - **Tier 2 — about to fail.** `attempt` at the policy max, `review_cycle` not converging,
   `stall_armed` or nudges sent, stale heartbeat, session budget nearly gone while still in dev.
 - **Tier 3 — silent rot.** The ones nothing else catches: log growing while the progress

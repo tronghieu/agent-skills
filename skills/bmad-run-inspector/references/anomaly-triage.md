@@ -34,7 +34,11 @@ starts a block and following unprefixed lines continue it.
 2. Check whether the newest block is complete. A missing final newline is direct evidence of
    a partial append. A newline does **not** prove completeness: repeated blocks ending at the
    same mid-word or an abruptly cut sentence are also truncation clues. Report partial evidence
-   explicitly and recover the outcome from `journal.jsonl`, `state.json`, or the task artifacts.
+   explicitly, then recover the rest — but recover it from the right place. For an ordinary
+   notice, `journal.jsonl`, `state.json` and the task artifacts hold the outcome. **For an
+   escalation they do not**: they carry byte-identical copies of the same cut, and repeated
+   blocks ending mid-word are the signature of exactly that. Go to "Reading an escalation"
+   below instead of re-reading the same truncation three times.
 3. Treat the title and severity label as classifier output over free text, not as a verdict.
    Cross-check `dev-decision.action`, the terminal `story-*` event and task phase, plus the
    project's findings or ledger artifacts. Do not repeat `CRITICAL` merely because it appears
@@ -51,21 +55,25 @@ notice itself.
 
 ### Reading an escalation
 
-A CRITICAL escalation pauses the run, and its text is the one piece of evidence bmad-loop
-silently truncates. It builds the detail by parsing the story spec, then cuts it at 2000
-characters and appends no marker. Every copy inside the run directory carries that same cut:
-`dev-decision.reason`, `story-escalated.reason`, `run-paused.reason`, `state.json`'s
-`paused_reason`, and the ATTENTION notice. **No file in the run directory holds the whole
-blocker.** The dropped half is the actionable one — it is where the blocking condition and the
-command an operator needs tend to sit.
+A CRITICAL escalation pauses the run, and its text is the piece of evidence bmad-loop truncates
+without saying so. It builds the detail by parsing the story spec, then cuts it at 2000
+characters and appends no marker.
+
+Every copy inside the run directory carries that same cut: `dev-decision.reason`,
+`story-escalated.reason`, `run-paused.reason`, `state.json`'s `paused_reason`, and the ATTENTION
+notice. This is the mechanism behind the mid-word cuts a notice shows — one truncation seen from
+five files, not five truncations, which is why cross-checking them against each other proves
+nothing. **No file in the run directory holds the whole blocker**, and the dropped half is the
+actionable one: it is where the blocking condition and the command an operator needs tend to sit.
 
 1. **Treat the notice as an index entry, not as evidence.** Its severity label is a
    classifier's guess (above), and its body may be cut. Neither supports a conclusion.
-2. **Measure the cut before reading further.** Strip the `CRITICAL escalation from dev
-   session: ` prefix from `paused_reason`. Several escalations join with `; `, so measure each
-   detail rather than the whole string. A detail sitting exactly on 2000 characters is
-   truncated, not merely long. Report it as partial. `scripts/run_probe.py` measures this and
-   raises it as its own Tier 1 finding.
+2. **Establish the cut before reading further.** `scripts/run_probe.py` measures it and raises
+   its own Tier 1 finding, so a probe usually answers this for you. Without one, the eye-level
+   tell is the text stopping mid-word or mid-sentence. To confirm by hand, strip the `CRITICAL
+   escalation from dev session: ` prefix and measure the detail — exactly 2000 characters is the
+   cap, not a coincidence — and measure each detail separately, since several escalations join
+   with `; `. Report it as partial either way.
 3. **Read the story spec's `## Auto Run Result` section.** This is the untruncated original,
    and for an escalated story it is the primary source — complete and structured, where the
    notice is capped and the log is a redraw capture. `state.json`'s `tasks.<k>.spec_file` names
@@ -78,8 +86,29 @@ command an operator needs tend to sit.
    recover. Bracket the session's byte range with `log_task` and `log_pos` per
    `log-forensics.md`. Report it as a reconstruction from a redraw capture, and quote it
    rather than paraphrasing.
-5. **Only then say why the run paused.** A report concluding that the escalation looks spurious
-   without having reached step 3 or 4 is not a finding. It is the absence of one.
+5. **Only then say why the run paused** — and say it with the blocker quoted, not summarized.
+   A report concluding that the escalation looks spurious without having reached step 3 or 4 is
+   not a finding. It is the absence of one.
+
+The remedy needs the same care as the finding. `bmad-loop resolve` re-drives the story, so on a
+real blocker it walks the next session into the same wall — a pre-commit hook still refusing, a
+service still down. Lead with whatever clears the block; the spec's result section often names
+the exact command, and quoting it beats offering the generic `resolve`. Reach for `resolve` when
+the block is genuinely cleared or the escalation really was spurious, and say which of the two
+you concluded.
+
+**Do not read a cleared pause as a settled escalation.** `resume` and `resolve` both clear
+`paused_reason`, `paused_stage` and `paused_story_key` outright, and only `resolve` re-arms the
+story. The two therefore look identical in `state.json`'s pause fields and are not: after a
+plain `resume` the task sits at `phase: escalated` forever, terminal, with nothing left in the
+run that will pick it back up — the same trap as a parked story, one phase over. A task at
+`escalated` on a run that is not paused is that trap, and `scripts/run_probe.py` reports it as
+Tier 3.
+
+This is also why a post-mortem cannot lead with `paused_reason`. On any resumed run that field
+is already gone, while `journal.jsonl` keeps `story-escalated.reason` and `run-paused.reason`
+forever — append-only, no compaction path anywhere in bmad-loop. For a finished or resumed run,
+start from the journal and take the same five steps above.
 
 Absence of a stated blocker in `ATTENTION` is not evidence that there was no blocker. It is the
 same mistake as reading an empty `--section errors` as a clean run, one layer up.
@@ -135,6 +164,7 @@ comparing artifacts across time, which is why a probe writes a snapshot.
 | Story re-driven | Multiple `story-start` entries for one `story_key` in the journal | Work restarted from the beginning |
 | Silent verify failure | Backlog count unchanged although a story reached `done` | A verify command ending in `\|\| true` failed without failing the run — check `policy_snapshot.verify.commands` for which steps this project made non-fatal |
 | Session budget guard disabled | No `budget-tripped` or `over-budget-fired` ever appears, despite a heavy-spend session | The adapter has no mid-session usage signal to sample, so `session_budget_mode` (`warn` or `enforce`) is inert regardless of setting. Absence of the event is not evidence the session stayed under budget |
+| Story resumed past, not resolved | `tasks.<k>.phase = "escalated"` while `paused_reason` is null | A plain `bmad-loop resume` clears the pause without re-arming the story. The phase is terminal, so nothing re-drives it — see "Reading an escalation" |
 | Debt accumulating | `deferred-work.md` growing while `sweep.auto = "never"` | Nothing triages the ledger until someone runs `bmad-loop sweep` |
 | Working tree drifting | `git status --short` count climbing under `scm.isolation = "none"` | The run edits the live checkout. With `rollback_on_failure = false`, a failed attempt leaves it dirty and pauses |
 
