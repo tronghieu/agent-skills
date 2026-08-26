@@ -42,7 +42,7 @@ npx skills add tronghieu/agent-skills --skill bmad-run-inspector
 2. **探测状态。** `scripts/run_probe.py` 直接读取 `state.json` 和 `journal.jsonl`——不解析日志——并报告健康标志、每个 story 的 phase/attempt/评审轮次、心跳（heartbeat）的新旧程度，以及按三个严重级别排序的发现。它会对自身状态拍一次快照，这样下一次探测就能报告发生了什么变化，而这正是区分"在正常工作"和"已经卡死"的关键。
 3. **谨慎地重建叙事。** `scripts/extract_transcript.py` 剥离终端转义序列，并用每一行被重绘过的最长版本重建出每一条逻辑行，把一份体积达数兆字节的录像压缩成几十行经过分类的内容：工具调用、子代理开销、流式返回的结果、正文，以及 CLI 自身的进度计数器。`--collapsed` 这一遍会报告有多大比例的 story 在结构上是不可读的，这样这个数字就可以被直接引用，而不必含糊其辞。
 4. **与工作树交叉核对。** 日志说的是代理尝试做了什么；git 说的是真正落地了什么。将其与 story 记录的基线提交（baseline commit）做 diff，能捕捉到"代理写了代码"和"代理只是叙述了写代码这件事"之间的差距。
-5. **读取真正的裁决。** `session-end.status` 看起来像是答案，但其实不是——它只说明这次 CLI 会话是怎么结束的，并不说明这份工作是否被接受。真正的结果要依次看 `dev-decision.action`、journal 里最终的 kind（`story-done`、`story-deferred`、`story-escalated`、`story-awaiting-operator`），以及该 story 的最终 phase。如果用户需要实际失败的断言内容，这个 Skill 会重新运行 verify 命令，而不是从 journal 里猜测。
+5. **读取真正的裁决。** `session-end.status` 看起来像是答案，但其实不是——它只说明这次 CLI 会话是怎么结束的，并不说明这份工作是否被接受。真正的结果要依次看 `dev-decision.action`、journal 里最终的 kind（`story-done`、`story-deferred`、`story-escalated`、`story-awaiting-operator`），以及该 story 的最终 phase。如果用户需要实际失败的断言内容，这个 Skill 会重新运行 verify 命令，而不是从 journal 里猜测。escalation 还要多走一步：bmad-loop 会把 escalation 的原因截断在 2000 个字符，运行目录里的每一份副本都是同样的截断，所以这个 Skill 会去读 story spec 里的结果小节，而不是拿一条被截断的 notice 来解释这次 pause。
 
 ## 你会收到什么
 

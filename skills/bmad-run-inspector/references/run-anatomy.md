@@ -1,10 +1,20 @@
 # Run Directory Anatomy
 
 Every `bmad-loop` run writes to `.bmad-loop/runs/<run-id>/`. The run id is
-`<YYYYMMDD>-<HHMMSS>-<ref>`; the four-character ref is the short handle
-`bmad-loop list` prints. The run-scoped subcommands accept it — `status`, `resume`,
-`resolve`, `attach`, `stop`, `diagnose`, `delete`, `archive` — but not every subcommand
-does; see `anomaly-triage.md` for the ones that don't.
+`<YYYYMMDD>-<HHMMSS>-<ref>`. The four-character ref is the short handle `bmad-loop list`
+prints. The run-scoped subcommands accept that ref: `status`, `resume`, `resolve`, `attach`,
+`stop`, `diagnose`, `delete`, `archive`. Not every subcommand does. See `anomaly-triage.md` for
+the ones that do not.
+
+| Section | Answers |
+|---|---|
+| The two tables below | Which file holds what, and whether it should be there at all |
+| `state.json` | Structural truth: task phases, attempts, baselines, the frozen policy |
+| `journal.jsonl` | What happened and when — including which fields arrive truncated |
+| `tasks/<task-id>/` | Per-session working dir, heartbeat, session lifecycle |
+| `engine.pid`, `events/` | Whether the engine lives; where hook events actually go now |
+| The story spec | The escalation evidence that lives outside the run directory |
+| What no file in here records | The absences that read as good news and aren't |
 
 | Entry | Purpose | Presence |
 |---|---|---|
@@ -28,8 +38,8 @@ does; see `anomaly-triage.md` for the ones that don't.
 | `sentinels/` | copies of pre-planning-halt sentinel specs | stories engine, sentinel hit |
 | `events/` | legacy in-tree hook-event channel — receives nothing on a current install, see `events/` below | legacy |
 
-The `resume` config-digest baseline is run-scoped but is not in the run dir; it lives
-out of tree — see `events/` below.
+The `resume` config-digest baseline is run-scoped but is not in the run dir. It lives out of
+tree. See `events/` below.
 
 Sibling directories under `.bmad-loop/`:
 
@@ -44,16 +54,16 @@ Sibling directories under `.bmad-loop/`:
 | `operator-actions.json` | legacy pre-0.10 single-file park index; nothing writes it now, only read-and-prune |
 | `bmad_loop_hook.py` | the hook relay script copied into the project |
 
-`bmad-loop list` and `bmad-loop status` read only `runs/` — an archived run is invisible
-to both, and asking either for one returns `no such run`. Post-mortem work on an archived
-run means extracting the tarball and reading the artifacts by hand.
+`bmad-loop list` and `bmad-loop status` read only `runs/`. An archived run is invisible to both,
+and asking either for one returns `no such run`. Post-mortem work on an archived run means
+extracting the tarball and reading the artifacts by hand.
 
 ## state.json
 
-The structural source of truth. Read it before anything else — it is small, exact, and
-never lies about phase or attempt counts.
+The structural source of truth. Read it before anything else. It is small, exact, and never
+lies about phase or attempt counts.
 
-**Top-level failure flags.** These are the tier-1 signals; all default to `false`/`null`
+**Top-level failure flags.** These are the tier-1 signals. All default to `false`/`null`
 on a healthy in-flight run:
 
 | Key | Meaning when set |
@@ -66,18 +76,19 @@ on a healthy in-flight run:
 | `paused_story_key` | The story `bmad-loop resolve <run-id>` re-drives by default; pass `--story <key>` to override it |
 
 **Run identity.** `run_id`, `run_type` (`story` or `sweep`), `started_at`, `current_epic`,
-`epic_filter`, `story_filter`, `max_stories`, `source` (which backlog mode fed the run —
-a choice made by the project's policy, not a default the tool picks for you), `target_branch`,
-`sweep_cycle`, `sweeps_triggered`, `trusted_config_digest`, `project`, `spec_folder`,
-`plugin_shared`.
-`trusted_config_digest` is not new in 0.10.0 — the field predates the release. What
-changed is that the authoritative config-digest baseline moved out of tree (see `events/`
-below); this copy was demoted to a fallback, consulted only when the out-of-tree file is
-missing.
+`epic_filter`, `story_filter`, `max_stories`, `source`, `target_branch`, `sweep_cycle`,
+`sweeps_triggered`, `trusted_config_digest`, `project`, `spec_folder`, `plugin_shared`.
 
-**`tasks`** — a dict keyed by story key. This is the field people miss; it is not
-`units` and not `stories`. Note the collision: this map is keyed by story key, while the
-`tasks/` **directory** (below) is keyed by task-id — different things sharing a name.
+`source` names which backlog mode fed the run. The project's policy chooses it. It is not a
+default the tool picks for you.
+
+`trusted_config_digest` is not new in 0.10.0. The field predates the release. What changed is
+that the authoritative config-digest baseline moved out of tree (see `events/` below). This copy
+was demoted to a fallback, consulted only when the out-of-tree file is missing.
+
+**`tasks`** is a dict keyed by story key. This is the field people miss. It is not `units` and
+not `stories`. Watch the name collision: this map is keyed by story key, while the `tasks/`
+**directory** (below) is keyed by task-id. Two different things share the name.
 
 | Field | Use |
 |---|---|
@@ -89,7 +100,7 @@ missing.
 | `baseline_commit` | The commit the run started from — diff against this for the real change set |
 | `baseline_untracked` | Untracked files that already existed, so they are not blamed on the run |
 | `baseline_ledger_digest` | Hash of the deferred-work ledger at start, used to detect harvest |
-| `spec_file` | Path to the story's spec |
+| `spec_file` | Path to the story's spec. For an escalated story this is primary evidence, not a cross-reference — see "The story spec" below |
 | `commit_sha` | The commit the story landed on, once committed |
 | `defer_reason` | Why a deferred story was deferred |
 | `worktree_path`, `branch` | Where isolated work lives, under `scm.isolation = "worktree"` |
@@ -108,17 +119,18 @@ close-intent flags (`bundle_closes_intended`, `story_closes_intended`,
 **Phase enum, complete.** `pending, dev-running, dev-verify, review-running,
 review-verify, committing, triage-running, triage-verify, done, deferred, escalated,
 awaiting-operator`. `triage-running` and `triage-verify` are sweep-only.
-`TERMINAL_PHASES = {done, deferred, escalated, awaiting-operator}`. `awaiting-operator`
-is **new in 0.10.0** — see `.bmad-loop/operator/` above for the park record; see
+`TERMINAL_PHASES = {done, deferred, escalated, awaiting-operator}`. `awaiting-operator` is
+**new in 0.10.0**. See `.bmad-loop/operator/` above for the park record. See
 `anomaly-triage.md` for how to respond to a parked story.
 
-**`policy_snapshot`** — the policy as frozen at run start. Always read thresholds from
-here rather than from `.bmad-loop/policy.toml`, because the live file may have been edited
-after the run began. Sub-tables: `limits`, `verify`, `review`, `gates`, `scm`, `adapter`,
-`stories`, `dev`, `notify`, `sweep`, `cleanup`, `plugins`, `tui`, `operator`, `mux`.
-Two of those are load-bearing elsewhere in this skill: `log-forensics.md` sends the reader
-to `[mux] backend` to identify the multiplexer, and `anomaly-triage.md` builds its whole
-story-parking explanation on `policy.operator.enabled`.
+**`policy_snapshot`** is the policy as frozen at run start. Always read thresholds from here,
+never from `.bmad-loop/policy.toml`, because someone may have edited the live file after the run
+began. Sub-tables: `limits`, `verify`, `review`, `gates`, `scm`, `adapter`, `stories`, `dev`,
+`notify`, `sweep`, `cleanup`, `plugins`, `tui`, `operator`, `mux`.
+
+Two of those are load-bearing elsewhere in this skill. `log-forensics.md` sends the reader to
+`[mux] backend` to identify the multiplexer. `anomaly-triage.md` builds its whole story-parking
+explanation on `policy.operator.enabled`.
 
 The `limits` worth knowing: `max_dev_attempts`, `max_review_cycles`,
 `max_followup_reviews`, `session_timeout_min`, `dev_stall_grace_s`, `dev_stall_nudges`,
@@ -145,49 +157,66 @@ matter, not an inventory.
 | `story-start` | `story_key` |
 | `session-start` | `task_id, role, adapter, model, story_key, prompt` |
 | `session-end` | `task_id, status, tokens, tokens_weighted`, plus applicable extras: `fired_at, teardown_s, expired_clock` / `budget_weighted, budget, budget_mode` / `env_fault, env_fault_evidence` / `session_vanished`. Abort form: `task_id, status="aborted", error` |
-| `dev-decision` | `story_key, attempt, session_status, action, reason, env_fault, session_vanished` |
+| `dev-decision` | `story_key, attempt, session_status, action, reason, env_fault, session_vanished`. On an escalation the `reason` is truncated — see below |
 | `spec-deferrals-harvested` | `story_key, spec, dw_ids, deduped, malformed` |
-| `story-escalated` | `story_key, reason` |
+| `story-escalated` | `story_key, reason` — the same truncated text, see below |
 | `story-awaiting-operator` | `story_key, commit, actions` |
 | `token-budget-exceeded` | `story_key, weighted, total, budget` |
-| `run-paused` | `reason, stage, story_key` |
+| `run-paused` | `reason, stage, story_key` — the same truncated text, see below |
 | `run-crash` | `error, message, epic` |
 | `run-stop` | varies: `graceful, remaining` / `reason` / `pid, fallback` |
 
-**Watch the field names.** `session-end` carries `status`; `dev-decision` carries
-`session_status` — different keys on different kinds. `rc` belongs to `plugin-hook`,
-not to either of them.
+**Watch the field names.** `session-end` carries `status`. `dev-decision` carries
+`session_status`. Different keys on different kinds. `rc` belongs to `plugin-hook`, not to
+either of them.
 
 Treat any kind containing `error`, `crash`, `escalat`, `stall`, `fail`, `env_fault`,
 `pause`, or `budget` as a finding to report.
 
+**An escalation `reason` is truncated, silently.** bmad-loop builds the detail by parsing the
+story spec's `## Auto Run Result` section, cuts it at 2000 characters, and appends no marker.
+That one cut string reaches `dev-decision.reason`, `story-escalated.reason`,
+`run-paused.reason`, `state.json`'s `paused_reason` and the ATTENTION notice alike. **No file in
+the run directory holds the whole blocker.**
+
+bmad-loop adds the wrapper `CRITICAL escalation from dev session: ` on top of the already-cut
+detail. So measure the detail, not the whole string. `anomaly-triage.md` has the reading order.
+"The story spec" below has the uncut original.
+
+The journal is where that text survives. `resume` and `resolve` both clear `paused_reason`,
+`paused_stage` and `paused_story_key` from `state.json`. `journal.jsonl` keeps its copies
+forever, because it is append-only and bmad-loop has no rewrite or compaction path. On a resumed
+or finished run, the journal is the only record in the directory that an escalation happened at
+all.
+
 Two readings that need care:
 
-- A short journal is normal. Most of a run's activity happens inside one long dev session
-  and produces no journal entries until it ends. Seven lines after an hour is healthy, not
-  stalled — check the heartbeat and progress counter instead.
-- Repeated `story-start` entries for the same `story_key` mean the story is being
-  re-driven from the beginning, not progressing.
+- A short journal is normal. Most of a run's activity happens inside one long dev session and
+  produces no journal entries until it ends. Seven lines after an hour is healthy, not stalled.
+  Check the heartbeat and progress counter instead.
+- Repeated `story-start` entries for the same `story_key` mean the story is being re-driven
+  from the beginning, not progressing.
 
-**Reading pass/fail.** `session-end.status` (`completed | stalled | timeout | crashed |
-over_budget | aborted`) describes only how the CLI session ended — nothing about whether
-the work was accepted. A `completed` session can still be rejected, and a `crashed` or
-`timeout` session can still be salvaged. The authoritative outcome is
-**`dev-decision.action`** (`proceed, retry, defer, pause, salvage`), together with the
-terminal per-story kinds — `story-done`, `story-deferred`, `story-escalated`,
-`story-awaiting-operator` — and the task's terminal `phase` in `state.json`.
+**Reading pass/fail.** `session-end.status` is one of `completed | stalled | timeout | crashed
+| over_budget | aborted`. It describes only how the CLI session ended, never whether the work
+was accepted. A `completed` session can still be rejected. A `crashed` or `timeout` session can
+still be salvaged.
 
-**`log_pos` / `log_task`.** `log_pos` is the byte size of `logs/<log_task>.log`, stat'd at
-the moment the journal entry is appended — not a marker inside the log. Whether it lands
-before or after the event it describes depends on the call site (`session-start` is
-appended before the session runs; `session-end` after it finishes). See
-`log-forensics.md` for slicing a log by these offsets.
+The authoritative outcome is **`dev-decision.action`** (`proceed, retry, defer, pause,
+salvage`). Read it together with the terminal per-story kinds (`story-done`, `story-deferred`,
+`story-escalated`, `story-awaiting-operator`) and the task's terminal `phase` in `state.json`.
+
+**`log_pos` / `log_task`.** `log_pos` is the byte size of `logs/<log_task>.log`, stat'd at the
+moment the journal entry is appended. It is not a marker inside the log. Whether it lands before
+or after the event it describes depends on the call site. `session-start` is appended before the
+session runs. `session-end` is appended after it finishes. See `log-forensics.md` for slicing a log by these
+offsets.
 
 ## tasks/&lt;task-id&gt;/
 
-task-id = story key + phase + attempt, e.g. `story-key-example-dev-1`. The log
-basename minus `.log` (`logs/<task-id>.log`) is exactly the task-id — that's how you join
-a log to its task dir.
+task-id = story key + phase + attempt, for example `story-key-example-dev-1`. The log basename
+minus `.log` (`logs/<task-id>.log`) is exactly the task-id. That is how you join a log to its
+task dir.
 
 | File | Shape | Presence |
 |---|---|---|
@@ -198,14 +227,16 @@ a log to its task dir.
 | `result.json` | skill-defined dict | written by the driven skill, not by bmad-loop, which only deletes it at session start and reads it back |
 
 **Whether `result.json` appears depends on which dev skill the project's policy wires up.**
-Some skill contracts write it; others never do and the adapter instead synthesises the
-result from the story spec's frontmatter. Check the project's `policy.toml` (or the
-`policy_snapshot.dev.skill` key in `state.json` — `policy_snapshot.adapter` holds the
-coding-CLI selection, not the skill) for the dev skill in play before treating
-an absent `result.json` as evidence of anything — on its own, absence is not a fault.
+Some skill contracts write it. Others never do, and the adapter synthesises the result from the
+story spec's frontmatter instead.
 
-`prompt.txt` holds the launching prompt (e.g. `/bmad-build-auto <story-key>`), which is
-how you confirm the session is working on the story you think it is.
+So identify the dev skill in play before you treat an absent `result.json` as evidence of
+anything. On its own, absence is not a fault. Read it from the project's `policy.toml`, or from
+`policy_snapshot.dev.skill` in `state.json`. Note that `policy_snapshot.adapter` holds the
+coding-CLI selection, not the skill.
+
+`prompt.txt` holds the launching prompt, for example `/bmad-build-auto <story-key>`. Use it to
+confirm the session is working on the story you think it is.
 
 ## tasks/&lt;task-id&gt;/heartbeat.json
 
@@ -221,11 +252,15 @@ Written by the engine while a session runs. Four fields:
 ## tasks/&lt;task-id&gt;/session-lifecycle.jsonl
 
 **There is no event marking a normal session end.** This file records teardown and guard
-breadcrumbs, not a success/failure verdict. `kill-outcome` and `straggler-reap` are
-ordinary — teardown emits `kill-outcome` whenever any process in the session's tree is
-still alive at that point, which is the common case, not a red flag. Read the
-`timeout-fired`, `budget-tripped`/`over-budget-fired`, and the contract-refusal events
-(`frontmatter-unmodified-refused`, `readback-refused-no-proof-of-work`) as the findings.
+breadcrumbs, not a success or failure verdict.
+
+`kill-outcome` and `straggler-reap` are ordinary. Teardown emits `kill-outcome` whenever any
+process in the session's tree is still alive at that point, which is the common case. It is not
+a red flag.
+
+The findings are `timeout-fired`, `budget-tripped`, `over-budget-fired`, and the two
+contract-refusal events: `frontmatter-unmodified-refused` and
+`readback-refused-no-proof-of-work`.
 
 | Event | Fields |
 |---|---|
@@ -248,40 +283,72 @@ again.
 
 ## engine.pid
 
-One line, no trailing newline. Check liveness with `os.kill(pid, 0)` or `ps -p`. A dead
-pid with `finished`/`stopped` still `false` is tier 1: the orchestrator died without
+One line, no trailing newline. Check liveness with `os.kill(pid, 0)` or `ps -p`. A dead pid
+while `finished` and `stopped` are still `false` is tier 1. The orchestrator died without
 recording an ending, and nothing will resume it on its own.
 
-Note the file holds the *engine* pid, not the coding CLI's. The agent session lives in a
-multiplexer session named `bmad-loop-<run-id>`; `bmad-loop attach` opens it regardless of
-backend. For tmux specifically, `tmux ls` shows it. Run `bmad-loop mux` (bare, no
-subcommand) to see which backend a run is on.
+The file holds the *engine* pid, not the coding CLI's. The agent session lives in a multiplexer
+session named `bmad-loop-<run-id>`. `bmad-loop attach` opens it regardless of backend. For tmux
+specifically, `tmux ls` shows it. Run bare `bmad-loop mux` to see which backend a run is on.
 
 ## events/
 
-**Empty once the relay is current; a populated directory means a stale relay.** Hook
-events moved out of the project tree.
+**Empty once the relay is current. A populated directory means a stale relay.** Hook events
+moved out of the project tree.
+
 The engine sets `BMAD_LOOP_EVENTS_DIR` for every session it launches, so
-`runs/<run-id>/events/` receives nothing on any current install; it survives only so an
-un-upgraded relay script — which falls back to the in-tree path when that variable is
-absent — keeps working.
+`runs/<run-id>/events/` receives nothing on any current install. The directory survives only to
+keep an un-upgraded relay script working, because that script falls back to the in-tree path
+when the variable is absent.
 
 State-root resolution, first match wins:
 
-1. `BMAD_LOOP_STATE_DIR` — used verbatim as the root, must be absolute.
+1. `BMAD_LOOP_STATE_DIR`, used verbatim as the root. Must be absolute.
 2. POSIX: `$XDG_STATE_HOME/bmad-loop` if absolute, else `~/.local/state/bmad-loop`.
 3. Windows: `%LOCALAPPDATA%\bmad-loop\state`, else the `%USERPROFILE%` equivalent.
 
 Events for a run land at `<state-root>/<project-tag>/<run-id>/events`, where the project
 tag is the first 16 hex chars of the sha256 of the resolved project path.
 
-`bmad-loop validate` reports a stale relay as `hooks.relay-stale`; `bmad-loop relay
-<Event>` is the current entry point.
+`bmad-loop validate` reports a stale relay as `hooks.relay-stale`. `bmad-loop relay <Event>` is
+the current entry point.
+
+## The story spec
+
+The spec lives outside the run directory. On an escalation it is the only artifact that survives
+whole. `state.json`'s `tasks.<k>.spec_file` names it. Use that path. Do not build one.
+
+Where specs live is the project's decision, not bmad-loop's. The directory comes from
+`implementation_artifacts` in `_bmad/bmm/config.yaml`. That key is required and has no bmad-loop
+default. It is resolved against the project root.
+
+bmad-loop then globs `*.md` in that directory and keeps a file if either of these holds: it
+carries a `## Auto Run Result` heading, or its name begins with `bmad-build-auto-result-` or
+`bmad-dev-auto-result-`. A `spec-<story-key>.md` filename is one project's convention, not a
+pattern bmad-loop enforces.
+
+Stories mode resolves specs on a different key entirely. `policy_snapshot.stories.spec_folder`
+is empty by default and puts them at `<spec-folder>/stories/<id>-*.md`.
+
+`## Auto Run Result` is the section that matters. bmad-loop reads a `Status:` line out of it,
+tolerating bullet and bold markup. It takes the whole trimmed body as the escalation detail,
+then truncates that.
+
+The body is free-form prose from the project's dev skill. bmad-loop parses no subheadings
+inside it, so what a blocker is called there varies by project. Read the section through. Do not
+grep for a heading name. For an escalated story, read this before anything in the run directory.
+See `anomaly-triage.md`.
+
+When no result body parses, the detail falls back to the literal `generic dev session reported
+a blocked outcome`. Seeing exactly that string in `paused_reason` means the spec has nothing to
+recover. The log tail is then the only remaining source.
 
 ## What no file in here records
 
 Be explicit about these when reporting, because their absence reads as absence of problems:
 
 - Test pass/fail counts (see `log-forensics.md`).
-- The result of verify commands ending in `|| true` — they always exit 0.
-- Anything a subagent did internally; only its final `Done(…)` summary line reaches the log.
+- The result of verify commands ending in `|| true`. They always exit 0.
+- Anything a subagent did internally. Only its final `Done(…)` summary line reaches the log.
+- The second half of a truncated escalation. Every copy in here is cut at the same 2000
+  characters. Only the story spec has it whole.
