@@ -12,12 +12,42 @@ your own run's `policy_snapshot` instead of trusting what's printed here.
 | Engine crashed | `crashed: true`, `crash_error` non-null | Report the traceback. `bmad-loop diagnose` produces a sanitized dump for maintainers |
 | Run paused | `paused_reason` / `paused_stage` non-null | `bmad-loop resolve <run-id>` for a CRITICAL escalation — re-drives `paused_story_key` by default, pass `--story <key>` only to override it; `bmad-loop resume <run-id>` if the block is already cleared |
 | Engine died silently | `engine.pid` not alive while `finished` and `stopped` are both false | Nothing will resume it. Decide between `bmad-loop resume <run-id>` and a fresh run; check the working tree first if `scm.isolation = "none"` |
-| Attention raised | An `ATTENTION` file in the run dir | Read it — the engine writes it precisely because it wants a human. Governed by `notify.file` |
+| Attention raised | A new or unresolved notice in `ATTENTION`; file existence alone is not enough | Read the whole file, then corroborate the newest notice as described below. Governed by `notify.file` |
 | Run concluded | `finished: true` or `stopped: true` | Not a fault, but the moment a summary is owed: stories completed, backlog remaining, working-tree state |
 | Story parked for an operator | `tasks.<k>.phase = "awaiting-operator"` | `bmad-loop confirm <story-key>` (`--list`, `--json`, `--yes`, `--reverify`) |
 
 A gate can also hold a run: `gates.mode = "per-epic"` pauses at each epic boundary for
 approval. That surfaces as a pause with a gate-shaped reason — approval, not debugging.
+
+### Reading an ATTENTION file
+
+`ATTENTION` is append-only. Once the first notice is written, the file remains present for
+the rest of the run, so existence alone cannot stay a Tier 1 signal. Read it as a sequence of
+timestamped blocks, oldest first; a line matching `[YYYY-MM-DD HH:MM:SS] title: message`
+starts a block and following unprefixed lines continue it.
+
+1. Read the whole file and start with the newest block. Compare its timestamp with the prior
+   probe and with later settling journal events such as `story-done`, `story-deferred`,
+   `run-resume`, `run-stop`, or `run-complete`. A notice superseded by one of those events is
+   historical, not a live Tier 1 finding. Same-second ordering is ambiguous because ATTENTION
+   timestamps have no fractions; keep it live until another source settles it.
+2. Check whether the newest block is complete. A missing final newline is direct evidence of
+   a partial append. A newline does **not** prove completeness: repeated blocks ending at the
+   same mid-word or an abruptly cut sentence are also truncation clues. Report partial evidence
+   explicitly and recover the outcome from `journal.jsonl`, `state.json`, or the task artifacts.
+3. Treat the title and severity label as classifier output over free text, not as a verdict.
+   Cross-check `dev-decision.action`, the terminal `story-*` event and task phase, plus the
+   project's findings or ledger artifacts. Do not repeat `CRITICAL` merely because it appears
+   in the notice.
+4. Check the project adapter. With `dev.writes_result_json = false`, bmad-loop has no structured
+   `result.json` channel for that dev session and may classify synthesized prose instead; a
+   severity mismatch is therefore more plausible, not more authoritative.
+
+`scripts/run_probe.py` records each ATTENTION file's size, notice count, newest timestamp and
+newline state in `.probe-snapshot.json`. It reports a changed block as `new since last probe`,
+keeps an unsuperseded block as `unresolved`, and demotes a block followed by a settling journal
+event to historical context. This metadata narrows the reading; it never replaces reading the
+notice itself.
 
 A story parks when three things hold: `policy.operator.enabled` (sprint mode only), the dev
 session's spec frontmatter reads `status: awaiting-operator`, and it declares a non-empty

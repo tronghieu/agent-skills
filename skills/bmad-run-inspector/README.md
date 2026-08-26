@@ -52,7 +52,7 @@ Findings are ranked by urgency, not discovery order:
 
 | Tier | Example | Typical remedy |
 | --- | --- | --- |
-| **1 — needs a human now** | Crashed engine, a run paused on an escalation, a dead engine pid, an `ATTENTION` file | `bmad-loop resolve <run-id>`, `bmad-loop resume <run-id>`, or `bmad-loop diagnose` |
+| **1 — needs a human now** | Crashed engine, a run paused on an escalation, a dead engine pid, a new or unresolved `ATTENTION` notice | `bmad-loop resolve <run-id>`, `bmad-loop resume <run-id>`, or `bmad-loop diagnose` |
 | **2 — about to fail** | Last dev attempt before the story's cap, review cycles not converging, a stale heartbeat, session budget nearly gone mid-implementation | Watch closely; intervene before the next automatic failure |
 | **3 — silent rot** | Log growing while the progress counter is frozen and nothing new is streaming, identical tool calls repeating, a deferred-work ledger swelling with sweeps disabled | Compare two probes; nothing else in the run surfaces these on its own |
 

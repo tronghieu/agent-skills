@@ -27,6 +27,7 @@ import argparse
 import glob
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -39,6 +40,19 @@ HEARTBEAT_INTERVAL_S = 30
 # interval before a flat log is even eligible to be called a hang) — one
 # threshold, not two arbitrary ones.
 STALE_S = 120
+
+ATTENTION_HEADER = re.compile(r"^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]\s+")
+ATTENTION_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+# These events settle or supersede an earlier notice. Escalated and
+# awaiting-operator are deliberately absent: both still need a human.
+ATTENTION_RESOLUTION_KINDS = {
+    "checkpoint-resume",
+    "run-complete",
+    "run-resume",
+    "run-stop",
+    "story-deferred",
+    "story-done",
+}
 
 
 def sh(cmd: list[str], cwd: str | None = None, timeout: int = 30) -> str:
@@ -63,6 +77,103 @@ def pid_alive(pid: str) -> bool:
         return False
     except PermissionError:
         return True  # exists, owned by someone else
+
+
+def stop_request(run: str) -> dict | None:
+    """Read the pending stop-control file without treating malformed bytes as hard.
+
+    bmad-loop 0.11.1 reads a present legacy, malformed, or temporarily unreadable
+    body as graceful; only an explicit ``mode: hard`` is hard. Mirror that
+    conservative contract here.
+    """
+    path = os.path.join(run, "stop-request.json")
+    if not os.path.isfile(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            body = json.load(fh)
+    except (json.JSONDecodeError, OSError, ValueError):
+        body = None
+    mode = "hard" if isinstance(body, dict) and body.get("mode") == "hard" else "graceful"
+    requested_at = body.get("requested_at") if isinstance(body, dict) else None
+    return {"mode": mode, "requested_at": requested_at}
+
+
+def attention_state(run: str, journal: list[dict]) -> dict:
+    """Summarize append-only ATTENTION files without trusting their prose labels.
+
+    A timestamped header starts a notice; continuation lines belong to that notice.
+    We retain only metadata here — an inspector must still read the whole file and
+    corroborate the newest block against structured artifacts.
+    """
+    files = []
+    newest_epoch = None
+    newest_stamp = None
+    for path in sorted(glob.glob(os.path.join(run, "ATTENTION*"))):
+        item = {
+            "name": os.path.basename(path),
+            "size": None,
+            "notice_count": 0,
+            "newest_notice_at": None,
+            "ends_with_newline": None,
+            "read_error": None,
+        }
+        try:
+            with open(path, "rb") as fh:
+                raw = fh.read()
+            item["size"] = len(raw)
+            item["ends_with_newline"] = not raw or raw.endswith(b"\n")
+            stamps = []
+            for line in raw.decode("utf-8", "replace").splitlines():
+                match = ATTENTION_HEADER.match(line)
+                if match:
+                    stamps.append(match.group(1))
+            item["notice_count"] = len(stamps)
+            if stamps:
+                item["newest_notice_at"] = stamps[-1]
+                try:
+                    epoch = time.mktime(time.strptime(stamps[-1], ATTENTION_TIME_FORMAT))
+                except (OverflowError, ValueError):
+                    epoch = None
+                if epoch is not None and (newest_epoch is None or epoch > newest_epoch):
+                    newest_epoch = epoch
+                    newest_stamp = stamps[-1]
+        except OSError as exc:
+            item["read_error"] = str(exc)
+        files.append(item)
+
+    resolutions = [
+        j for j in journal
+        if j.get("kind") in ATTENTION_RESOLUTION_KINDS and isinstance(j.get("ts"), (int, float))
+    ]
+    resolution = max(resolutions, key=lambda j: j["ts"]) if resolutions else None
+
+    # ATTENTION timestamps have only whole-second precision. Require the structured
+    # event to be more than one second newer before calling a notice historical;
+    # same-second ordering is ambiguous and therefore stays live.
+    historical = bool(
+        newest_epoch is not None
+        and resolution is not None
+        and resolution["ts"] > newest_epoch + 1
+    )
+    unreadable = any(item["read_error"] for item in files)
+    return {
+        "files": files,
+        "newest_notice_at": newest_stamp,
+        "last_resolution": (
+            {"kind": resolution.get("kind"), "ts": resolution.get("ts")} if resolution else None
+        ),
+        "historical": historical,
+        "unreadable": unreadable,
+        "possible_partial_append": any(item["ends_with_newline"] is False for item in files),
+    }
+
+
+def attention_signature(attention: dict | None) -> list[tuple]:
+    return [
+        (item.get("name"), item.get("size"), item.get("newest_notice_at"))
+        for item in (attention or {}).get("files", [])
+    ]
 
 
 def collect(project: str, run: str) -> dict:
@@ -113,6 +224,8 @@ def collect(project: str, run: str) -> dict:
                 except json.JSONDecodeError:
                     pass
 
+    attention = attention_state(run, journal)
+
     return {
         "run_dir": run,
         "probed_at": now,
@@ -137,7 +250,11 @@ def collect(project: str, run: str) -> dict:
         "journal_tail": journal[-3:],
         "journal_failures": [j for j in journal
                              if any(k in str(j.get("kind", "")).lower() for k in FAILURE_KINDS)],
-        "attention_files": [os.path.basename(p) for p in glob.glob(os.path.join(run, "ATTENTION*"))],
+        # Keep attention_files for snapshots and consumers written before the
+        # structured attention metadata was added.
+        "attention_files": [item["name"] for item in attention["files"]],
+        "attention": attention,
+        "stop_request": stop_request(run),
     }
 
 
@@ -197,8 +314,33 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
                    f"`bmad-loop resume {cur['run_id']}`")
     if cur["pid"] and not cur["pid_alive"] and not (f.get("finished") or f.get("stopped")):
         out.append(f"T1 engine pid {cur['pid']} is dead but the run never finished")
-    if cur["attention_files"]:
-        out.append(f"T1 ATTENTION file present: {cur['attention_files']}")
+    attention = cur.get("attention") or {}
+    if attention.get("files"):
+        names = [item.get("name") for item in attention["files"]]
+        newest = attention.get("newest_notice_at") or "timestamp unreadable"
+        if attention.get("unreadable"):
+            out.append(f"T1 ATTENTION cannot be read: {names}")
+        elif attention.get("historical"):
+            resolution = attention.get("last_resolution") or {}
+            out.append(
+                f"context: ATTENTION contains historical notices; newest={newest}, "
+                f"later resolution={resolution.get('kind')}"
+            )
+        else:
+            changed = (
+                not prev
+                or attention_signature(attention) != attention_signature(prev.get("attention"))
+            )
+            state = "new since last probe" if prev and changed else "unresolved"
+            partial = (
+                " (possible partial append: file lacks final newline)"
+                if attention.get("possible_partial_append")
+                else ""
+            )
+            out.append(
+                f"T1 {state} ATTENTION notice: {names}, newest={newest}{partial} — "
+                "read the whole file and corroborate its label"
+            )
     if f.get("finished") or f.get("stopped"):
         out.append(f"T1 run concluded (finished={f.get('finished')} stopped={f.get('stopped')}) — report a summary")
 
@@ -229,6 +371,11 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
     if cur["journal_failures"]:
         kinds = sorted({j.get("kind") for j in cur["journal_failures"]})
         out.append(f"T2 journal carries failure entries: {kinds}")
+
+    if cur.get("stop_request"):
+        request = cur["stop_request"]
+        when = f" since {request['requested_at']}" if request.get("requested_at") else ""
+        out.append(f"context: {request['mode']} stop request pending{when}")
 
     if prev and prev.get("run_id") == cur["run_id"]:
         # Missing on a pre-timestamp snapshot: elapsed stays None, so the floor
@@ -313,6 +460,7 @@ def main() -> int:
               f"isolation={cur['isolation']}  branch={git['branch']}  dirty={git['dirty_count']}")
         print(f"flags: {display_flags(cur['flags'])}")
         print(f"limits: {cur['limits']}")
+        print(f"stop_request: {cur['stop_request']}")
         print("\n## tasks")
         for k, t in cur["tasks"].items():
             prev_t = (prev or {}).get("tasks", {}).get(k)
@@ -328,6 +476,8 @@ def main() -> int:
         print(f"\n## journal ({cur['journal_lines']} lines)")
         for j in cur["journal_tail"]:
             print("  ", json.dumps(j)[:220])
+        print("\n## attention")
+        print("  ", json.dumps(cur["attention"], default=str)[:1000])
         print("\n## findings")
         if findings:
             for f in findings:

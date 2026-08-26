@@ -1,27 +1,23 @@
 ---
 name: bmad-run-inspector
 description: >
-  Read and explain what a bmad-loop run actually did, from the artifacts it leaves in
-  `.bmad-loop/runs/<run-id>/`. Use for both live watching (periodic health checks while a
-  run is in flight, "is it stuck?", "should I be worried?") and after-the-fact forensics
-  ("what did last night's run do?", "why did story X fail?", "where did the tokens go?").
-  Reach for this before hand-rolling `tail`/`grep` over a run log — the log is a terminal
-  redraw capture, not a transcript, and reading it naively produces shredded fragments and
-  confident wrong answers about whether tests passed. Triggers on requests like "check the
-  loop", "monitor the run", "is the loop still alive", "what is the agent doing right now",
-  "summarize the run", "why did the run pause", "the loop stopped, what happened", or any
-  question that would be answered by opening a run directory — in any language (e.g.
-  Vietnamese "theo dõi bmad loop", "phân tích run", "đọc log của run", "run này làm gì";
-  Spanish "qué pasó en la última ejecución"; Chinese "查看运行日志发生了什么"; Japanese
-  "実行ログで何が起きたか確認して"; French "que s'est-il passé dans cette exécution").
-  (This is for bmad-loop's own run artifacts under `.bmad-loop/runs/` — not for reading an
-  application's runtime logs or a CI provider's build logs, which belong elsewhere.)
+  Inspect and explain bmad-loop run artifacts under `.bmad-loop/runs/`. Use for live health
+  checks ("is it stuck?", "is the loop alive?", "what is the agent doing?") and post-run
+  forensics ("what happened?", "why did story X fail?", "where did the tokens go?").
+  Reconstruct terminal-redraw captures before interpreting them; naive tail/grep can produce
+  fragments and false claims about test results. Also triggers on "monitor/check/summarize the
+  loop", "why did the run pause?", Vietnamese "theo dõi bmad loop", "phân tích run", "đọc log
+  của run", and equivalent requests in other languages. Use only for bmad-loop's own run
+  artifacts, not application runtime logs or CI-provider build logs.
 allowed-tools: Read Glob Grep Bash(python3 *) Bash(bmad-loop *) Bash(git *) Bash(ls *) Bash(ps *) Bash(wc *) Bash(tmux *) Bash(psmux *)
 ---
 
 # BMAD Run Inspector
 
-Verified against bmad-loop 0.10.0.
+Verified against [bmad-loop 0.11.1](https://github.com/bmad-code-org/bmad-loop/releases/tag/v0.11.1).
+The bundled inspector scripts support Python 3.9+; `bmad-loop` itself currently requires
+Python 3.11+, but it may be installed in an isolated environment while the host's `python3`
+still resolves to the stock macOS 3.9 interpreter.
 
 A `bmad-loop` run leaves a directory of evidence behind. This skill is about reading that
 evidence honestly: saying what it proves, and refusing to say what it doesn't.
@@ -130,9 +126,10 @@ python3 <skill>/scripts/run_probe.py --project /path/to/repo
 ```
 
 Prints health flags, per-task phase/attempt/review_cycle, heartbeats, log sizes, journal
-tail, and a findings list. It also writes `.probe-snapshot.json` into the run directory so
-the *next* probe can report deltas — that delta is what separates "working" from "hung", and
-no single reading can tell you.
+tail, ATTENTION metadata, any pending hard/graceful stop request, and a findings list. It
+also writes `.probe-snapshot.json` into the run directory so the *next* probe can report
+deltas — that delta is what separates "working" from "hung", and distinguishes a new
+ATTENTION notice from an unchanged append-only file. No single reading can tell you.
 
 Thresholds come from `state.json`'s `policy_snapshot`, not from hardcoded numbers. Every
 project tunes `max_dev_attempts` and `session_timeout_min` differently; a hardcoded 2 turns
@@ -249,7 +246,8 @@ Anomalies fall into three tiers; `references/anomaly-triage.md` has the full tab
 policy key behind each threshold and the recommended action.
 
 - **Tier 1 — needs a human now.** `crashed`, `crash_error`, `paused_reason`/`paused_stage`
-  set, engine pid dead while unfinished, an `ATTENTION` file, or the run concluding.
+  set, engine pid dead while unfinished, a new or unresolved `ATTENTION` notice, or the run
+  concluding. The file's mere existence is not enough because it is append-only.
 - **Tier 2 — about to fail.** `attempt` at the policy max, `review_cycle` not converging,
   `stall_armed` or nudges sent, stale heartbeat, session budget nearly gone while still in dev.
 - **Tier 3 — silent rot.** The ones nothing else catches: log growing while the progress

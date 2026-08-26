@@ -52,7 +52,7 @@ npx skills add tronghieu/agent-skills --skill bmad-run-inspector
 
 | 级别 | 示例 | 典型应对方式 |
 | --- | --- | --- |
-| **1 — 现在就需要人介入** | 引擎崩溃、运行因升级（escalation）而暂停、引擎 pid 已死、出现 `ATTENTION` 文件 | `bmad-loop resolve <run-id>`、`bmad-loop resume <run-id>`，或 `bmad-loop diagnose` |
+| **1 — 现在就需要人介入** | 引擎崩溃、运行因升级（escalation）而暂停、引擎 pid 已死、出现新的或尚未解决的 `ATTENTION` 通知 | `bmad-loop resolve <run-id>`、`bmad-loop resume <run-id>`，或 `bmad-loop diagnose` |
 | **2 — 即将失败** | story 上限前的最后一次开发尝试、评审循环未收敛、心跳过期、实现过程中会话预算即将耗尽 | 密切关注；在下一次自动失败发生前介入 |
 | **3 — 静默腐化** | 日志在增长但进度计数器已冻结、没有新内容在流式输出；相同的工具调用反复出现；在 sweep 被禁用的情况下 deferred-work ledger 不断膨胀 | 对比两次探测结果；运行过程中没有其他任何东西会自己暴露这些问题 |
 
