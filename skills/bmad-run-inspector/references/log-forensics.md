@@ -67,6 +67,21 @@ this correlation exists only on the journal.
 does not read or use `log_pos`. Slicing by journal offset is the targeted one — bracket the
 phase you want first, then read that range.
 
+### When the log tail is the last surviving copy
+
+Everything above says the capture cannot be trusted, and that reads as *do not go there*. There
+is one case where it is the right place to go. An escalation's `reason` is cut at 2000
+characters, and every copy in the run directory carries the same cut, so if the story spec has
+no `## Auto Run Result` section the blocker exists nowhere else — except in the last painted
+frame of that session's log. The tell is a detail reading exactly `generic dev session reported
+a blocked outcome`, bmad-loop's fallback when it found no result body to parse. Bracket the dev
+session's byte range with `log_task` and `log_pos`, reconstruct the tail, and quote it.
+
+Label it for what it is: text recovered from a redraw capture, not a transcript. A reconstructed
+tail reported as reconstructed beats repeating a truncated notice as though it were whole. See
+`anomaly-triage.md` for where this sits in the reading order — it is step 4, after the spec, not
+instead of it.
+
 ## What is NOT in the file
 
 **Collapsed tool output.** The CLI shows long results as `… +N lines (ctrl+o to expand)`.

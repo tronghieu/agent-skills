@@ -208,6 +208,13 @@ A story can also land at `story-awaiting-operator` and stay there indefinitely �
 terminal, not stuck, and clears only when a human runs `bmad-loop confirm <story-key>`. See
 `references/anomaly-triage.md` for the full handling; don't improvise it here.
 
+A story landing at `story-escalated` pauses the run, and its reason needs one extra step. Do
+not explain that pause from the journal `reason` or the ATTENTION notice: both are cut at 2000
+characters with no marker, and so is `state.json`'s `paused_reason`. The uncut text is in the
+story spec's `## Auto Run Result` section, named by `tasks.<story>.spec_file`. Reading only the
+truncated copies is how a real blocker gets reported as a misclassification —
+`references/anomaly-triage.md` has the reading order.
+
 **Watch the field names** — the easiest way to read this wrong: `session-end` carries
 `status`; `dev-decision` carries a differently-named `session_status`. `rc` belongs to
 `plugin-hook` alone. Grepping the wrong key on the wrong kind gets you a plausible-looking
@@ -247,7 +254,9 @@ policy key behind each threshold and the recommended action.
 
 - **Tier 1 — needs a human now.** `crashed`, `crash_error`, `paused_reason`/`paused_stage`
   set, engine pid dead while unfinished, a new or unresolved `ATTENTION` notice, or the run
-  concluding. The file's mere existence is not enough because it is append-only.
+  concluding. The file's mere existence is not enough because it is append-only. On an
+  escalation, every copy of the reason in the run directory is cut at the same 2000 characters
+  — read the story spec's `## Auto Run Result` section before explaining the pause.
 - **Tier 2 — about to fail.** `attempt` at the policy max, `review_cycle` not converging,
   `stall_armed` or nudges sent, stale heartbeat, session budget nearly gone while still in dev.
 - **Tier 3 — silent rot.** The ones nothing else catches: log growing while the progress
@@ -275,5 +284,7 @@ These exist because the failure mode of this task is a confident, wrong, reassur
 - Distinguish "I read this" from "I inferred this". The user acts on the difference.
 - Absence of error lines is not evidence of success — especially here, where the error
   lines are structurally absent from the capture.
+- Absence of a stated blocker is not evidence that there was no blocker. When a notice is
+  truncated, say the text is partial and go to the uncut source before concluding anything.
 - When a reading is ambiguous, say which extra command would settle it, and offer to run it.
 - Never claim a story is done because the agent said it was done. Check the phase and the diff.

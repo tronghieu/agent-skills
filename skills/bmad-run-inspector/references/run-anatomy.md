@@ -89,7 +89,7 @@ missing.
 | `baseline_commit` | The commit the run started from — diff against this for the real change set |
 | `baseline_untracked` | Untracked files that already existed, so they are not blamed on the run |
 | `baseline_ledger_digest` | Hash of the deferred-work ledger at start, used to detect harvest |
-| `spec_file` | Path to the story's spec |
+| `spec_file` | Path to the story's spec. For an escalated story this is primary evidence, not a cross-reference — see "The story spec" below |
 | `commit_sha` | The commit the story landed on, once committed |
 | `defer_reason` | Why a deferred story was deferred |
 | `worktree_path`, `branch` | Where isolated work lives, under `scm.isolation = "worktree"` |
@@ -145,12 +145,12 @@ matter, not an inventory.
 | `story-start` | `story_key` |
 | `session-start` | `task_id, role, adapter, model, story_key, prompt` |
 | `session-end` | `task_id, status, tokens, tokens_weighted`, plus applicable extras: `fired_at, teardown_s, expired_clock` / `budget_weighted, budget, budget_mode` / `env_fault, env_fault_evidence` / `session_vanished`. Abort form: `task_id, status="aborted", error` |
-| `dev-decision` | `story_key, attempt, session_status, action, reason, env_fault, session_vanished` |
+| `dev-decision` | `story_key, attempt, session_status, action, reason, env_fault, session_vanished`. On an escalation the `reason` is truncated — see below |
 | `spec-deferrals-harvested` | `story_key, spec, dw_ids, deduped, malformed` |
-| `story-escalated` | `story_key, reason` |
+| `story-escalated` | `story_key, reason` — the same truncated text, see below |
 | `story-awaiting-operator` | `story_key, commit, actions` |
 | `token-budget-exceeded` | `story_key, weighted, total, budget` |
-| `run-paused` | `reason, stage, story_key` |
+| `run-paused` | `reason, stage, story_key` — the same truncated text, see below |
 | `run-crash` | `error, message, epic` |
 | `run-stop` | varies: `graceful, remaining` / `reason` / `pid, fallback` |
 
@@ -160,6 +160,15 @@ not to either of them.
 
 Treat any kind containing `error`, `crash`, `escalat`, `stall`, `fail`, `env_fault`,
 `pause`, or `budget` as a finding to report.
+
+**An escalation `reason` is truncated, silently.** bmad-loop builds the detail by parsing the
+story spec's `## Auto Run Result` section, then cuts it at 2000 characters and appends no
+marker. That one cut string is what reaches `dev-decision.reason`, `story-escalated.reason`,
+`run-paused.reason`, `state.json`'s `paused_reason` and the ATTENTION notice alike — **no file
+in the run directory holds the whole blocker.** The wrapper `CRITICAL escalation from dev
+session: ` is added on top of the already-cut detail, so measure the detail rather than the
+whole string. `anomaly-triage.md` has the reading order; "The story spec" below has the
+uncut original.
 
 Two readings that need care:
 
@@ -278,6 +287,32 @@ tag is the first 16 hex chars of the sha256 of the resolved project path.
 `bmad-loop validate` reports a stale relay as `hooks.relay-stale`; `bmad-loop relay
 <Event>` is the current entry point.
 
+## The story spec
+
+The spec lives outside the run directory, and on an escalation it is the only artifact that
+survives whole. `state.json`'s `tasks.<k>.spec_file` names it — use that path rather than
+building one.
+
+Where specs live is the project's decision, not bmad-loop's. The directory comes from
+`implementation_artifacts` in `_bmad/bmm/config.yaml`, a required key with no bmad-loop
+default, resolved against the project root. bmad-loop then globs `*.md` there and keeps files
+that either carry a `## Auto Run Result` heading or whose names begin with
+`bmad-build-auto-result-` or `bmad-dev-auto-result-`. A `spec-<story-key>.md` filename is one
+project's convention, not a pattern bmad-loop enforces. Stories mode resolves specs on a
+different key entirely — `policy_snapshot.stories.spec_folder`, empty by default, putting them
+at `<spec-folder>/stories/<id>-*.md`.
+
+`## Auto Run Result` is the section that matters. bmad-loop reads a `Status:` line out of it —
+tolerating bullet and bold markup — and takes the whole trimmed body as the escalation detail,
+which it then truncates. The body is free-form prose from the project's dev skill, and
+bmad-loop parses no subheadings inside it, so what a blocker is called there varies by project.
+Read the section through; do not grep for a heading name. For an escalated story this comes
+before anything in the run directory — see `anomaly-triage.md`.
+
+When no result body parses, the detail falls back to the literal `generic dev session reported
+a blocked outcome`. Seeing exactly that string in `paused_reason` means the spec has nothing to
+recover and the log tail is the only remaining source.
+
 ## What no file in here records
 
 Be explicit about these when reporting, because their absence reads as absence of problems:
@@ -285,3 +320,5 @@ Be explicit about these when reporting, because their absence reads as absence o
 - Test pass/fail counts (see `log-forensics.md`).
 - The result of verify commands ending in `|| true` — they always exit 0.
 - Anything a subagent did internally; only its final `Done(…)` summary line reaches the log.
+- The second half of a truncated escalation. Every copy in here is cut at the same 2000
+  characters; only the story spec has it whole.

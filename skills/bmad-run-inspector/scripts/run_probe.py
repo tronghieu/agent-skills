@@ -54,6 +54,13 @@ ATTENTION_RESOLUTION_KINDS = {
     "story-done",
 }
 
+# bmad-loop cuts each escalation detail at this many characters and appends no
+# marker, then wraps the result in ESCALATION_PREFIX. Every copy in the run dir
+# carries the same cut, so a detail sitting exactly on the cap means the uncut
+# text survives only in the story spec.
+ESCALATION_DETAIL_CAP = 2000
+ESCALATION_PREFIX = "CRITICAL escalation from dev session: "
+
 
 def sh(cmd: list[str], cwd: str | None = None, timeout: int = 30) -> str:
     try:
@@ -169,6 +176,19 @@ def attention_state(run: str, journal: list[dict]) -> dict:
     }
 
 
+def escalation_truncated(reason: str | None) -> bool:
+    """True when a paused_reason carries a detail sitting on bmad-loop's cap.
+
+    Several escalations join with "; ", so each part is measured as well as the
+    whole; a detail whose own prose contains "; " is caught by the whole-string
+    check. A part can never exceed the cap, so equality is the signal.
+    """
+    body = (reason or "").strip()
+    if body.startswith(ESCALATION_PREFIX):
+        body = body[len(ESCALATION_PREFIX):]
+    return any(len(part) == ESCALATION_DETAIL_CAP for part in [body] + body.split("; "))
+
+
 def attention_signature(attention: dict | None) -> list[tuple]:
     return [
         (item.get("name"), item.get("size"), item.get("newest_notice_at"))
@@ -195,6 +215,8 @@ def collect(project: str, run: str) -> dict:
             "review_cycle": t.get("review_cycle"),
             "followup_reviews_spent": t.get("followup_reviews_spent"),
             "baseline_commit": t.get("baseline_commit"),
+            # The uncut escalation text lives here, not in the run dir.
+            "spec_file": t.get("spec_file"),
         }
 
     heartbeats = {}
@@ -308,10 +330,17 @@ def diagnose(cur: dict, prev: dict | None, git: dict) -> list[str]:
         # kilobytes of markdown; printed whole it buries every other finding.
         lines = (f.get("paused_reason") or "").strip().splitlines()
         reason = lines[0][:160] + ("..." if len(lines[0]) > 160 else "") if lines else ""
-        tail = " (full text in state.json's paused_reason)" if reason else ""
         out.append(f"T1 paused at {f.get('paused_stage')} on {f.get('paused_story_key')}: "
-                   f"{reason}{tail} -> `bmad-loop resolve {cur['run_id']}` or "
+                   f"{reason} -> `bmad-loop resolve {cur['run_id']}` or "
                    f"`bmad-loop resume {cur['run_id']}`")
+        if escalation_truncated(f.get("paused_reason")):
+            spec = (cur["tasks"].get(f.get("paused_story_key")) or {}).get("spec_file")
+            source = spec or "the story's spec (tasks.<k>.spec_file)"
+            out.append(
+                f"T1 escalation detail is cut at {ESCALATION_DETAIL_CAP} chars and every copy "
+                f"in the run dir carries the same cut — read `## Auto Run Result` in {source} "
+                "for the blocker; do not report the pause from the truncated text"
+            )
     if cur["pid"] and not cur["pid_alive"] and not (f.get("finished") or f.get("stopped")):
         out.append(f"T1 engine pid {cur['pid']} is dead but the run never finished")
     attention = cur.get("attention") or {}

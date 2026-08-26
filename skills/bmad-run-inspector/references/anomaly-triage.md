@@ -10,7 +10,7 @@ your own run's `policy_snapshot` instead of trusting what's printed here.
 | Finding | Evidence | Remedy |
 |---|---|---|
 | Engine crashed | `crashed: true`, `crash_error` non-null | Report the traceback. `bmad-loop diagnose` produces a sanitized dump for maintainers |
-| Run paused | `paused_reason` / `paused_stage` non-null | `bmad-loop resolve <run-id>` for a CRITICAL escalation — re-drives `paused_story_key` by default, pass `--story <key>` only to override it; `bmad-loop resume <run-id>` if the block is already cleared |
+| Run paused | `paused_reason` / `paused_stage` non-null. On an escalation the reason text is truncated — read the escalation as described below before explaining the pause | `bmad-loop resolve <run-id>` for a CRITICAL escalation — re-drives `paused_story_key` by default, pass `--story <key>` only to override it; `bmad-loop resume <run-id>` if the block is already cleared |
 | Engine died silently | `engine.pid` not alive while `finished` and `stopped` are both false | Nothing will resume it. Decide between `bmad-loop resume <run-id>` and a fresh run; check the working tree first if `scm.isolation = "none"` |
 | Attention raised | A new or unresolved notice in `ATTENTION`; file existence alone is not enough | Read the whole file, then corroborate the newest notice as described below. Governed by `notify.file` |
 | Run concluded | `finished: true` or `stopped: true` | Not a fault, but the moment a summary is owed: stories completed, backlog remaining, working-tree state |
@@ -48,6 +48,41 @@ newline state in `.probe-snapshot.json`. It reports a changed block as `new sinc
 keeps an unsuperseded block as `unresolved`, and demotes a block followed by a settling journal
 event to historical context. This metadata narrows the reading; it never replaces reading the
 notice itself.
+
+### Reading an escalation
+
+A CRITICAL escalation pauses the run, and its text is the one piece of evidence bmad-loop
+silently truncates. It builds the detail by parsing the story spec, then cuts it at 2000
+characters and appends no marker. Every copy inside the run directory carries that same cut:
+`dev-decision.reason`, `story-escalated.reason`, `run-paused.reason`, `state.json`'s
+`paused_reason`, and the ATTENTION notice. **No file in the run directory holds the whole
+blocker.** The dropped half is the actionable one — it is where the blocking condition and the
+command an operator needs tend to sit.
+
+1. **Treat the notice as an index entry, not as evidence.** Its severity label is a
+   classifier's guess (above), and its body may be cut. Neither supports a conclusion.
+2. **Measure the cut before reading further.** Strip the `CRITICAL escalation from dev
+   session: ` prefix from `paused_reason`. Several escalations join with `; `, so measure each
+   detail rather than the whole string. A detail sitting exactly on 2000 characters is
+   truncated, not merely long. Report it as partial. `scripts/run_probe.py` measures this and
+   raises it as its own Tier 1 finding.
+3. **Read the story spec's `## Auto Run Result` section.** This is the untruncated original,
+   and for an escalated story it is the primary source — complete and structured, where the
+   notice is capped and the log is a redraw capture. `state.json`'s `tasks.<k>.spec_file` names
+   the file; `run-anatomy.md` covers how the path resolves. The prose inside that section is
+   written by the project's own dev skill, so read the section through rather than grepping for
+   a subheading it may or may not use.
+4. **If the spec has no `## Auto Run Result` section, reconstruct the log tail.** The tell is a
+   detail reading exactly `generic dev session reported a blocked outcome` — bmad-loop's
+   fallback when it found no result body to parse, which means the spec holds nothing to
+   recover. Bracket the session's byte range with `log_task` and `log_pos` per
+   `log-forensics.md`. Report it as a reconstruction from a redraw capture, and quote it
+   rather than paraphrasing.
+5. **Only then say why the run paused.** A report concluding that the escalation looks spurious
+   without having reached step 3 or 4 is not a finding. It is the absence of one.
+
+Absence of a stated blocker in `ATTENTION` is not evidence that there was no blocker. It is the
+same mistake as reading an empty `--section errors` as a clean run, one layer up.
 
 A story parks when three things hold: `policy.operator.enabled` (sprint mode only), the dev
 session's spec frontmatter reads `status: awaiting-operator`, and it declares a non-empty
