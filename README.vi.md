@@ -28,6 +28,7 @@ Sau đó gọi skill trong agent:
 | Chẩn đoán một vấn đề lặp lại | [problem-solver](./skills/problem-solver/README.vi.md) |
 | Hiểu khách hàng hoặc thị trường | [design-thinking](./skills/design-thinking/README.vi.md), [market-researcher](./skills/market-researcher/README.vi.md) |
 | Quyết định nên xây gì và bàn giao đúng kế hoạch | [product-manager](./skills/product-manager/README.vi.md), [project-manager](./skills/project-manager/README.vi.md) |
+| Vận hành sprint và cải thiện quy trình của đội phần mềm | [scrum-master](./skills/scrum-master/README.vi.md) |
 | Phân tích dữ liệu hoặc tài liệu dài | [data-scientist](./skills/data-scientist/README.vi.md), [deep-reader](./skills/deep-reader/README.vi.md) |
 | Ra quyết định kinh doanh có hệ quả lớn | [strategy-board](./skills/strategy-board/README.vi.md) |
 | Tạo tài liệu, prompt, slide hoặc truyện | [diataxis-writer](./skills/diataxis-writer/README.vi.md), [system-prompt-creator](./skills/system-prompt-creator/README.vi.md), [slidewright](./skills/slidewright/README.vi.md), [fiction-studio](./skills/fiction-studio/README.vi.md) |
@@ -166,6 +167,16 @@ npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 [Đọc hướng dẫn project-manager](./skills/project-manager/README.vi.md)
+
+### scrum-master
+
+Dành cho Scrum Master, engineering manager, tech lead, product owner và đội phần mềm cần lập kế hoạch sprint tập trung, theo dõi sức khỏe sprint trung thực, làm rõ impediment và follow up retrospective.
+
+```bash
+npx skills add tronghieu/agent-skills --skill scrum-master
+```
+
+[Đọc hướng dẫn scrum-master](./skills/scrum-master/README.vi.md)
 
 ### slidewright
 

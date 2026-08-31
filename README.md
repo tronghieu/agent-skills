@@ -28,6 +28,7 @@ Most agent tools use slash commands. Codex and ChatGPT use `$`; in those tools, 
 | Diagnose a recurring problem | [problem-solver](./skills/problem-solver/README.md) |
 | Understand customers or markets | [design-thinking](./skills/design-thinking/README.md), [market-researcher](./skills/market-researcher/README.md) |
 | Decide what to build and deliver it | [product-manager](./skills/product-manager/README.md), [project-manager](./skills/project-manager/README.md) |
+| Run software sprints and improve team process | [scrum-master](./skills/scrum-master/README.md) |
 | Analyze data or long documents | [data-scientist](./skills/data-scientist/README.md), [deep-reader](./skills/deep-reader/README.md) |
 | Make a high-stakes business decision | [strategy-board](./skills/strategy-board/README.md) |
 | Create documentation, prompts, slides, or fiction | [diataxis-writer](./skills/diataxis-writer/README.md), [system-prompt-creator](./skills/system-prompt-creator/README.md), [slidewright](./skills/slidewright/README.md), [fiction-studio](./skills/fiction-studio/README.md) |
@@ -166,6 +167,16 @@ npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 [Read the project-manager guide](./skills/project-manager/README.md)
+
+### scrum-master
+
+For Scrum Masters, engineering managers, tech leads, product owners, and software teams that need focused sprint planning, honest sprint health, visible impediments, and retrospective follow-through.
+
+```bash
+npx skills add tronghieu/agent-skills --skill scrum-master
+```
+
+[Read the scrum-master guide](./skills/scrum-master/README.md)
 
 ### slidewright
 

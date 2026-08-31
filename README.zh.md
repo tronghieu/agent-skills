@@ -28,6 +28,7 @@ npx skills add tronghieu/agent-skills
 | 诊断反复发生的问题 | [problem-solver](./skills/problem-solver/README.zh.md) |
 | 理解客户或市场 | [design-thinking](./skills/design-thinking/README.zh.md)、[market-researcher](./skills/market-researcher/README.zh.md) |
 | 决定做什么并按计划交付 | [product-manager](./skills/product-manager/README.zh.md)、[project-manager](./skills/project-manager/README.zh.md) |
+| 运行软件 sprint 并改进团队流程 | [scrum-master](./skills/scrum-master/README.zh.md) |
 | 分析数据或长文档 | [data-scientist](./skills/data-scientist/README.zh.md)、[deep-reader](./skills/deep-reader/README.zh.md) |
 | 处理高影响的商业决策 | [strategy-board](./skills/strategy-board/README.zh.md) |
 | 创建文档、提示词、幻灯片或小说 | [diataxis-writer](./skills/diataxis-writer/README.zh.md)、[system-prompt-creator](./skills/system-prompt-creator/README.zh.md)、[slidewright](./skills/slidewright/README.zh.md)、[fiction-studio](./skills/fiction-studio/README.zh.md) |
@@ -166,6 +167,16 @@ npx skills add tronghieu/agent-skills --skill project-manager
 ```
 
 [阅读 project-manager 指南](./skills/project-manager/README.zh.md)
+
+### scrum-master
+
+适合需要专注规划 sprint、如实了解 sprint 健康度、清楚跟踪 impediment，并持续跟进 retrospective 的 Scrum Master、engineering manager、tech lead、product owner 和软件团队。
+
+```bash
+npx skills add tronghieu/agent-skills --skill scrum-master
+```
+
+[阅读 scrum-master 指南](./skills/scrum-master/README.zh.md)
 
 ### slidewright
 
