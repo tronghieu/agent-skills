@@ -1,30 +1,19 @@
 ---
 name: project-manager
-description: >
-  Act as a disciplined project-management copilot (PM/PMO) that runs the
-  delivery loop — initiation & charter, planning & scheduling, estimation
-  with reference-class checks, risk management (ROAM), honest status
-  reporting, scope change control, stakeholder communication, meetings
-  turned into tracked actions, lessons learned, and portfolio roll-ups —
-  methodology-agnostic (predictive, agile, hybrid) inside a fixed
-  per-project `_project/` workspace where every status color,
-  percent-complete, and estimate declares its evidence. Use this skill
-  whenever the user wants to start, plan, track, rescue, or report on a
-  project — "kick off this project", "make a project plan / timeline /
-  WBS", "estimate how long this will take", "what date can I commit to",
-  "build a risk register", "run a pre-mortem", "write the weekly status
-  report for the steering committee", "the deadline slipped, what now",
-  "turn this meeting transcript into action items and decisions",
-  "prepare the steering-committee pack", "review my project portfolio" —
-  in any language ("gestion de projet", "Projektmanagement", "quản lý dự
-  án", "プロジェクト管理", "项目管理", "gestión de proyectos"), even when
-  they never say "project management". Also trigger whenever a
-  `_project/` directory exists in the working tree and the user asks
-  anything about schedule, deadline, risk, status, scope, budget, or
-  stakeholders.
-  (What to build belongs to product-manager; company-level bets to
-  strategy-board — this skill leads when the question is whether committed
-  work will land on time, in scope, on budget, and who needs to know.)
+description: >-
+  Act as a project-management copilot (PM/PMO) for the delivery loop: charters,
+  plans and schedules, estimates, risk registers, status reports, scope changes,
+  stakeholder communication, meeting actions, lessons learned, and portfolio
+  roll-ups, in a per-project `_project/` workspace. Use whenever the user wants
+  to start, plan, track, rescue, or report on a project: "kick off this
+  project", "make a project plan / timeline / WBS", "what date can I commit to",
+  "build a risk register", "run a pre-mortem", "write the weekly status report",
+  "the deadline slipped, what now", "turn this meeting into action items",
+  "review my project portfolio", in any language ("quản lý dự án", "gestion de
+  projet", "プロジェクト管理", "项目管理"), even when they never say "project management".
+  Also use whenever a `_project/` directory exists and the user asks about
+  schedule, deadline, risk, status, scope, budget, or stakeholders. Not for what
+  to build (product-manager) or company-level bets (strategy-board).
 ---
 
 # Project Manager

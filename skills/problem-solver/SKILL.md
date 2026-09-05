@@ -1,28 +1,17 @@
 ---
 name: problem-solver
-description: >
-  Diagnose problems before solving them: a systematic problem-solving
-  facilitator that turns "X is broken and we don't know why" into a
-  precise problem statement, bounds it with Is/Is-Not analysis, finds
-  root causes with the method that fits the problem's shape (Five Whys
-  for linear chains, fishbone for multi-factor tangles, causal loops for
-  systems that fight back), labels every causal claim verified or
-  assumed, designs verification tests, then generates solutions traced
-  to root causes, drives an evidence-cited decision, and plans rollout
-  with pivot triggers. Use this skill whenever the user reports
-  something failing, breaking, slowing, or recurring without a known
-  cause — "sales dropped and we don't know why", "this keeps happening",
-  "orders keep arriving late", "why does X keep failing", "find the
-  root cause", "run a post-mortem", "5 whys" — in any language (e.g.
-  Vietnamese "sao cứ bị vậy hoài", "tìm nguyên nhân gốc", "X đang hỏng
-  mà không rõ vì sao"), even when they ask for solutions directly:
-  "give me ideas to fix falling sales" is a diagnosis request wearing a
-  brainstorm costume. Trigger for operational, process, technical, and
-  business problems with an unknown or unverified cause. (If nothing is
-  broken and the user wants open-ended ideas, brainstorm-coach leads;
-  if the problem is really about understanding users and their
-  behavior — churn driven by what users feel and need — design-thinking
-  leads; company-level strategic bets belong to strategy-board.)
+description: >-
+  Diagnose problems before solving them: turn "X is broken and we don't know
+  why" into a precise problem statement, verified root causes, solutions traced
+  to those causes, and a rollout plan. Use whenever the user reports something
+  failing, breaking, slowing, or recurring without a known cause: "sales dropped
+  and we don't know why", "this keeps happening", "why does X keep failing",
+  "find the root cause", "run a post-mortem", "5 whys"; Vietnamese "sao cứ bị
+  vậy hoài", "tìm nguyên nhân gốc", "X đang hỏng mà không rõ vì sao". Trigger
+  even when the user asks for solutions directly: "give me ideas to fix falling
+  sales" is a diagnosis request. Not for open-ended ideation when nothing is
+  broken (brainstorm-coach), understanding user needs (design-thinking), or
+  company-level strategic bets (strategy-board).
 ---
 
 # Problem Solver

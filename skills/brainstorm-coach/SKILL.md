@@ -1,31 +1,17 @@
 ---
 name: brainstorm-coach
-description: >
-  Facilitate structured brainstorming sessions as a coach and hybrid thinking
-  partner: run divergent ideation on any topic using a library of ~20 named
-  techniques (SCAMPER, Six Thinking Hats, reversal, analogical thinking,
-  question storming, role playing…), one technique at a time, with the user
-  generating ideas first and the AI building on them with clearly labeled
-  additions — then converge, categorize, and deliver a session document with
-  priorities and next steps. Use this skill whenever the user wants ideas or
-  wants to think out loud together — "brainstorm with me", "give me ideas
-  for…", "help me come up with…", "let's explore options for…", "I'm stuck
-  on the name / the features / the campaign angle" — in any language (e.g.
-  Vietnamese "brainstorm cùng tôi", "cho tôi ý tưởng", "nghĩ cùng tôi xem",
-  "gợi ý phương án giúp tôi"; Spanish "ayúdame a generar ideas"; Japanese
-  「アイデア出しを手伝って」), even when they never say the word
-  "brainstorm". Trigger for open-ended exploration of a topic, product,
-  name, feature set, campaign, event, career move, or any generative
-  question that does not first require diagnosing why something is broken.
-  Also trigger when the user asks for multiple perspectives on their ideas
-  or a structured devil's-advocate pass — "give me different angles on
-  these ideas", "phản biện mấy ý tưởng này giúp tôi", "party mode" — the
-  skill's party mode handles multi-role ideation and counterpoint.
-  (If the request is "X is failing and we don't know why", root-cause
-  diagnosis comes first — the problem-solver skill in this family leads
-  there; if the question is who the users are and what they need, with real
-  research, design-thinking leads; company-level strategic bets belong to
-  strategy-board.)
+description: >-
+  Coach structured brainstorming sessions on any topic: diverge on ideas
+  together, then converge on priorities and next steps in a session document.
+  Use whenever the user wants ideas or wants to think out loud, in any language
+  ("brainstorm with me", "give me ideas for…", "help me come up with…", "let's
+  explore options for…", "I'm stuck on the name / the features"; Vietnamese
+  "brainstorm cùng tôi", "cho tôi ý tưởng", "nghĩ cùng tôi xem"), even when they
+  never say "brainstorm". Also use when the user wants multiple perspectives or
+  a devil's-advocate pass on their ideas ("give me different angles", "phản biện
+  mấy ý tưởng này", "party mode"). Not for diagnosing why something is failing
+  (problem-solver), user research (design-thinking), or company-level strategic
+  bets (strategy-board).
 ---
 
 # Brainstorm Coach

@@ -1,26 +1,19 @@
 ---
 name: product-manager
-description: >
-  Act as a disciplined product manager copilot that turns evidence into
-  product decisions and operating artifacts: opportunity backlogs, RICE
-  prioritization with sensitivity analysis, PRDs with story maps and user
-  stories, north-star metrics and OKRs, experiment designs, launch plans with
-  rollback criteria, feedback triage, platform-vs-feature decisions, and
-  light pricing/packaging — all inside a persistent per-product workspace
-  where every number declares its origin. Use this skill whenever the user
-  wants to decide what to build, spec it, or ship it — "write a PRD for…",
-  "prioritize our backlog / these features", "what should we build next",
-  "plan OKRs for the quarter", "define our north star metric", "design an
-  A/B test for…", "plan the launch of…", "triage this pile of customer
-  feedback", "should this be a platform or a feature", "help me manage this
-  product" — in any language ("viết PRD", "ưu tiên tính năng nào",
-  "quản lý sản phẩm", "lập kế hoạch ra mắt", "プロダクト管理", "产品经理"),
-  even when the user never says "product manager". Also trigger when the
-  user returns to an existing `<product>-pm/` workspace with any product
-  question. (Deep user discovery belongs to design-thinking, desk market
-  facts to market-researcher, company-level strategic bets to strategy-board
-  — this skill leads when the question is what to build, in what order, and
-  how to ship it.)
+description: >-
+  Act as a product-manager copilot that turns evidence into product decisions
+  and artifacts: backlogs and prioritization, PRDs and user stories, metrics and
+  OKRs, experiments, launch plans, feedback triage, and pricing/packaging, kept
+  in a per-product workspace. Use whenever the user wants to decide what to
+  build, spec it, or ship it: "write a PRD for…", "prioritize our backlog",
+  "what should we build next", "plan OKRs", "define our north star metric",
+  "design an A/B test", "plan the launch", "triage this customer feedback",
+  "platform or feature?", in any language ("viết PRD", "ưu tiên tính năng nào",
+  "quản lý sản phẩm", "プロダクト管理", "产品经理"), even when they never say "product
+  manager". Also use when the user returns to a product workspace this skill
+  created (a directory holding `product.md`, `state.md`, and `decisions.md`).
+  Not for deep user discovery (design-thinking), desk market facts
+  (market-researcher), or company-level bets (strategy-board).
 ---
 
 # Product Manager
