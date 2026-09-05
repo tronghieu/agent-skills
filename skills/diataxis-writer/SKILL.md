@@ -1,16 +1,14 @@
 ---
 name: diataxis-writer
 description: >-
-  Write, restructure, classify, and review documentation using the Diataxis
-  framework. Use this skill whenever the user asks to create, improve, audit, or
-  reorganize docs, documentation, knowledge bases, help centers, onboarding
-  guides, internal process docs, manuals, runbooks, product docs, API/developer
-  docs, tutorials, how-to guides, references, or explanations. Also use it when
-  the user mentions Diataxis, tutorial, how-to, reference, explanation, docs
-  taxonomy, documentation architecture, or asks why a document feels confusing.
-  Do not use it for marketing copy, legal contracts, fiction, sales proposals,
-  press releases, or persuasion-first writing unless the user explicitly wants a
-  Diataxis-style documentation analysis.
+  Write, restructure, classify, and review documentation with the Diataxis
+  framework. Use when the user asks to create, improve, audit, or reorganize
+  documentation of any kind: knowledge bases, help centers, onboarding guides,
+  process docs, manuals, runbooks, product or API docs, tutorials, how-to
+  guides, references, explanations. Also use when the user mentions Diataxis,
+  docs taxonomy, or documentation architecture, or asks why a document feels
+  confusing. Not for marketing, legal, sales, press, or fiction writing unless
+  the user wants a Diataxis-style analysis.
 ---
 
 # Diataxis Writer
@@ -78,6 +76,21 @@ read `references/diataxis-patterns.md`.
    page just because the information is related.
 5. **Verify the result.** Check that each section helps the primary reader job.
    Remove or relocate sections that serve a different job.
+6. **Polish the prose.** Run this step only when the deliverable contains prose
+   you wrote or rewrote. Skip it for classification notes, outline reviews,
+   and rewrite plans that contain no rewritten text. Run it last: structure
+   first, prose second.
+   - If a skill named `humanizer` is available in this session, invoke it on
+     the finished document and ask it to return only the final text, which
+     humanizer calls embedded mode. Tell it the Diataxis type so it keeps
+     that type's voice: guiding for a tutorial, imperative for a how-to,
+     neutral for reference, and weighing alternatives for an explanation.
+     Change prose only. Keep headings, section order, code, commands, tables,
+     and link targets unchanged.
+   - If it is not available, apply the Reader-First Prose rules and the
+     checklist in `references/ai-prose-tells.md`. Then tell the user once per
+     conversation that they can install the full skill with
+     `npx skills add blader/humanizer`. Do not repeat the suggestion.
 
 ## Reader-First Prose
 
@@ -204,6 +217,10 @@ When reviewing an existing document, return:
 3. Recommended target structure.
 4. Concrete rewrite plan or rewritten sections, depending on the user's request.
 
+If the humanizer skill ran, include only its final text inside the document.
+Do not include its draft or its list of remaining patterns. The
+classification note, document, and checklist stay as described above.
+
 ## Quality Checklist
 
 - The page has one primary reader job.
@@ -218,3 +235,5 @@ When reviewing an existing document, return:
 - Sentences longer than 25 words have been reviewed and are necessary.
 - No sentence contains nested qualifications that could be stated separately.
 - Concision has not removed contracts, constraints, evidence, or exceptions.
+- The prose has been checked for common AI writing tells, either with the
+  humanizer skill or with `references/ai-prose-tells.md`.

@@ -74,6 +74,7 @@ Bạn sẽ nhận được phân loại, các phát hiện theo section về n�
 - Dùng [Deep Reader](../deep-reader/README.vi.md) **trước skill này** khi bộ tài liệu lớn hoặc dày cần được đọc kỹ và có thể truy nguyên; nó tạo nền tảng hiểu nguồn mà việc tái cấu trúc cần có.
 - Dùng [Critical Thinking](../critical-thinking/README.vi.md) khi tài liệu đưa ra claim hoặc khuyến nghị quan trọng; skill này kiểm tra bằng chứng và lập luận, còn Diataxis tổ chức trải nghiệm người đọc.
 - Dùng [System Prompt Creator](../system-prompt-creator/README.vi.md) khi quy trình làm tài liệu cần trở thành hành vi lặp lại trong sản phẩm LLM; nó chuyển workflow và guardrail mong muốn thành system prompt có thể kiểm thử.
+- Dùng [Humanizer](https://github.com/blader/humanizer) **sau skill này** để loại bỏ các dấu hiệu văn phong AI khỏi bản văn hoàn chỉnh. Diataxis Writer tự động gọi nó khi skill này đã được cài, và dùng checklist tích hợp ngắn gọn hơn khi chưa cài. Cài đặt bằng `npx skills add blader/humanizer`.
 
 ## Giới hạn
 
