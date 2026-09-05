@@ -74,6 +74,7 @@ You receive a classification, section-level mixed-purpose findings, a target inf
 - Use [Deep Reader](../deep-reader/README.md) **before this skill** when a large or dense document set needs careful, traceable reading; it establishes the source understanding that a restructure depends on.
 - Use [Critical Thinking](../critical-thinking/README.md) when the documentation makes important claims or recommendations; it tests the evidence and reasoning, while Diataxis organizes the reader experience.
 - Use [System Prompt Creator](../system-prompt-creator/README.md) when the resulting documentation process must become repeatable behavior in an LLM product; it turns the desired workflow and guardrails into a testable system prompt.
+- Use [Humanizer](https://github.com/blader/humanizer) **after this skill** to strip AI writing tells from the finished prose. Diataxis Writer calls it automatically when it is installed and falls back to a shorter built-in checklist when it is not. Install it with `npx skills add blader/humanizer`.
 
 ## Limits
 

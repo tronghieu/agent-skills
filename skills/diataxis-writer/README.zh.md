@@ -74,6 +74,7 @@ npx skills add tronghieu/agent-skills --skill diataxis-writer
 - 当大型或内容密集的文档集需要仔细、可追溯地阅读时，请在此技能**之前**使用 [Deep Reader](../deep-reader/README.zh.md)；它提供重构所依赖的源材料理解。
 - 当文档提出重要主张或建议时，使用 [Critical Thinking](../critical-thinking/README.zh.md)；它检验证据和推理，而 Diataxis 负责组织读者体验。
 - 当产出的文档流程需要成为 LLM 产品中可重复的行为时，使用 [System Prompt Creator](../system-prompt-creator/README.zh.md)；它把期望的工作流和护栏转化为可测试的系统提示词。
+- 在此技能**之后**使用 [Humanizer](https://github.com/blader/humanizer)，从完成的文字中去除 AI 写作痕迹。Diataxis Writer 在该技能已安装时会自动调用它，未安装时则退回使用更简短的内置检查清单。安装命令为 `npx skills add blader/humanizer`。
 
 ## 局限
 

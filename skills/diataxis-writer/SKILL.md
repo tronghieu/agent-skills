@@ -78,6 +78,21 @@ read `references/diataxis-patterns.md`.
    page just because the information is related.
 5. **Verify the result.** Check that each section helps the primary reader job.
    Remove or relocate sections that serve a different job.
+6. **Polish the prose.** Run this step only when the deliverable contains prose
+   you wrote or rewrote. Skip it for classification notes, outline reviews,
+   and rewrite plans that contain no rewritten text. Run it last: structure
+   first, prose second.
+   - If a skill named `humanizer` is available in this session, invoke it on
+     the finished document and ask it to return only the final text, which
+     humanizer calls embedded mode. Tell it the Diataxis type so it keeps
+     that type's voice: guiding for a tutorial, imperative for a how-to,
+     neutral for reference, and weighing alternatives for an explanation.
+     Change prose only. Keep headings, section order, code, commands, tables,
+     and link targets unchanged.
+   - If it is not available, apply the Reader-First Prose rules and the
+     checklist in `references/ai-prose-tells.md`. Then tell the user once per
+     conversation that they can install the full skill with
+     `npx skills add blader/humanizer`. Do not repeat the suggestion.
 
 ## Reader-First Prose
 
@@ -204,6 +219,10 @@ When reviewing an existing document, return:
 3. Recommended target structure.
 4. Concrete rewrite plan or rewritten sections, depending on the user's request.
 
+If the humanizer skill ran, include only its final text inside the document.
+Do not include its draft or its list of remaining patterns. The
+classification note, document, and checklist stay as described above.
+
 ## Quality Checklist
 
 - The page has one primary reader job.
@@ -218,3 +237,5 @@ When reviewing an existing document, return:
 - Sentences longer than 25 words have been reviewed and are necessary.
 - No sentence contains nested qualifications that could be stated separately.
 - Concision has not removed contracts, constraints, evidence, or exceptions.
+- The prose has been checked for common AI writing tells, either with the
+  humanizer skill or with `references/ai-prose-tells.md`.
