@@ -1,16 +1,14 @@
 ---
 name: diataxis-writer
 description: >-
-  Write, restructure, classify, and review documentation using the Diataxis
-  framework. Use this skill whenever the user asks to create, improve, audit, or
-  reorganize docs, documentation, knowledge bases, help centers, onboarding
-  guides, internal process docs, manuals, runbooks, product docs, API/developer
-  docs, tutorials, how-to guides, references, or explanations. Also use it when
-  the user mentions Diataxis, tutorial, how-to, reference, explanation, docs
-  taxonomy, documentation architecture, or asks why a document feels confusing.
-  Do not use it for marketing copy, legal contracts, fiction, sales proposals,
-  press releases, or persuasion-first writing unless the user explicitly wants a
-  Diataxis-style documentation analysis.
+  Write, restructure, classify, and review documentation with the Diataxis
+  framework. Use when the user asks to create, improve, audit, or reorganize
+  documentation of any kind: knowledge bases, help centers, onboarding guides,
+  process docs, manuals, runbooks, product or API docs, tutorials, how-to
+  guides, references, explanations. Also use when the user mentions Diataxis,
+  docs taxonomy, or documentation architecture, or asks why a document feels
+  confusing. Not for marketing, legal, sales, press, or fiction writing unless
+  the user wants a Diataxis-style analysis.
 ---
 
 # Diataxis Writer
