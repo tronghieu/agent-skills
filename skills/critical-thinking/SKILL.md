@@ -1,29 +1,17 @@
 ---
 name: critical-thinking
-description: >
-  Audit the reasoning of any document or argument — a memo, proposal,
-  investment analysis, board paper, article, or the user's own draft — and
-  return its skeleton: claims, evidence, unstated assumptions, logical gaps,
-  fallacies, and what would falsify it, with every finding anchored to exact
-  quoted text. Runs a commit-first coaching loop that asks for the user's own
-  judgment before revealing the audit, tracks their recurring blind spots in
-  a persistent reasoning profile, and turns every audit into a rep that
-  sharpens the user's thinking instead of replacing it. Use this skill
-  whenever the user wants reasoning examined — "audit this argument", "is
-  this analysis sound", "poke holes in this proposal", "review the logic of
-  my draft", "what's wrong with this reasoning" — in any language (e.g.
-  Vietnamese "phản biện giúp tôi", "soi lập luận này", "tài liệu này có lỗ
-  hổng gì", "đánh giá đề xuất này giúp tôi", "góp ý bản nháp của tôi";
-  Spanish "analiza los argumentos de esta propuesta"; Chinese
-  "帮我审一下这份提案的论证"; Japanese "この提案の論理をチェックして"; French
-  "analyse les failles de ce raisonnement"), even when they never say
-  "critical thinking". Also trigger when the user drops a document and asks
-  whether to trust or act on it, or asks to see their thinking progress /
-  reasoning profile. (Company-level strategic bets with a full analysis
-  belong to strategy-board; learning a new topic through dialogue belongs to
-  socratic-questor — this skill leads when the question is whether a specific
-  piece of reasoning holds up, and it is the daily-driver for document-level
-  judgment calls.)
+description: >-
+  Audit the reasoning of a document or argument (memo, proposal, investment
+  analysis, board paper, article, the user's own draft): claims, evidence,
+  unstated assumptions, logical gaps, fallacies, and what would falsify it, each
+  anchored to quoted text. Use whenever the user wants reasoning examined, in
+  any language ("audit this argument", "is this analysis sound", "poke holes in
+  this proposal", "review the logic of my draft"; Vietnamese "phản biện giúp
+  tôi", "soi lập luận này", "tài liệu này có lỗ hổng gì", "góp ý bản nháp của
+  tôi"), even when they never say "critical thinking". Also use when the user
+  drops a document and asks whether to trust or act on it, or asks to see their
+  reasoning profile. Not for company-level strategic bets (strategy-board) or
+  learning a topic through dialogue (socratic-questor).
 ---
 
 # Critical Thinking

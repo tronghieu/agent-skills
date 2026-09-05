@@ -1,14 +1,14 @@
 ---
 name: bmad-run-inspector
-description: >
-  Inspect and explain bmad-loop run artifacts under `.bmad-loop/runs/`. Use for live health
-  checks ("is it stuck?", "is the loop alive?", "what is the agent doing?") and post-run
-  forensics ("what happened?", "why did story X fail?", "where did the tokens go?").
-  Reconstruct terminal-redraw captures before interpreting them; naive tail/grep can produce
-  fragments and false claims about test results. Also triggers on "monitor/check/summarize the
-  loop", "why did the run pause?", Vietnamese "theo dõi bmad loop", "phân tích run", "đọc log
-  của run", and equivalent requests in other languages. Use only for bmad-loop's own run
-  artifacts, not application runtime logs or CI-provider build logs.
+description: >-
+  Inspect and explain bmad-loop run artifacts under `.bmad-loop/runs/`. Use for
+  live health checks ("is it stuck?", "is the loop alive?", "what is the agent
+  doing?") and post-run forensics ("what happened?", "why did story X fail?",
+  "where did the tokens go?"). Also triggers on "monitor/check/summarize the
+  loop", "why did the run pause?", Vietnamese "theo dõi bmad loop", "phân tích
+  run", "đọc log của run", and equivalent requests in other languages. Use only
+  for bmad-loop's own run artifacts, not application runtime logs or CI-provider
+  build logs.
 allowed-tools: Read Glob Grep Bash(python3 *) Bash(bmad-loop *) Bash(git *) Bash(ls *) Bash(ps *) Bash(wc *) Bash(tmux *) Bash(psmux *)
 ---
 

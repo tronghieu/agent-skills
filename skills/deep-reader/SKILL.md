@@ -1,21 +1,15 @@
 ---
 name: deep-reader
 description: >-
-  Deep-read long books and papers using Mortimer Adler's inspectional /
-  analytical / syntopical method, the Recite step from SQ3R, and S. Keshav's
-  three-pass method for papers, with page-anchored notes as external memory so
-  the agent never has to load the whole text into one context window. Use this
-  skill whenever the user asks to read, study, summarize, analyze, review, or
-  answer questions about a long book, textbook, PDF, EPUB, thesis, dissertation,
-  survey paper, or any document of roughly 50+ pages. Also use it when a
-  `<slug>-notes/` workspace from a previous session already sits next to a source
-  file and the user asks a follow-up question about that book — search the
-  existing notes before re-reading anything. Trigger on these requests in
-  whatever language the user writes them — for example Vietnamese "đọc sách",
-  "tóm tắt sách", "phân tích luận án", or equivalent phrasing in any other
-  language. Do not use this skill for short documents (under ~30 pages) that fit
-  comfortably in context — read those directly instead; the pipeline is overhead
-  they don't need.
+  Read, study, and answer questions about long books and papers without loading
+  the whole text into one context window, keeping page-anchored notes as a
+  reusable workspace. Use whenever the user asks to read, study, summarize,
+  analyze, review, or answer questions about a long book, textbook, PDF, EPUB,
+  thesis, dissertation, survey paper, or any document of roughly 50+ pages, in
+  any language (Vietnamese "đọc sách", "tóm tắt sách", "phân tích luận án").
+  Also use when a `<slug>-notes/` workspace from a previous session sits next to
+  a source file and the user asks a follow-up question about that book. Not for
+  short documents (under ~30 pages) that fit in context; read those directly.
 ---
 
 # Deep Reader

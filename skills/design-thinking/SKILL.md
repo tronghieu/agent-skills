@@ -1,24 +1,17 @@
 ---
 name: design-thinking
-description: >
-  Facilitate a full design-thinking engagement — Empathize, Define, Ideate,
-  Prototype, Test — as a disciplined facilitator and thinking partner that
-  never fabricates user insight: it designs the research (interview guides,
-  observation plans, experiments with pass/fail criteria), the user brings
-  back real data, and every insight traces to registered evidence. Use this
-  skill whenever the user wants to understand users deeply and design a
-  solution or experience for them — "run design thinking", "understand our
-  users", "design user interviews", "synthesize these interview notes",
-  "build personas", "write How-Might-We questions", "brainstorm solutions
-  for…", "prototype this concept", "design an experiment / usability test to
-  validate…", "our users are churning and we don't know why" — in any
-  language ("tư duy thiết kế", "nghiên cứu người dùng", "phỏng vấn khách
-  hàng", "デザイン思考", "设计思维"), even when the user never says "design
-  thinking". Also trigger when the user drops raw interview notes,
-  transcripts, or survey exports and wants them turned into insights,
-  personas, or product decisions. (For "is there a market for X" desk
-  questions, the market-researcher skill leads; this skill leads when the
-  question is who the users are and what to build for them.)
+description: >-
+  Facilitate a full design-thinking engagement (Empathize, Define, Ideate,
+  Prototype, Test) grounded in real user evidence. Use whenever the user wants
+  to understand users deeply and design a solution for them: "run design
+  thinking", "understand our users", "design user interviews", "synthesize these
+  interview notes", "build personas", "write How-Might-We questions", "prototype
+  this concept", "design a usability test", "our users are churning and we don't
+  know why", in any language ("tư duy thiết kế", "nghiên cứu người dùng", "phỏng
+  vấn khách hàng", "デザイン思考", "设计思维"), even when they never say "design
+  thinking". Also use when the user drops raw interview notes, transcripts, or
+  survey exports and wants insights, personas, or product decisions. Not for "is
+  there a market for X" desk questions (market-researcher).
 ---
 
 # Design Thinking
