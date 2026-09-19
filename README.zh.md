@@ -251,7 +251,7 @@ npx skills add tronghieu/agent-skills --skill system-prompt-creator
 
 对于范围较大的新技能，建议先创建 issue，以确认范围并避免重复工作。参见 [AGENTS.md](./AGENTS.md) 了解技能编写规范。
 
-本仓库遵循开放的 [Agent Skills 规范](https://agentskills.io)。兼容性取决于各宿主工具对该规范的实现。
+本仓库遵循开放的 [Agent Skills 规范](https://agentskills.io)。兼容性取决于各宿主工具对该规范的实现。这些 skill 已在 Claude 和 DeepSeek 模型上实际使用过。
 
 ## 许可证
 

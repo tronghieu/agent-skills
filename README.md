@@ -251,7 +251,7 @@ Contributions are welcome. To propose a change:
 
 For substantial new skills, opening an issue first can help confirm scope and avoid overlapping work. See [AGENTS.md](./AGENTS.md) for skill-authoring conventions.
 
-This repository follows the open [Agent Skills specification](https://agentskills.io). Compatibility depends on each host tool's implementation of that specification.
+This repository follows the open [Agent Skills specification](https://agentskills.io). Compatibility depends on each host tool's implementation of that specification. The skills are tested on Claude and DeepSeek models.
 
 ## License
 

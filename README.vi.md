@@ -251,7 +251,7 @@ Chúng tôi hoan nghênh đóng góp. Để đề xuất thay đổi:
 
 Với skill mới có phạm vi lớn, bạn nên mở issue trước để thống nhất phạm vi và tránh trùng lặp công việc. Xem [AGENTS.md](./AGENTS.md) để biết quy ước viết skill.
 
-Repo tuân theo [chuẩn Agent Skills mở](https://agentskills.io). Khả năng tương thích phụ thuộc vào cách từng công cụ triển khai chuẩn này.
+Repo tuân theo [chuẩn Agent Skills mở](https://agentskills.io). Khả năng tương thích phụ thuộc vào cách từng công cụ triển khai chuẩn này. Các skill đã được dùng thử trên model Claude và DeepSeek.
 
 ## Giấy phép
 
