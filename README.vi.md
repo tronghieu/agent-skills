@@ -2,6 +2,10 @@
 
 **Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/tronghieu/agent-skills?style=flat)](https://github.com/tronghieu/agent-skills)
+[![skills.sh](https://skills.sh/b/tronghieu/agent-skills)](https://www.skills.sh/tronghieu/agent-skills)
+
 Bộ sưu tập các skill có phương pháp dành cho người dùng AI để ra quyết định, vận hành dự án, phân tích bằng chứng, tạo tài liệu và hoàn thành công việc thực tế. Các skill này phù hợp với người dùng chủ động: bạn cung cấp bối cảnh thật và chịu trách nhiệm về quyết định; agent hỗ trợ cấu trúc, phân tích và kiểm tra chất lượng.
 
 ## Bắt đầu nhanh
@@ -10,6 +14,13 @@ Cài toàn bộ bộ sưu tập:
 
 ```bash
 npx skills add tronghieu/agent-skills
+```
+
+Hoặc cài như một Claude Code plugin:
+
+```text
+/plugin marketplace add tronghieu/agent-skills
+/plugin install agent-skills@tronghieu-skills
 ```
 
 Sau đó gọi skill trong agent:
@@ -238,7 +249,7 @@ Chúng tôi hoan nghênh đóng góp. Để đề xuất thay đổi:
 4. Đóng gói lại `skills/<tên-skill>.zip`.
 5. Gửi pull request, trong đó giải thích skill dành cho ai, khi nào nên kích hoạt, bạn đã kiểm thử gì và còn giới hạn nào.
 
-Với skill mới có phạm vi lớn, bạn nên mở issue trước để thống nhất phạm vi và tránh trùng lặp công việc.
+Với skill mới có phạm vi lớn, bạn nên mở issue trước để thống nhất phạm vi và tránh trùng lặp công việc. Xem [AGENTS.md](./AGENTS.md) để biết quy ước viết skill.
 
 Repo tuân theo [chuẩn Agent Skills mở](https://agentskills.io). Khả năng tương thích phụ thuộc vào cách từng công cụ triển khai chuẩn này.
 

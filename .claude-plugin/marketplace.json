@@ -1,0 +1,38 @@
+{
+  "name": "tronghieu-skills",
+  "owner": {
+    "name": "Lưu Trọng Hiếu",
+    "url": "https://github.com/tronghieu"
+  },
+  "metadata": {
+    "description": "Method-driven agent skills for knowledge work."
+  },
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "description": "Method-driven skills for knowledge work: strategy, research, critical thinking, data analysis, docs, slides.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/bmad-run-inspector",
+        "./skills/brainstorm-coach",
+        "./skills/critical-thinking",
+        "./skills/cv-scorer",
+        "./skills/data-scientist",
+        "./skills/deep-reader",
+        "./skills/design-thinking",
+        "./skills/diataxis-writer",
+        "./skills/fiction-studio",
+        "./skills/market-researcher",
+        "./skills/problem-solver",
+        "./skills/product-manager",
+        "./skills/project-manager",
+        "./skills/scrum-master",
+        "./skills/slidewright",
+        "./skills/socratic-questor",
+        "./skills/strategy-board",
+        "./skills/system-prompt-creator"
+      ]
+    }
+  ]
+}

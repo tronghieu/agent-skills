@@ -2,6 +2,10 @@
 
 **Language:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/tronghieu/agent-skills?style=flat)](https://github.com/tronghieu/agent-skills)
+[![skills.sh](https://skills.sh/b/tronghieu/agent-skills)](https://www.skills.sh/tronghieu/agent-skills)
+
 A collection of method-driven skills for people who use AI to make decisions, run projects, analyze evidence, create documents, and produce finished work. These skills are designed for active collaborators: you provide the real context and remain responsible for the decision; the agent supplies structure, analysis, and quality checks.
 
 ## Quick start
@@ -10,6 +14,13 @@ Install the full collection:
 
 ```bash
 npx skills add tronghieu/agent-skills
+```
+
+Or install as a Claude Code plugin:
+
+```text
+/plugin marketplace add tronghieu/agent-skills
+/plugin install agent-skills@tronghieu-skills
 ```
 
 Then invoke a skill in your agent:
@@ -238,7 +249,7 @@ Contributions are welcome. To propose a change:
 4. Rebuild `skills/<skill-name>.zip`.
 5. Open a pull request explaining who the skill is for, when it should activate, what you tested, and any known limitations.
 
-For substantial new skills, opening an issue first can help confirm scope and avoid overlapping work.
+For substantial new skills, opening an issue first can help confirm scope and avoid overlapping work. See [AGENTS.md](./AGENTS.md) for skill-authoring conventions.
 
 This repository follows the open [Agent Skills specification](https://agentskills.io). Compatibility depends on each host tool's implementation of that specification.
 

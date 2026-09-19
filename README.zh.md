@@ -2,6 +2,10 @@
 
 **语言：** [中文](./README.zh.md) | [English](./README.md) | [Tiếng Việt](./README.vi.md)
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/tronghieu/agent-skills?style=flat)](https://github.com/tronghieu/agent-skills)
+[![skills.sh](https://skills.sh/b/tronghieu/agent-skills)](https://www.skills.sh/tronghieu/agent-skills)
+
 这是一组面向知识工作的、以方法为核心的 AI 技能，帮助用户做决策、管理项目、分析证据、编写文档并完成实际交付。它们适合主动参与的使用者：你提供真实背景并对最终决定负责；Agent 负责提供结构、分析和质量检查。
 
 ## 快速开始
@@ -10,6 +14,13 @@
 
 ```bash
 npx skills add tronghieu/agent-skills
+```
+
+或作为 Claude Code 插件安装：
+
+```text
+/plugin marketplace add tronghieu/agent-skills
+/plugin install agent-skills@tronghieu-skills
 ```
 
 然后在 Agent 中调用技能：
@@ -238,7 +249,7 @@ npx skills add tronghieu/agent-skills --skill system-prompt-creator
 4. 重新打包 `skills/<技能名称>.zip`。
 5. 提交拉取请求，说明技能适合谁、何时应触发、进行了哪些测试，以及已知限制。
 
-对于范围较大的新技能，建议先创建 issue，以确认范围并避免重复工作。
+对于范围较大的新技能，建议先创建 issue，以确认范围并避免重复工作。参见 [AGENTS.md](./AGENTS.md) 了解技能编写规范。
 
 本仓库遵循开放的 [Agent Skills 规范](https://agentskills.io)。兼容性取决于各宿主工具对该规范的实现。
 
