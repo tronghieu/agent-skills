@@ -12,7 +12,15 @@ import glob
 import json
 import os
 import sys
-import tomllib
+
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python < 3.11
+    try:
+        import tomli as tomllib  # type: ignore[no-redef]
+    except ModuleNotFoundError:
+        sys.exit("error: needs Python 3.11+ (tomllib) or `pip install tomli`")
+
 from pathlib import Path
 
 # Resolved relative to this script's own location, not cwd, so the skill (and this
