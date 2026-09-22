@@ -1,19 +1,13 @@
 ---
 name: manual-testing
-description: >
-  Run a disciplined manual-testing session on this project's running app, in one of five
-  modes: exploratory (hunt bugs nobody predicted), verification (re-test a bug fix or
-  verify a story by hand), smoke (broad shallow pass after a deploy or reset), assessment
-  (UX / localization / accessibility review for human judgment), or AI probe (ground an
-  agent's replies against the database). Drives the app through a browser like a real
-  user, verifies every claim against database and network (not just the UI), and delivers
-  a session note, reproducible bug reports, and automation candidates. Use this whenever
-  the user asks, in any language, for something to be tested by hand — "manual test",
-  "exploratory test", "bug hunt", "verify the bug fix", "smoke test", "QA this screen",
-  "review this screen's UX", "check the localized copy", "test the AI agent's answers" —
-  or assigns a test design or test-case IDs to execute by hand.
-  Do NOT use it for writing automated Playwright specs (e2e-test-builder) or unit tests
-  (vitest).
+description: >-
+  Run a session-based manual test of the project's running app in one of five modes:
+  exploratory, verification, smoke, assessment (UX, localization, accessibility), or AI
+  probe. Use whenever the user asks, in any language, for something to be tested by
+  hand — "manual test", "exploratory test", "bug hunt", "verify the bug fix", "smoke
+  test", "QA this screen", "review this screen's UX", "check the localized copy", "test
+  the AI agent's answers" — or assigns a test design or test-case IDs to execute by
+  hand. Not for writing automated tests.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(curl *), Bash(psql *), Bash(docker *), Bash(jq *), Bash(python3 *)
 ---
 
@@ -41,7 +35,7 @@ Before anything else, resolve the skill's customization:
 python3 <skill-dir>/scripts/resolve_customization.py
 ```
 
-It merges three layers and prints JSON: the skill's `customize.toml` defaults, the team
+Needs Python 3.11 or the `tomli` package. It merges three layers and prints JSON: the skill's `customize.toml` defaults, the team
 override `_project/testing/manual-testing.toml`, and the personal override
 `_project/testing/manual-testing.user.toml`. Missing override files are normal and mean
 defaults. Then act on `customization.workflow`:
