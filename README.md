@@ -46,6 +46,7 @@ Most agent tools use slash commands. Codex and ChatGPT use `$`; in those tools, 
 | Learn through guided questions | [socratic-questor](./skills/socratic-questor/README.md) |
 | Compare CVs with a job description | [cv-scorer](./skills/cv-scorer/README.md) |
 | Understand what an autonomous coding run did, or why it stalled | [bmad-run-inspector](./skills/bmad-run-inspector/README.md) |
+| Test a running app by hand and prove what you saw | [manual-testing](./skills/manual-testing/README.md) |
 
 ## Skills
 
@@ -138,6 +139,16 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 ```
 
 [Read the fiction-studio guide](./skills/fiction-studio/README.md)
+
+### manual-testing
+
+For anyone who has to test a running app by hand and wants findings that survive scrutiny: exploratory bug hunts, verifying a fix, smoke passes, UX or localization review, and probing an AI assistant's answers. Every finding is checked against the database, not just the screen. Needs a local dev stack.
+
+```bash
+npx skills add tronghieu/agent-skills --skill manual-testing
+```
+
+[Read the manual-testing guide](./skills/manual-testing/README.md)
 
 ### market-researcher
 
