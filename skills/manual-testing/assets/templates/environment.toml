@@ -1,0 +1,44 @@
+# Project adapter for the manual-testing skill (and other testing skills).
+# Values live HERE only — environment.md references them, never repeats them.
+# Every value below should be read from a repo file; unresolved values are marked
+# TODO for research — see references/adapter-bootstrap.md in the manual-testing skill.
+
+[project]
+name = ""                # TODO(confirm: source?)
+updated = "TODO(date)"   # bump whenever any value here changes
+# locales = []           # optional — locales the app ships, first = primary; drives the skills' i18n/localization checks
+
+# [conventions]         # optional — URL/subdomain/naming conventions worth machine access
+
+[apps.example]           # one table per runnable app — rename "example", duplicate per app
+port = 0                 # TODO(confirm: source?)
+url = ""                 # TODO(confirm: source?)
+
+[services]              # every service a session touches: db, email-catcher, mocks…
+# TODO(confirm: source?) — add one key = "" per service
+
+[database]
+psql_url = ""            # TODO(confirm: source?) — or the project's equivalent access string
+readonly = true          # the skill treats this as law
+
+[auth]
+method = ""              # TODO(confirm: source?) — e.g. "email-otp", "password", "oauth-stub"
+# + the machine-shaped parameters of that method (otp_length, expiry, …)
+
+# [[tenants]]           # only if the product is multi-tenant
+
+[[accounts]]            # one block per seeded test account
+email = ""                # TODO(confirm: source?)
+tenant = ""               # TODO(confirm: source?)
+level = ""                # TODO(confirm: source?)
+note = ""                 # job/persona + what this account is FOR (e.g. isolation probing)
+
+[outputs]
+session_notes_dir = ""   # TODO(confirm: source?)
+bug_reports_dir = ""     # TODO(confirm: source?)
+screenshots_dir = ""     # TODO(confirm: source?) — evidence screenshots, one subfolder per session
+
+[[preflight]]           # ordered; sessions stop at first failure
+name = ""                 # TODO(confirm: source?)
+command = ""              # TODO(confirm: source?) — must exit 0 when healthy
+fix = ""                  # TODO(confirm: source?) — what to tell the user when it fails

@@ -117,3 +117,17 @@ cp -r skills/{skill-name} ~/.claude/skills/
 Add the skill to project knowledge or paste SKILL.md contents into the conversation.
 
 If the skill requires network access, instruct users to add required domains at `claude.ai/settings/capabilities`.
+
+## Project-specific facts: the `_project/` adapter
+
+A skill that needs facts about the user's repository (ports, seeded accounts, which coding CLI, which test runner) keeps them out of the skill and reads them from `_project/` at the repository root. The skill stays generic. The adapter answers its questions for one repository.
+
+Contract:
+
+- `_project/` is one shared root. A skill claims one subpath and writes nowhere else. Today: `bmad-run-inspector` owns `_project/bmad-loop/`, `manual-testing` owns `_project/testing/`, `scrum-master` owns `_project/scrum-master/`. `project-manager` owns the root itself; it predates this rule and is the only exception.
+- Files at the root (`README.md`, `tools.md`) belong to every skill. Create one if absent, append your own section, never rewrite another skill's.
+- Values a script reads go in TOML (`environment.toml`). Knowledge and judgment calls go in Markdown (`environment.md`) with a dated "current state" section, rewritten in place, never appended.
+- A team override is `<skill>.toml`, committed. A personal override is `<skill>.user.toml`, gitignored. Layers merge base, then team, then user. A skill that supports overrides ships its own `customize.toml` as the schema and its own resolver script.
+- A bootstrap script scaffolds the subpath from `assets/templates/`, never overwrites an existing file, reports created versus skipped, and marks every value it could not read from a real file as `TODO(confirm: <source>)`. It never guesses.
+- The skill must work when `_project/` is absent: bootstrap it, or degrade and say so. A missing adapter is never an error.
+- This repository has no shared runtime. Each skill is installed on its own, so each ships its own scripts. Copy the resolver into the new skill. Never depend on another skill being present.
