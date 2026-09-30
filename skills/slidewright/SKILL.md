@@ -45,26 +45,39 @@ you design or restyle slide content.
 
 ## Workflow
 
-1. **Understand the talk.** Topic, audience, speaker (name/role for the title slide), tone,
-   rough number of slides, and any brand colours/logo. For Vietnamese content the default
-   voice is plain, honest, direct — no marketing hype.
+1. **Understand and clarify the talk.**
+   - **Content:** If the presentation content is vague or unclear, ask questions to clarify the topic, audience, speaker (name/role), and key message before building. For Vietnamese content, the default voice is plain, honest, direct — no marketing hype.
+   - **Style:** Ask the user for their preferred visual style and suggest these 5 modern options:
+     1. *Minimalist Bauhaus*: High contrast, geometric typography, generous whitespace.
+     2. *Dark Mode Cinematic*: Deep slate/black backgrounds, dramatic contrast, glowing accents.
+     3. *Editorial / Magazine*: Sophisticated font pairings (serif + sans), structured grid layouts.
+     4. *Glassmorphism*: Soft background gradients with blurred, translucent content panels.
+     5. *Neo-Brutalism*: Bold typography, raw borders, hard shadows, high energy.
 2. **Pick a track** (below). If unsure, ask once; otherwise default to plain HTML for
    small/quick decks and React for substantial, maintained talks.
 3. **Scaffold** with the matching script — don't hand-assemble the boilerplate.
 4. **Build slides** following `references/design-system.md`: one idea per slide, few
    words, real visuals, projection-legible type, presenter-only interaction, and the
-   two-layer padding contract for both viewport and content containers.
+   two-layer padding contract for both viewport and content containers. Respect the
+   density limits — never exceed 5 bullets, ~60 words, or 5×4 table cells per slide.
+   If content doesn't fit at the typography floor, split into more slides — never shrink
+   past the floor and never produce a slide that scrolls vertically.
 5. **Keep the required chrome:** a visible bottom navigation slider (dot strip) and slide
    number. Both scaffolds include it — don't remove it.
 6. **Write speaker notes** in the `<deck-name>-notes.md` file the scaffold creates (never
    on the slides themselves).
-7. **Run the spacing audit before handoff.** Check every slide at 1920×1080 and at one
+7. **Run the verify script** to catch text-too-small and content-too-dense violations:
+   ```bash
+   bash /mnt/skills/user/slidewright/scripts/verify-slides.sh <path-to-deck>
+   ```
+   Fix every reported issue before proceeding.
+8. **Run the spacing audit before handoff.** Check every slide at 1920×1080 and at one
    smaller viewport. No text or primary content may cross the viewport safe area. For
    every element that draws a visible boundary (`background`, `border`, `outline`,
    `shadow`, rounded surface, or text-overlay panel), verify that its content has
    padding on all four sides. Media and purely decorative edge-to-edge layers are the
    only exceptions; text over them belongs in a nested padded surface.
-8. **Export to PDF** if asked — see `references/export-pdf.md`.
+9. **Export to PDF** if asked — see `references/export-pdf.md`.
 
 Put each deck in its own folder. Keep any live-demo app as a separate project, not inside
 the deck.
@@ -110,3 +123,6 @@ to add/reorder them, then build the content.
 - `scripts/new-react-deck.sh` — scaffold a Vite + React deck.
 - `scripts/export-deck-pdf.py` — export a deck to a content-complete PDF (waits for render
   and reveals hidden content; image-based).
+- `scripts/verify-slides.sh` — static analysis of deck files: flags text below the
+  typography floor, fixed-px font sizes, excessive bullet counts, and high word density
+  per slide. Run after building slides and before handoff.

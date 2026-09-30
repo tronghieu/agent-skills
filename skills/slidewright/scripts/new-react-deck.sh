@@ -70,7 +70,7 @@ cat > src/index.css <<'EOF'
 @import "tailwindcss";
 
 :root {
-  --surface-inset: clamp(24px, 2.5vw, 48px);
+  --surface-inset: clamp(12px, 2.5vw, 48px);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, #root { width: 100%; height: 100%; overflow: hidden; }
@@ -101,7 +101,7 @@ rm -f src/App.css  # default Vite styles; the deck supplies its own in index.css
 cat > src/components/Slide.tsx <<'EOF'
 import type { ReactNode } from 'react'
 
-const NAV_HEIGHT = 64
+const NAV_HEIGHT = 48
 
 interface SlideProps {
   children: ReactNode
@@ -132,16 +132,16 @@ export default function Slide({ children, className = '', fullBleed = false }: S
       style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }}
     >
       <div
-        className={`flex h-full w-full flex-col ${
-          fullBleed
-            ? 'px-10 py-8'          /* safe-area: smaller but never zero */
-            : 'justify-center px-16 py-14'
-        }`}
+        className="flex h-full w-full flex-col"
         style={{
+          padding: fullBleed
+            ? 'clamp(8px, 3vh, 48px) clamp(10px, 3vw, 56px)'  /* safe-area: smaller but never zero */
+            : 'clamp(12px, 4.5vh, 72px) clamp(16px, 5vw, 100px)',
           maxWidth: fullBleed ? '100%' : '1500px',
           margin: '0 auto',
           minHeight: 0,
           overflowY: 'auto',
+          ...(!fullBleed && { justifyContent: 'center' }),
         }}
       >
         {children}
@@ -157,7 +157,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { slides } from '../slides'
 
-const NAV_HEIGHT = 64
+const NAV_HEIGHT = 48
 
 /**
  * Owns slide navigation for the whole deck: keyboard (arrows / space / home / end),
@@ -211,19 +211,19 @@ export default function Deck() {
       </div>
 
       <div
-        className="flex shrink-0 items-center gap-4 border-t border-black/10 bg-white/80 px-6 backdrop-blur"
+        className="flex shrink-0 items-center gap-3 border-t border-black/10 bg-white/80 px-5 backdrop-blur"
         style={{ height: NAV_HEIGHT }}
       >
         <button
           onClick={() => go(current - 1)}
           disabled={current === 0}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-[#1f2430] disabled:opacity-25"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-[#1f2430] disabled:opacity-25"
           aria-label="Slide trước"
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={18} />
         </button>
 
-        <div className="flex flex-1 items-center justify-center gap-2 overflow-x-auto">
+        <div className="flex flex-1 items-center justify-center gap-1.5 overflow-x-auto">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -231,25 +231,25 @@ export default function Deck() {
               aria-label={`Slide ${index + 1}`}
               className="shrink-0 rounded-full transition-all"
               style={{
-                width: index === current ? 26 : 10,
-                height: 10,
+                width: index === current ? 22 : 8,
+                height: 8,
                 backgroundColor: index === current ? '#9d6248' : '#d5c8b4',
               }}
             />
           ))}
         </div>
 
-        <div className="min-w-16 text-center text-base font-medium tabular-nums text-[#6d6a66]">
+        <div className="min-w-14 text-center text-sm font-medium tabular-nums text-[#6d6a66]">
           {current + 1} / {total}
         </div>
 
         <button
           onClick={() => go(current + 1)}
           disabled={current === total - 1}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-[#1f2430] disabled:opacity-25"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-[#1f2430] disabled:opacity-25"
           aria-label="Slide sau"
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={18} />
         </button>
       </div>
     </div>
@@ -279,7 +279,7 @@ export default function TitleSlide() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="font-black leading-[1.0] tracking-tight text-[#1f2430]"
-            style={{ fontSize: 'clamp(56px, 7.5vw, 100px)' }}
+            style={{ fontSize: 'clamp(28px, 6vw, 88px)' }}
           >
             Tiêu đề bài nói
           </motion.h1>
@@ -288,13 +288,13 @@ export default function TitleSlide() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.12, ease: 'easeOut' }}
             className="max-w-4xl text-[#6d6a66]"
-            style={{ fontSize: 'clamp(26px, 2.8vw, 40px)', lineHeight: 1.4 }}
+            style={{ fontSize: 'clamp(18px, 2.8vw, 40px)', lineHeight: 1.4 }}
           >
             Một dòng dẫn ngắn, nói thẳng bài này nói về điều gì.
           </motion.p>
         </div>
 
-        <p className="text-[#6d6a66]" style={{ fontSize: 'clamp(20px, 1.8vw, 32px)' }}>
+        <p className="text-[#6d6a66]" style={{ fontSize: 'clamp(14px, 1.8vw, 32px)' }}>
           Tên người trình bày · Vai trò
         </p>
       </div>

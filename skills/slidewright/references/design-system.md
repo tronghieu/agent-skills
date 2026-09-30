@@ -30,7 +30,7 @@ much content is on it. The floor is the hard bottom; the hero ceiling is the har
 | Body / bullet       | 20pt · 40px      | **40–48px**                       | 52px         |
 | Subtitle / lead     | 24pt · 48px      | **48–60px**                       | 64px         |
 | Section head (h2)   | —                | **52–64px**                       | 72px         |
-| Main title (h1)     | 36pt · 72px      | **80–104px**                      | 120px        |
+| Main title (h1)     | 36pt · 72px      | **72–88px**                       | 120px        |
 | Caption / slide no. | 16pt · 32px*     | **32–38px**                       | —            |
 
 \* caption/slide-number is the one role allowed below the body floor (never < 16pt = 32px),
@@ -65,13 +65,13 @@ slides; push toward ceiling on sparse/hero slides):
 
 | Role              | Ordinary slide                      | Text-heavy slide                    | Sparse / hero slide                  |
 | ----------------- | ----------------------------------- | ----------------------------------- | ------------------------------------ |
-| Body / bullet     | `clamp(28px, 2.6vw, 44px)`         | `clamp(28px, 2.4vw, 40px)`         | `clamp(28px, 2.8vw, 48px)`          |
-| Subtitle / lead   | `clamp(30px, 2.9vw, 48px)`         | `clamp(30px, 2.7vw, 44px)`         | `clamp(30px, 3.2vw, 56px)`          |
-| Section head (h2) | `clamp(38px, 3.4vw, 60px)`         | `clamp(38px, 3.0vw, 52px)`         | `clamp(38px, 4.0vw, 68px)`          |
-| Main title (h1)   | `clamp(56px, 6.4vw, 104px)`        | `clamp(56px, 5.6vw, 88px)`         | `clamp(56px, 7.5vw, 120px)`         |
-| Caption / slide # | `clamp(22px, 1.9vw, 36px)`         | `clamp(22px, 1.7vw, 32px)`         | `clamp(22px, 2.0vw, 38px)`          |
+| Body / bullet     | `clamp(18px, 2.6vw, 44px)`         | `clamp(18px, 2.4vw, 40px)`         | `clamp(18px, 2.8vw, 48px)`          |
+| Subtitle / lead   | `clamp(20px, 2.9vw, 48px)`         | `clamp(20px, 2.7vw, 44px)`         | `clamp(20px, 3.2vw, 56px)`          |
+| Section head (h2) | `clamp(24px, 3.4vw, 60px)`         | `clamp(24px, 3.0vw, 52px)`         | `clamp(24px, 4.0vw, 68px)`          |
+| Main title (h1)   | `clamp(28px, 5.6vw, 88px)`         | `clamp(28px, 5.0vw, 80px)`         | `clamp(28px, 6.4vw, 100px)`         |
+| Caption / slide # | `clamp(14px, 1.9vw, 36px)`         | `clamp(14px, 1.7vw, 32px)`         | `clamp(14px, 2.0vw, 38px)`          |
 
-In JSX, apply via `style={{ fontSize: 'clamp(28px, 2.6vw, 44px)' }}`. In the HTML
+In JSX, apply via `style={{ fontSize: 'clamp(18px, 2.6vw, 44px)' }}`. In the HTML
 template, use the same value in inline `style` or in `<style>` overrides.
 
 ### Two scaling strategies
@@ -124,8 +124,8 @@ zero.
 
 | Slide type    | Vertical padding floor            | Horizontal padding floor          |
 | ------------- | --------------------------------- | --------------------------------- |
-| Normal slide  | `clamp(40px, 5vh, 80px)`          | `clamp(48px, 5vw, 120px)`        |
-| Full-bleed    | `clamp(32px, 4vh, 64px)`          | `clamp(40px, 4vw, 96px)`         |
+| Normal slide  | `clamp(16px, 5vh, 80px)`          | `clamp(20px, 5vw, 120px)`        |
+| Full-bleed    | `clamp(12px, 4vh, 64px)`          | `clamp(16px, 4vw, 96px)`         |
 
 "Full-bleed" means the **background** fills edge-to-edge (for images, gradients, colour
 blocks), but the **text content** still sits inside the safe area. Think of it like a TV's
@@ -143,9 +143,9 @@ content, that same element must own non-zero padding on all four sides.
 
 | Surface type | Recommended inset |
 | ------------ | ----------------- |
-| Card, panel, callout, compare column, quote box | `clamp(24px, 2.5vw, 48px)` on all sides |
+| Card, panel, callout, compare column, quote box | `clamp(12px, 2.5vw, 48px)` on all sides |
 | Compact badge, chip, or pill | about `.45em .85em` |
-| Text panel over full-bleed media | `clamp(24px, 2.5vw, 48px)` on all sides |
+| Text panel over full-bleed media | `clamp(12px, 2.5vw, 48px)` on all sides |
 
 The scaffolds expose `--surface-inset` and `.slide-surface`. Use the helper on ordinary
 content surfaces, then add the desired colour, border, radius, or shadow:
@@ -182,15 +182,38 @@ Inspect every slide at 1920×1080 and one smaller viewport before handoff:
 - Padding remains visible after resizing; it is not cancelled by a local `p-0`,
   `padding: 0`, negative margin, or absolute positioning.
 
-## Content overflow
+## Content overflow (non-negotiable — do not produce scrollable slides)
 
-If a slide has more content than fits (dense bullets, a big table, a long quote), the
-slide's content area scrolls vertically rather than clipping. This is a safety net, not a
-design goal — prefer splitting into two slides when practical. But clipping is worse than
-scrolling, because the presenter silently loses content without realising.
+Vertical scrolling on a projected slide is a **hard failure**: the audience cannot scroll,
+and even the presenter may not notice content is hidden below the fold. Treat it as
+seriously as text below the floor.
 
-Both scaffolds set `overflow-y: auto` on the content area. The scrollbar is the browser's
-native default — no custom styling.
+### Density limits (1920×1080 reference)
+
+| Slide type           | Hard ceiling                                              |
+| -------------------- | --------------------------------------------------------- |
+| Bulleted point       | **5 bullets max**, each ≤ 1 visual line at the floor size |
+| Two-column compare   | **4 items per column** max                                |
+| Body text (prose)    | **≈ 60 words** visible on one slide                       |
+| Table / data grid    | **5 rows × 4 columns** max                               |
+| Mixed (heading + bullets + visual) | Heading + **3 bullets** + one image/diagram  |
+
+If the content exceeds these limits, **split it into two or more slides**. Do not shrink
+text below the floor to fit — if it won't fit at the floor, the slide has too much on it.
+
+### The rule
+
+1. **Never produce a slide that requires vertical scrolling.** Both scaffolds set
+   `overflow-y: auto` as a safety net so content is not clipped — but if a slide scrolls,
+   it is a bug. Fix it by splitting, not by shrinking.
+2. After building slides, run the verify script to catch violations automatically:
+   ```bash
+   bash /mnt/skills/user/slidewright/scripts/verify-slides.sh <path-to-deck>
+   ```
+   Fix any reported issues before handing off.
+
+Both scaffolds set `overflow-y: auto` on the content area so content is never silently
+clipped. The scrollbar is the browser's native default — no custom styling.
 
 ## Required chrome on every deck
 

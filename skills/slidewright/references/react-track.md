@@ -67,10 +67,10 @@ Honour the floor (see design-system.md). Always use fluid `clamp()` — not fixe
 or Tailwind text size classes (`text-sm`, `text-base`, `text-4xl` — these are fixed rem
 values that don't scale with the viewport).
 
-- Hero heading: `style={{ fontSize: 'clamp(56px, 7.5vw, 100px)' }}`
-- Lead / subtitle: `style={{ fontSize: 'clamp(30px, 2.9vw, 48px)' }}`
-- Body text: `style={{ fontSize: 'clamp(28px, 2.6vw, 44px)' }}`
-- Caption: `style={{ fontSize: 'clamp(22px, 1.9vw, 36px)' }}`
+- Hero heading: `style={{ fontSize: 'clamp(28px, 6vw, 88px)' }}`
+- Lead / subtitle: `style={{ fontSize: 'clamp(20px, 2.9vw, 48px)' }}`
+- Body text: `style={{ fontSize: 'clamp(18px, 2.6vw, 44px)' }}`
+- Caption: `style={{ fontSize: 'clamp(14px, 1.9vw, 36px)' }}`
 
 See the full clamp() cheatsheet in `references/design-system.md`. Tune the `max` per
 slide — tighten toward the floor on dense slides, push toward the ceiling on sparse ones.

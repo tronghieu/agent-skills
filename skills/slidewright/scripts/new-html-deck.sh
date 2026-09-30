@@ -52,9 +52,9 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
   <style>
     :root {
       --accent:#9d6248; --ink:#1f2430; --bg:#f8f3e7; --soft:#6d6a66;
-      --slide-pad-y:clamp(40px,5.5vh,96px);
-      --slide-pad-x:clamp(48px,6.2vw,140px);
-      --surface-inset:clamp(24px,2.5vw,48px);
+      --slide-pad-y:clamp(16px,5.5vh,96px);
+      --slide-pad-x:clamp(20px,6.2vw,140px);
+      --surface-inset:clamp(12px,2.5vw,48px);
     }
     * { box-sizing:border-box; margin:0; padding:0; }
     html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); }
@@ -65,7 +65,7 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
        stage, so no letterbox/pillarbox bars on 16:10 laptops, ultrawides, or resized
        windows. Type scales with clamp() so it stays projection-legible. Author with
        clamp()/em/%/vh — not fixed px — so the deck breathes across screen sizes. */
-    #viewport { position:fixed; inset:0 0 64px 0; overflow:hidden; }
+    #viewport { position:fixed; inset:0 0 48px 0; overflow:hidden; }
     .slide {
       position:absolute; inset:0;
       /* Safe-area padding — keeps content away from the viewport edge. Do NOT
@@ -95,28 +95,28 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
                                  (body floor 40px; caption 32px; never below)
          - sparse/hero slide -> raise the max toward the ceiling for presence.
        Override on the specific <section>/element; keep these globals as the default. */
-    .slide          { font-size:clamp(28px,2.6vw,44px); line-height:1.45; }
-    .slide h1       { font-size:clamp(56px,6.4vw,104px); line-height:1.04; letter-spacing:-.03em; font-weight:900; }
-    .slide h2       { font-size:clamp(38px,3.4vw,60px);  line-height:1.12; font-weight:800; }
-    .slide .lead    { font-size:clamp(30px,2.9vw,48px);  color:var(--soft); }
-    .slide .caption { font-size:clamp(22px,1.9vw,36px);  color:var(--soft); }
+    .slide          { font-size:clamp(18px,2.6vw,44px); line-height:1.45; }
+    .slide h1       { font-size:clamp(28px,5.6vw,88px); line-height:1.04; letter-spacing:-.03em; font-weight:900; }
+    .slide h2       { font-size:clamp(24px,3.4vw,60px);  line-height:1.12; font-weight:800; }
+    .slide .lead    { font-size:clamp(20px,2.9vw,48px);  color:var(--soft); }
+    .slide .caption { font-size:clamp(14px,1.9vw,36px);  color:var(--soft); }
     .slide ul       { list-style:none; display:flex; flex-direction:column; gap:clamp(16px,2.4vh,28px); }
     .slide li       { display:flex; gap:.55em; align-items:flex-start; }
     .slide li::before { content:''; flex:none; width:.42em; height:.42em; margin-top:.5em; border-radius:.12em; background:var(--accent); }
 
     /* Bottom navigation bar — required on every deck. */
     #nav {
-      position:fixed; left:0; right:0; bottom:0; height:64px; z-index:50;
-      display:flex; align-items:center; justify-content:center; gap:20px;
+      position:fixed; left:0; right:0; bottom:0; height:48px; z-index:50;
+      display:flex; align-items:center; justify-content:center; gap:16px;
       background:rgba(255,255,255,.82); backdrop-filter:blur(10px);
       border-top:1px solid rgba(0,0,0,.06);
     }
-    #nav button { cursor:pointer; border:none; background:none; color:var(--ink); padding:8px 12px; font-size:18px; border-radius:10px; }
+    #nav button { cursor:pointer; border:none; background:none; color:var(--ink); padding:6px 10px; font-size:15px; border-radius:8px; }
     #nav button:disabled { opacity:.25; cursor:default; }
-    #dots { display:flex; gap:8px; align-items:center; max-width:60vw; overflow-x:auto; }
-    .dot { width:10px; height:10px; border-radius:999px; background:#d5c8b4; border:none; cursor:pointer; transition:all .2s; flex:none; }
-    .dot.active { width:26px; background:var(--accent); }
-    #counter { font-size:18px; color:var(--soft); font-variant-numeric:tabular-nums; min-width:64px; text-align:center; }
+    #dots { display:flex; gap:6px; align-items:center; max-width:60vw; overflow-x:auto; }
+    .dot { width:8px; height:8px; border-radius:999px; background:#d5c8b4; border:none; cursor:pointer; transition:all .2s; flex:none; }
+    .dot.active { width:22px; background:var(--accent); }
+    #counter { font-size:14px; color:var(--soft); font-variant-numeric:tabular-nums; min-width:56px; text-align:center; }
   </style>
 </head>
 <body>
@@ -132,9 +132,9 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
     <section class="slide active">
       <div class="slide-content" style="justify-content:space-between;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-          <span style="display:inline-flex; align-items:center; background:rgba(157,98,72,.1); color:var(--accent); font-weight:700; padding:.45em .85em; border-radius:999px; font-size:clamp(20px,1.7vw,32px);">__NAME__</span>
+          <span style="display:inline-flex; align-items:center; background:rgba(157,98,72,.1); color:var(--accent); font-weight:700; padding:.45em .85em; border-radius:999px; font-size:clamp(12px,1.7vw,32px);">__NAME__</span>
         </div>
-        <div style="display:flex; flex-direction:column; gap:clamp(20px,3vh,40px);">
+        <div style="display:flex; flex-direction:column; gap:clamp(8px,3vh,40px);">
           <h1>__TITLE__</h1>
           <p class="lead" style="max-width:28em;">Thay câu này bằng một dòng dẫn nói rõ bài này nói về điều gì — ngắn, thẳng, như đang nói trên sân khấu.</p>
         </div>
