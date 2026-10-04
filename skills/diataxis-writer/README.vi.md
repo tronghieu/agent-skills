@@ -42,6 +42,7 @@ Technical writer, developer advocate, người sở hữu tài liệu, đội pr
 - How-to guide, runbook, tài liệu cấu hình, migration và troubleshooting
 - Reference cho API, command, policy và configuration
 - Explanation về khái niệm, bối cảnh kiến trúc và lý do thiết kế
+- Tài liệu kỹ thuật tiếng Anh theo quy tắc Simplified Technical English (ASD-STE100), dành cho người đọc không phải bản ngữ hoặc để dịch
 - Audit một trang khó hiểu hoặc tổ chức lại cả bộ tài liệu
 
 ## Bốn nhóm Diataxis
@@ -68,6 +69,14 @@ Xem pattern và template chi tiết tại [Diataxis patterns](./references/diata
 Hãy đưa tài liệu hoặc bộ tài liệu, độc giả mục tiêu, bối cảnh sản phẩm hoặc quy trình và kết quả mong muốn. Ví dụ hiện có, câu hỏi support và dữ liệu tìm kiếm có thể giúp ích.
 
 Bạn sẽ nhận được phân loại, các phát hiện theo section về nội dung lẫn mục đích, kiến trúc thông tin mục tiêu, cùng kế hoạch viết lại cụ thể hoặc nội dung đã viết lại. Bản review cũng có checklist kiểm tra.
+
+## Simplified Technical English (ASD-STE100)
+
+How-to guide và reference bằng mọi ngôn ngữ đều áp dụng các quy tắc STE không phụ thuộc ngôn ngữ: mỗi bước một hành động, mỗi khái niệm một thuật ngữ, dùng câu chủ động, cảnh báo bắt đầu bằng lệnh, và các khẳng định giữ nguyên mức độ chắc chắn ban đầu.
+
+Tài liệu kỹ thuật tiếng Anh (how-to guide, reference và các bước của tutorial) còn áp dụng thêm các quy tắc chỉ dành cho tiếng Anh: không dùng phrasal verb, dùng thì đơn giản, không dùng dấu chấm phẩy, và giới hạn câu tối đa 20 từ cho hướng dẫn, 25 từ cho mô tả. Hãy nêu rõ tên STE nếu muốn áp dụng cho văn bản tiếng Anh khác. Xem [quy tắc STE](./references/ste-rules.md).
+
+Kết quả theo phong cách STE nhưng không phải STE được chứng nhận. Từ điển chính thức gồm khoảng 900 từ được phê duyệt có bản quyền nên không đi kèm. Với tài liệu cần chứng nhận, hãy đối chiếu văn bản với tiêu chuẩn tại [asd-ste100.org](https://www.asd-ste100.org/). Bộ quy tắc được điều chỉnh từ [asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) (MIT, danyuchn).
 
 ## Skill bổ trợ
 

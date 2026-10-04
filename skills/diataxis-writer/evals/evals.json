@@ -51,6 +51,35 @@
         "Removes the chatbot opener and closing, the bold-label bullets, the sales words, and the trailing -ing phrase.",
         "Keeps a short prerequisites and verification section or equivalent."
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "Rewrite this how-to section for our maintenance manual in Simplified Technical English. Many readers are not native English speakers: 'Prior to commencing the replacement of the filter cartridge, it is essential that the pump has been switched off; failure to do so may result in pressurized fluid being released. Once the housing has been unscrewed, take out the old cartridge and carry out an inspection of the O-ring, replacing it if any damage is found.'",
+      "expected_output": "An English how-to section in STE style: imperative one-action steps, a warning that opens with the command, no semicolons, phrasal verbs, present perfect, or nominalizations, and the original hedge kept.",
+      "files": [],
+      "expectations": [
+        "Writes numbered steps in the imperative, with one action per step.",
+        "Puts the warning first and starts it with the command or condition (for example 'Switch off the pump' or 'WARNING: Switch off the pump before ...').",
+        "Contains no semicolons, no 'take out' (uses 'remove'), no present perfect ('has been'), and no 'carry out an inspection' style nominalization.",
+        "Keeps the hedge: the fluid release stays a possibility ('can' or 'may'), not a certainty.",
+        "Keeps every fact: pump off first, pressurized fluid risk, unscrew housing, remove old cartridge, inspect the O-ring, replace it if damaged. Adds no new facts.",
+        "Every instruction sentence has 20 words or fewer.",
+        "Does not claim the result is certified or fully STE-compliant."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Viết lại đoạn hướng dẫn này cho rõ ràng hơn, người đọc là nhân viên vận hành: 'Trước khi tiến hành việc thực hiện sao lưu cơ sở dữ liệu thì cần phải đảm bảo rằng dịch vụ ghi đã được dừng lại, sau đó kiểm tra dung lượng đĩa, xác minh quyền truy cập và chạy lệnh pg_dump, lưu ý là quá trình này có thể mất vài giờ nếu dữ liệu lớn.'",
+      "expected_output": "A Vietnamese how-to with one action per step, consistent terms, and the 'có thể' hedge kept. English-only STE rules are not applied or mentioned as applied.",
+      "files": [],
+      "expectations": [
+        "Answers in Vietnamese and structures the result as a how-to guide with numbered steps.",
+        "Gives each step one action: stop the write service, check disk space, check access rights, run pg_dump.",
+        "Uses one verb for the same kind of action instead of rotating 'kiểm tra', 'xác minh', and 'đảm bảo'.",
+        "Keeps the hedge: the backup 'có thể' take several hours with large data. It does not become a certainty.",
+        "Keeps `pg_dump` unchanged and adds no invented flags, paths, or durations.",
+        "Does not apply English-only STE rules such as phrasal verbs or English tense rules, and does not claim STE compliance."
+      ]
     }
   ]
 }

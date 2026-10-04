@@ -7,7 +7,8 @@ description: >-
   process docs, manuals, runbooks, product or API docs, tutorials, how-to
   guides, references, explanations. Also use when the user mentions Diataxis,
   docs taxonomy, or documentation architecture, or asks why a document feels
-  confusing. Not for marketing, legal, sales, press, or fiction writing unless
+  confusing. Also use for Simplified Technical English (ASD-STE100) or
+  controlled-language rewrites of English technical docs. Not for marketing, legal, sales, press, or fiction writing unless
   the user wants a Diataxis-style analysis.
 ---
 
@@ -91,6 +92,8 @@ read `references/diataxis-patterns.md`.
      checklist in `references/ai-prose-tells.md`. Then tell the user once per
      conversation that they can install the full skill with
      `npx skills add blader/humanizer`. Do not repeat the suggestion.
+   - If Simplified Technical English applies, check the text against
+     `references/ste-rules.md` after the humanizer pass. STE is the last pass.
 
 ## Reader-First Prose
 
@@ -108,15 +111,40 @@ Write for comprehension rather than formality or literary flow.
 - Move secondary details into a new sentence, list, note, or linked document.
 - Preserve technical terms, contracts, constraints, evidence, and important
   exceptions. Concision must not remove required meaning.
+- Keep the certainty of each claim. Do not turn "may fail" into "fails". Do
+  not add a cause, frequency, or fact that the source does not state.
+- Use one term for one concept. Do not rotate synonyms such as "check",
+  "verify", and "confirm" for the same action.
+- Keep noun clusters to three words or fewer.
+- Give each paragraph one topic and at most six sentences. Use a list for
+  three or more steps or conditions.
 - Do not apply sentence-length limits to code, commands, paths, tables,
   headings, quotations, or generated identifiers.
 - Vary sentence length naturally. Do not turn every sentence into the same
-  short pattern.
+  short pattern. Text under Simplified Technical English is the exception.
 
 Treat word counts as review signals, not mechanical pass/fail rules. For
 Vietnamese, count space-separated tokens consistently even though they do not
 always correspond to lexical words. For languages without space-delimited
 words, rely on the one-idea and clause-count rules instead.
+
+## Simplified Technical English
+
+ASD-STE100 Simplified Technical English (STE) is a controlled language for
+technical text that must have one meaning. Its language-neutral rules are
+already in Reader-First Prose and the how-to guidance. Its English-only rules
+live in `references/ste-rules.md`.
+
+Read that file and apply it when the output is English and either:
+
+- the page is a how-to guide or reference page, or the text is tutorial steps,
+  warnings, or error messages, or
+- the user asks for STE, ASD-STE100, Simplified Technical English, or a
+  controlled-language rewrite.
+
+Do not apply the English-only rules to other languages. Do not call the result
+STE-compliant. The official STE dictionary is not included, so the result is
+STE-style.
 
 ## Type Guidance
 
@@ -138,6 +166,9 @@ Use a how-to guide when the reader already has context and wants a task done.
 
 - Start with the outcome, prerequisites, and when to use the guide.
 - Write action-oriented steps in the order the user should perform them.
+- Give each step one action. Use active voice and name who acts.
+- Start each warning or caution with the command or condition, then give the
+  reason.
 - Include decision points, warnings, rollback/recovery guidance, and verification.
 - Keep conceptual background brief; link to explanations when the "why" would
   distract from completing the task.
@@ -235,5 +266,8 @@ classification note, document, and checklist stay as described above.
 - Sentences longer than 25 words have been reviewed and are necessary.
 - No sentence contains nested qualifications that could be stated separately.
 - Concision has not removed contracts, constraints, evidence, or exceptions.
+- Each claim keeps its original certainty, and no new facts were added.
+- English how-to, reference, and tutorial steps follow
+  `references/ste-rules.md`.
 - The prose has been checked for common AI writing tells, either with the
   humanizer skill or with `references/ai-prose-tells.md`.

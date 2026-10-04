@@ -42,6 +42,7 @@ npx skills add tronghieu/agent-skills --skill diataxis-writer
 - 操作指南、runbook、配置、迁移和故障排除文档
 - API、命令、政策和配置参考
 - 概念解释、架构背景和设计理由
+- 面向非母语读者或需要翻译的英文技术文档，遵循简化技术英语（ASD-STE100）规则
 - 审查混乱页面或重组文档体系
 
 ## Diataxis 的四个象限
@@ -68,6 +69,14 @@ npx skills add tronghieu/agent-skills --skill diataxis-writer
 提供文档或文档集、目标读者、产品或流程背景以及期望结果。已有示例、支持问题和搜索数据会有帮助。
 
 你将获得分类结果、章节级的混杂目的发现、目标信息架构，以及具体的重写计划或已重写的内容。审查还会附带验证清单。
+
+## 简化技术英语（ASD-STE100）
+
+所有语言的操作指南和参考文档都适用与语言无关的 STE 规则：每步只做一个动作，每个概念只用一个术语，使用主动语态，警告以命令开头，主张保持原有的确定程度。
+
+英文技术文档（操作指南、参考文档和教程步骤）还适用仅限英语的规则：不用短语动词，使用简单时态，不用分号，指令句不超过 20 个单词，描述句不超过 25 个单词。若要对其他英文文本应用 STE，请明确提出 STE。参见 [STE 规则](./references/ste-rules.md)。
+
+结果遵循 STE 风格，但不是经过认证的 STE。官方词典包含约 900 个核准词汇，受版权保护，未包含在内。如需认证文档，请对照 [asd-ste100.org](https://www.asd-ste100.org/) 上的标准检查文本。规则集改编自 [asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill)（MIT, danyuchn）。
 
 ## 互补技能
 

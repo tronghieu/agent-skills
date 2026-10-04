@@ -42,6 +42,7 @@ Technical writers, developer advocates, documentation owners, product and engine
 - How-to guides, runbooks, configuration, migration, and troubleshooting docs
 - API, command, policy, and configuration reference
 - Conceptual explanations, architecture context, and design rationale
+- English technical docs that follow Simplified Technical English (ASD-STE100) rules for non-native readers or translation
 - Auditing a confusing page or reorganizing a documentation set
 
 ## The four Diataxis quadrants
@@ -68,6 +69,14 @@ For detailed patterns and templates, see [Diataxis patterns](./references/diatax
 Bring the document or documentation set, intended readers, product or process context, and the outcome you want. Existing examples, support questions, and search data can help.
 
 You receive a classification, section-level mixed-purpose findings, a target information architecture, and either a concrete rewrite plan or rewritten content. Reviews also include a verification checklist.
+
+## Simplified Technical English (ASD-STE100)
+
+How-to guides and reference pages in every language get the language-neutral STE rules: one action per step, one term per concept, active voice, warnings that start with the command, and claims that keep their original certainty.
+
+English technical docs (how-to guides, reference pages, and tutorial steps) also get the English-only rules: no phrasal verbs, simple tenses, no semicolons, and sentence caps of 20 words for instructions and 25 for descriptions. Ask for STE by name to apply it to other English text. See [STE rules](./references/ste-rules.md).
+
+The result follows STE style but is not certified STE. The official dictionary of about 900 approved words is copyrighted and not included. For certified documents, check the text against the standard from [asd-ste100.org](https://www.asd-ste100.org/). The rule set is adapted from [asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) (MIT, danyuchn).
 
 ## Complementary skills
 
