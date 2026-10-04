@@ -53,6 +53,9 @@ assume.
 
 <!-- TODO(confirm): answer at least —
      - Are reports and screenshots committed to git, or kept out of it (.gitignore)?
+       Required: a committed report linking an ignored screenshot is a broken link.
+     - Do reports also go to a tracker (via on_complete)? Which one, and how are
+       screenshots attached there?
      - Who reads the reports (devs in-repo? external stakeholders?) and in what format —
        is markdown the final deliverable, or is something built from it (docx/PDF export)?
      - Retention: are old sessions' notes and screenshots kept forever, pruned, archived? -->

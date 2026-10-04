@@ -120,3 +120,14 @@ re-navigating later: re-navigation can heal (or worsen) the very state you're cl
   (docx/PDF) is built from the markdown — is the project's call, declared in the adapter's
   "Reporting & evidence" section (`_project/testing/environment.md`). Default when the
   adapter is silent: keep the session folder, never delete referenced evidence.
+- **Ignored evidence:** before writing links, run `git check-ignore -q {outputs.screenshots_dir}`.
+  If it is ignored but the reports are committed, every link breaks for any other reader.
+  Write each report so it holds without the image: one line stating what the screenshot
+  proves, the deterministic signal carrying the proof, the link marked `(local only)`.
+- **Reports leaving the repo:** when `on_complete` files a report in a tracker, its
+  screenshots go with it as attachments; a repo path means nothing there. GitHub:
+  `gh issue create --body-file BUG-….md --attach '{path}#{alt}'` (gh ≥ 2.102) uploads each
+  file and rewrites `![alt]({path})` in the body to the uploaded asset — run it from the
+  report's directory with the same relative path. `gh issue edit|comment` and
+  `gh pr create|edit|comment` take `--attach` too; `gh pr review` does not.
+  Other trackers: their attachment API.

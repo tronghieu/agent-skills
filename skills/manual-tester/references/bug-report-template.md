@@ -56,7 +56,9 @@ status: open
 
 ## Evidence
 
-- Screenshot: {relative path into `{outputs.screenshots_dir}/SESSION-…/`}
+- Screenshot: {one line: what the image proves}
+  ![{what it proves}]({path relative to this report, into `{outputs.screenshots_dir}/SESSION-…/`})
+  — append `(local only)` when the screenshots dir is git-ignored (`proof-discipline.md` §6)
 - Deterministic signal: {DB query + result / HTTP status + payload / console error — at least one}
 
 ```sql
