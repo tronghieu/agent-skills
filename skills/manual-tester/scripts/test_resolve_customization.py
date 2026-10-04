@@ -2,7 +2,7 @@
 """Tests for resolve_customization.py.
 
 Usage:
-    python3 .agents/skills/manual-tester/scripts/test_resolve_customization.py
+    python3 scripts/test_resolve_customization.py
 """
 from __future__ import annotations
 
