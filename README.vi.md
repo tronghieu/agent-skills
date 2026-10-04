@@ -46,7 +46,7 @@ Sau đó gọi skill trong agent:
 | Học qua câu hỏi gợi mở | [socratic-questor](./skills/socratic-questor/README.vi.md) |
 | So sánh CV với mô tả công việc | [cv-scorer](./skills/cv-scorer/README.vi.md) |
 | Hiểu một run coding tự động đã làm gì, hoặc vì sao nó bị kẹt | [bmad-run-inspector](./skills/bmad-run-inspector/README.vi.md) |
-| Test một app đang chạy bằng tay và chứng minh điều đã thấy | [manual-testing](./skills/manual-testing/README.vi.md) |
+| Test một app đang chạy bằng tay và chứng minh điều đã thấy | [manual-tester](./skills/manual-tester/README.vi.md) |
 
 ## Các skill
 
@@ -140,15 +140,15 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 
 [Đọc hướng dẫn fiction-studio](./skills/fiction-studio/README.vi.md)
 
-### manual-testing
+### manual-tester
 
-Dành cho bất kỳ ai phải test một app đang chạy bằng tay và muốn kết quả đứng vững khi bị soi: săn bug khám phá, xác minh một bản fix, smoke test, review UX hay bản dịch, và kiểm tra câu trả lời của trợ lý AI. Mọi phát hiện đều được đối chiếu với database, không chỉ với màn hình. Cần một dev stack chạy local.
+Dành cho bất kỳ ai phải test một app đang chạy bằng tay và muốn kết quả đứng vững khi bị soi: săn bug khám phá, xác minh một bản fix, smoke test, review UX hay bản dịch kèm danh sách cải tiến xếp hạng, kiểm tra câu trả lời của trợ lý AI, và viết kịch bản test manual bỏ qua những gì test tự động đã chứng minh. Mọi phát hiện đều được đối chiếu với database, không chỉ với màn hình. Cần một dev stack chạy local.
 
 ```bash
-npx skills add tronghieu/agent-skills --skill manual-testing
+npx skills add tronghieu/agent-skills --skill manual-tester
 ```
 
-[Đọc hướng dẫn manual-testing](./skills/manual-testing/README.vi.md)
+[Đọc hướng dẫn manual-tester](./skills/manual-tester/README.vi.md)
 
 ### market-researcher
 

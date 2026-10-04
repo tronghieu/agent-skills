@@ -7,7 +7,7 @@ updated: 2026-07-10
 related:
   - ../SKILL.md
   - proof-discipline.md
-tags: [manual-testing, bootstrap, project-adapter, environment]
+tags: [manual-tester, bootstrap, project-adapter, environment]
 ---
 
 # Adapter Bootstrap — Creating `_project/testing/` in a Fresh Repo
@@ -59,7 +59,7 @@ base templates and may have bootstrapped some of these files already — the scr
 reporting them as *skipped* is the expected outcome, not a conflict. The shared files are
 one adapter, whoever created them first.
 
-The script does not create `_project/testing/manual-testing.toml`. That override is
+The script does not create `_project/testing/manual-tester.toml`. That override is
 optional. If §1 found project testing-policy docs (principles, status vocabulary, evidence
 rules), propose adding them as `persistent_facts` there. Use the skill's `customize.toml`
 as the key reference.

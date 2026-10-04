@@ -1,17 +1,19 @@
 ---
-name: manual-testing
+name: manual-tester
 description: >-
-  Run a session-based manual test of the project's running app in one of five modes:
-  exploratory, verification, smoke, assessment (UX, localization, accessibility), or AI
-  probe. Use whenever the user asks, in any language, for something to be tested by
-  hand — "manual test", "exploratory test", "bug hunt", "verify the bug fix", "smoke
-  test", "QA this screen", "review this screen's UX", "check the localized copy", "test
-  the AI agent's answers" — or assigns a test design or test-case IDs to execute by
-  hand. Not for writing automated tests.
+  Plan and run manual tests of the project's running app. Runs a session in one of five
+  modes: exploratory, verification, smoke, assessment (UX, localization, accessibility,
+  improvement review), or AI probe. Also writes a manual test plan that holds only what
+  automated tests cannot judge. Use whenever the user asks, in any language, for
+  something to be tested by hand or for a manual test plan — "manual test", "exploratory
+  test", "bug hunt", "verify the bug fix", "smoke test", "QA this screen", "review this
+  screen's UX", "what would you improve", "check the localized copy", "test the AI
+  agent's answers", "write manual test cases", "kịch bản test manual" — or assigns a test
+  design, test plan or test-case IDs to execute by hand. Not for writing automated tests.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(curl *), Bash(psql *), Bash(docker *), Bash(jq *), Bash(python3 *)
 ---
 
-# Manual Testing — Session-Based Testing on the Running App
+# Manual Tester — Session-Based Testing on the Running App
 
 You are running a **testing session**: operate the app like a real user and produce
 information the automated suites cannot — they re-check known promises; you handle
@@ -21,6 +23,9 @@ Your posture is falsification: you are trying to *break* the belief that the sof
 works, not to confirm it. But you are an agent, and an agent's eye is not an oracle —
 so every claim you make must survive the proof discipline below. One false "bug" costs
 more credibility than ten real ones earn.
+
+**Asked for a plan, not a session?** Write it per `references/test-plan-authoring.md` and
+stop: no driving. It still resolves the customization and reads the adapter first.
 
 This skill is **generic**; everything project-specific lives in the project adapter
 and the project's customization (both below). If asked to explain the method's theory,
@@ -36,8 +41,8 @@ python3 <skill-dir>/scripts/resolve_customization.py
 ```
 
 Needs Python 3.11 or the `tomli` package. It merges three layers and prints JSON: the skill's `customize.toml` defaults, the team
-override `_project/testing/manual-testing.toml`, and the personal override
-`_project/testing/manual-testing.user.toml`. Missing override files are normal and mean
+override `_project/testing/manual-tester.toml`, and the personal override
+`_project/testing/manual-tester.user.toml`. Missing override files are normal and mean
 defaults. Then act on `customization.workflow`:
 
 - `activation_steps_prepend` — follow now, before preflight.
@@ -105,7 +110,8 @@ session. A session on an unconfirmed environment produces findings nobody can tr
 ### 0 · Preflight
 
 Load `environment.toml` and run its `[preflight]` checks in order, stopping at the first
-failure — findings from a broken environment are false findings. If services are down,
+failure — findings from a broken environment are false findings. Then probe the app the
+mission targets, not only the one preflight checks: `curl` its `[apps]` url. If services are down,
 tell the user what to start (or ask before starting them yourself). Read the adapter's
 "Current state" snapshot so you know what exists to be tested at all. **Local dev only**
 — never run a session against production.
@@ -214,7 +220,9 @@ one line each), observations needing human judgment, open questions, coverage ho
 | `_project/testing/environment.toml` + `environment.md` | Session start — services, apps, accounts, current state |
 | `_project/testing/verification-queries.md` | Verifying data-changing actions against the DB |
 | `references/adapter-bootstrap.md` | `_project/testing/` missing or incomplete — creating the adapter in a fresh repo |
+| `references/test-plan-authoring.md` | Asked to write a manual test plan or test cases |
 | `references/session-modes.md` | Running verification, smoke, assessment, or ai-probe modes |
+| `references/assessment-rubric.md` | Assessment mode — every finding cites a rubric ID |
 | `references/exploration-method.md` | Writing a charter; mid-session when out of ideas; coverage map |
 | `references/proof-discipline.md` | Before writing any verdict; before any FAIL; probing AI |
 | `references/session-note-template.md` | Writing the session note |

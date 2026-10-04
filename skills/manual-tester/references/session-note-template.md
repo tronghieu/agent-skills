@@ -3,11 +3,11 @@ title: "Session Note Template"
 type: reference
 status: draft
 created: 2026-07-10
-updated: 2026-07-10
+updated: 2026-10-04
 related:
   - ../SKILL.md
   - bug-report-template.md
-tags: [manual-testing, session-note, template, sbtm]
+tags: [manual-tester, session-note, template, sbtm]
 ---
 
 # Session Note Template
@@ -38,6 +38,11 @@ status: complete | cut-short ({reason})
 
 # Session — {short mission phrase}
 
+## Summary
+
+_Assessment mode only._ FAIL count by severity, IMPROVEMENT count by impact, OBSERVATION
+count. Then the top three improvements, one line each. "None" when empty.
+
 ## Log
 
 Chronological, terse. Every entry: what I did → what I saw → what I concluded or asked.
@@ -60,6 +65,25 @@ Mark detours with `↪`. Timestamps optional but helpful at direction changes.
 
 Judgment signals — no verdict claimed. For each: what was seen, which HICCUPPS anchor it
 tripped, one screenshot.
+
+## Improvements
+
+_Assessment mode only. "None" when empty._ One block per item:
+
+- `I{n} · {title} — impact {high|medium|low} — {rubric ID}`
+- Screen: route, viewport, locale
+- Current · Why it matters · Source · Suggested change (one concrete change)
+- Repro · Screenshot
+
+An item with no screenshot, route, repro or rubric ID is dropped; log the drop.
+
+## Automated checks
+
+_Assessment mode only. "None" when empty._ One row per distinct screen.
+
+| Screen | Scan (critical/serious/moderate/minor) | Console errors | 4xx/5xx | Load ms | Overflow |
+| --- | --- | --- | --- | --- | --- |
+| {route} | {0/0/1/0 or NOT RUN: reason} | {n} | {n} | {ms} | {yes/no} |
 
 ## Open questions
 

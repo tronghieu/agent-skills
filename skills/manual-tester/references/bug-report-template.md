@@ -7,7 +7,7 @@ updated: 2026-07-10
 related:
   - ../SKILL.md
   - session-note-template.md
-tags: [manual-testing, bug-report, template, severity]
+tags: [manual-tester, bug-report, template, severity]
 ---
 
 # Bug Report Template

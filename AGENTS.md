@@ -124,7 +124,7 @@ A skill that needs facts about the user's repository (ports, seeded accounts, wh
 
 Contract:
 
-- `_project/` is one shared root. A skill claims one subpath and writes nowhere else. Today: `bmad-run-inspector` owns `_project/bmad-loop/`, `manual-testing` owns `_project/testing/`, `scrum-master` owns `_project/scrum-master/`. `project-manager` owns the root itself; it predates this rule and is the only exception.
+- `_project/` is one shared root. A skill claims one subpath and writes nowhere else. Today: `bmad-run-inspector` owns `_project/bmad-loop/`, `manual-tester` owns `_project/testing/`, `scrum-master` owns `_project/scrum-master/`. `project-manager` owns the root itself; it predates this rule and is the only exception.
 - Files at the root (`README.md`, `tools.md`) belong to every skill. Create one if absent, append your own section, never rewrite another skill's.
 - Values a script reads go in TOML (`environment.toml`). Knowledge and judgment calls go in Markdown (`environment.md`) with a dated "current state" section, rewritten in place, never appended.
 - A team override is `<skill>.toml`, committed. A personal override is `<skill>.user.toml`, gitignored. Layers merge base, then team, then user. A skill that supports overrides ships its own `customize.toml` as the schema and its own resolver script.

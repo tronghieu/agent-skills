@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge the manual-testing skill's three TOML customization layers and print
+"""Merge the manual-tester skill's three TOML customization layers and print
 the result as JSON, so an agent can read one resolved view instead of three files.
 
 Usage:
@@ -27,11 +27,16 @@ from pathlib import Path
 # script) can be copied verbatim into any other repo and still find its own default.
 DEFAULT_SKILL_ROOT = Path(__file__).resolve().parent.parent
 
-# (path relative to skill root or repo root, required)
+# (path relative to skill root or repo root, required, legacy path or None).
+# The legacy names predate the rename from manual-testing; they still load, with a warning.
 LAYER_SPECS = [
-    ("customize.toml", True),
-    ("_project/testing/manual-testing.toml", False),
-    ("_project/testing/manual-testing.user.toml", False),
+    ("customize.toml", True, None),
+    ("_project/testing/manual-tester.toml", False, "_project/testing/manual-testing.toml"),
+    (
+        "_project/testing/manual-tester.user.toml",
+        False,
+        "_project/testing/manual-testing.user.toml",
+    ),
 ]
 
 
@@ -159,10 +164,18 @@ def main() -> int:
     roots = {"customize.toml": skill_root}
     merged: dict = {}
     layers_meta: list[dict] = []
+    layer_warnings: list[str] = []
 
-    for rel_path, required in LAYER_SPECS:
+    for rel_path, required, legacy in LAYER_SPECS:
         root = roots.get(rel_path, repo_root)
         path = root / rel_path
+        legacy_path = root / legacy if legacy else None
+        if legacy_path and legacy_path.exists():
+            if path.exists():
+                layer_warnings.append(f"{legacy_path} ignored: {path} exists; delete the old file")
+            else:
+                layer_warnings.append(f"{legacy_path} loaded: rename it to {path.name}")
+                path = legacy_path
         if not path.exists():
             if required:
                 print(f"error: required customization file missing: {path}", file=sys.stderr)
@@ -180,7 +193,7 @@ def main() -> int:
     merged = substitute(
         merged, {"{project-root}": str(repo_root), "{skill-root}": str(skill_root)}
     )
-    warnings = expand_persistent_facts(merged)
+    warnings = layer_warnings + expand_persistent_facts(merged)
 
     customization = (
         {key: get_dotted(merged, key) for key in args.keys} if args.keys else merged

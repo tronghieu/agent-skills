@@ -24,7 +24,7 @@ bootstrap a fresh `_project/` there, and it works.
 
 ### `testing/`
 
-Consumed by `.claude/skills/manual-testing`.
+Consumed by `.claude/skills/manual-tester`.
 
 <!-- TODO(confirm): note any other skill that also consumes this directory. -->
 

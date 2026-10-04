@@ -6,7 +6,7 @@ created: TODO(date)
 updated: TODO(date)
 related:
   - environment.md
-tags: [testing, manual-testing, sql, verification, triangulation]
+tags: [testing, manual-tester, sql, verification, triangulation]
 ---
 
 # Verification Queries

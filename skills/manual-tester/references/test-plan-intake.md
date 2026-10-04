@@ -8,7 +8,7 @@ related:
   - ../SKILL.md
   - session-modes.md
   - proof-discipline.md
-tags: [manual-testing, test-design, intake, scope, automation]
+tags: [manual-tester, test-design, intake, scope, automation]
 ---
 
 # Test Plan Intake

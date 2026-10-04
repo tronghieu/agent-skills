@@ -1,7 +1,7 @@
-# Project adapter for the manual-testing skill (and other testing skills).
+# Project adapter for the manual-tester skill (and other testing skills).
 # Values live HERE only — environment.md references them, never repeats them.
 # Every value below should be read from a repo file; unresolved values are marked
-# TODO for research — see references/adapter-bootstrap.md in the manual-testing skill.
+# TODO for research — see references/adapter-bootstrap.md in the manual-tester skill.
 
 [project]
 name = ""                # TODO(confirm: source?)

@@ -2,7 +2,7 @@
 """Tests for resolve_customization.py.
 
 Usage:
-    python3 .agents/skills/manual-testing/scripts/test_resolve_customization.py
+    python3 .agents/skills/manual-tester/scripts/test_resolve_customization.py
 """
 from __future__ import annotations
 
@@ -75,11 +75,11 @@ class ResolveCustomizationTest(unittest.TestCase):
     def test_list_append_dedupe_across_layers(self):
         write(self.skill_root / "customize.toml", BASE_TOML)
         write(
-            self.repo_root / "_project/testing/manual-testing.toml",
+            self.repo_root / "_project/testing/manual-tester.toml",
             '[workflow]\nactivation_steps_append = ["a", "b"]\n',
         )
         write(
-            self.repo_root / "_project/testing/manual-testing.user.toml",
+            self.repo_root / "_project/testing/manual-tester.user.toml",
             '[workflow]\nactivation_steps_append = ["b", "c"]\n',
         )
         out = json.loads(run(self.skill_root, self.repo_root).stdout)
@@ -90,11 +90,11 @@ class ResolveCustomizationTest(unittest.TestCase):
     def test_scalar_replace_user_beats_team_beats_default(self):
         write(self.skill_root / "customize.toml", BASE_TOML)
         write(
-            self.repo_root / "_project/testing/manual-testing.toml",
+            self.repo_root / "_project/testing/manual-tester.toml",
             '[workflow]\non_complete = "team-value"\n',
         )
         write(
-            self.repo_root / "_project/testing/manual-testing.user.toml",
+            self.repo_root / "_project/testing/manual-tester.user.toml",
             '[workflow]\non_complete = "user-value"\n',
         )
         out = json.loads(run(self.skill_root, self.repo_root).stdout)
@@ -103,7 +103,7 @@ class ResolveCustomizationTest(unittest.TestCase):
     def test_array_of_tables_merge_by_id(self):
         write(self.skill_root / "customize.toml", BASE_TOML)
         write(
-            self.repo_root / "_project/testing/manual-testing.toml",
+            self.repo_root / "_project/testing/manual-tester.toml",
             '[[checks]]\nid = "a"\nvalue = 99\n\n[[checks]]\nid = "c"\nvalue = 3\n',
         )
         out = json.loads(run(self.skill_root, self.repo_root).stdout)
@@ -153,11 +153,46 @@ class ResolveCustomizationTest(unittest.TestCase):
 
     def test_invalid_toml_in_team_layer_exits_2(self):
         write(self.skill_root / "customize.toml", BASE_TOML)
-        bad_path = self.repo_root / "_project/testing/manual-testing.toml"
+        bad_path = self.repo_root / "_project/testing/manual-tester.toml"
         write(bad_path, "this is not valid toml [[[")
         result = run(self.skill_root, self.repo_root)
         self.assertEqual(result.returncode, 2)
         self.assertIn(str(bad_path), result.stderr)
+
+    def test_legacy_layer_names_load_with_a_rename_warning(self):
+        write(self.skill_root / "customize.toml", BASE_TOML)
+        write(
+            self.repo_root / "_project/testing/manual-testing.toml",
+            '[workflow]\non_complete = "legacy-team"\n',
+        )
+        write(
+            self.repo_root / "_project/testing/manual-testing.user.toml",
+            '[workflow]\nactivation_steps_append = ["legacy-user"]\n',
+        )
+        result = run(self.skill_root, self.repo_root)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        out = json.loads(result.stdout)
+        self.assertEqual(out["customization"]["workflow"]["on_complete"], "legacy-team")
+        self.assertEqual(
+            out["customization"]["workflow"]["activation_steps_append"], ["legacy-user"]
+        )
+        self.assertEqual(len(out["warnings"]), 2)
+        self.assertTrue(all("rename" in w for w in out["warnings"]))
+
+    def test_new_layer_name_wins_over_legacy(self):
+        write(self.skill_root / "customize.toml", BASE_TOML)
+        write(
+            self.repo_root / "_project/testing/manual-tester.toml",
+            '[workflow]\non_complete = "new"\n',
+        )
+        write(
+            self.repo_root / "_project/testing/manual-testing.toml",
+            '[workflow]\non_complete = "legacy"\n',
+        )
+        out = json.loads(run(self.skill_root, self.repo_root).stdout)
+        self.assertEqual(out["customization"]["workflow"]["on_complete"], "new")
+        self.assertEqual(len(out["warnings"]), 1)
+        self.assertIn("ignored", out["warnings"][0])
 
     def test_key_flag_filters_output(self):
         write(self.skill_root / "customize.toml", BASE_TOML)

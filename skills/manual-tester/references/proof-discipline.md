@@ -7,7 +7,7 @@ updated: 2026-07-10
 related:
   - ../SKILL.md
   - ../../../../_project/testing/verification-queries.md
-tags: [manual-testing, verdicts, triangulation, oracles, ai-testing]
+tags: [manual-tester, verdicts, triangulation, oracles, ai-testing]
 ---
 
 # Proof Discipline — Verdicts, Triangulation, Self-Check

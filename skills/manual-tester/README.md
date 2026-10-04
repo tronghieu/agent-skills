@@ -1,11 +1,11 @@
-# Manual Testing
+# Manual Tester
 
 **Language:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
-Test a running app by hand, the way a skeptical tester does, and prove every finding against the database before calling it a bug.
+Test a running app by hand, the way a skeptical tester does, and prove every finding against the database before calling it a bug. It also writes manual test plans that hold only what automated tests cannot judge.
 
 ```bash
-npx skills add tronghieu/agent-skills --skill manual-testing
+npx skills add tronghieu/agent-skills --skill manual-tester
 ```
 
 ## Quick start
@@ -30,6 +30,10 @@ Review the checkout screen's Vietnamese copy.
 Ask the in-app assistant five questions about this tenant's orders and check its answers against the database.
 ```
 
+```text
+Write a manual test plan for the epic from its test design, to hand to another agent.
+```
+
 ## Why not just click around?
 
 An agent driving a browser sees what the page shows. The page can lie: a toast says "saved" while the row never landed, a list looks empty because the filter is wrong, an error is swallowed before it reaches the screen. A report built on screenshots alone produces false bugs, and one false bug costs more trust than ten real ones earn.
@@ -42,18 +46,20 @@ Teams whose automated suites re-check known promises and who need someone to loo
 
 ## How it works
 
-1. **Resolve the project's testing policy.** `scripts/resolve_customization.py` merges the skill's defaults with the team override in `_project/testing/manual-testing.toml` and a personal `.user.toml`. Policy documents named there stay in context for the whole session and outrank the skill's own defaults.
+1. **Resolve the project's testing policy.** `scripts/resolve_customization.py` merges the skill's defaults with the team override in `_project/testing/manual-tester.toml` and a personal `.user.toml`. Policy documents named there stay in context for the whole session and outrank the skill's own defaults.
 2. **Read the project adapter.** Ports, services, seeded accounts, auth method, output paths, and preflight checks come from `_project/testing/environment.toml`. The dated "current state" and the how-tos come from `environment.md`. Read-only SQL comes from `verification-queries.md`. On a fresh repo the skill bootstraps the adapter from templates, reads each value from a real file, marks what it cannot confirm, and asks before the first session.
-3. **Pick a mode and write the mission.** Exploratory (a charter), verification (one falsifiable claim), smoke (a fixed breadth list), assessment (one lens over a set of screens), or AI probe (a grounded question set). Given a test design or test-case IDs, it first sorts the conditions by which ones need a human at all.
-4. **Drive and log.** Browser automation with a running log of action, observation, conclusion. After each step: console, network, i18n keys, tenant leakage, auth boundaries, silent failures.
-5. **Verify before verdict.** Read-only SELECT against the local database. Self-check before any FAIL: right account, right element, page loaded, reproduces twice from clean state.
-6. **Report.** A session note with a coverage map, one bug report per FAIL, and automation candidates phrased as scenario plus oracle.
+3. **Plan, if asked.** A requested plan keeps only cases no automated test decides, at most about ten, each naming what only a person can see. Then it stops.
+4. **Pick a mode and write the mission.** Exploratory (a charter), verification (one falsifiable claim), smoke (a fixed breadth list), assessment (one lens over a set of screens), or AI probe (a grounded question set). Given a test design or test-case IDs, it first sorts the conditions by which ones need a human at all.
+5. **Drive and log.** Browser automation with a running log of action, observation, conclusion. After each step: console, network, i18n keys, tenant leakage, auth boundaries, silent failures.
+6. **Verify before verdict.** Read-only SELECT against the local database. Self-check before any FAIL: right account, right element, page loaded, reproduces twice from clean state.
+7. **Report.** A session note with a coverage map, one bug report per FAIL, and automation candidates phrased as scenario plus oracle.
 
 ## What comes back
 
 - A session note, even when nothing was found, with what was visited, skipped, and never reached.
 - A bug report per failure, complete enough for a developer who was not there.
 - Observations for human judgment, kept apart from verdicts.
+- In assessment mode, a ranked list of improvements, each with a rubric ID, an impact and one concrete change.
 - Automation candidates: what to hand to the e2e or integration suite next.
 
 ## Limits

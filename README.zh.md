@@ -46,7 +46,7 @@ npx skills add tronghieu/agent-skills
 | 通过引导式提问学习 | [socratic-questor](./skills/socratic-questor/README.zh.md) |
 | 将简历与职位描述进行比较 | [cv-scorer](./skills/cv-scorer/README.zh.md) |
 | 理解自动化编码运行做了什么，或为什么卡住了 | [bmad-run-inspector](./skills/bmad-run-inspector/README.zh.md) |
-| 手动测试运行中的应用，并证明你所看到的 | [manual-testing](./skills/manual-testing/README.zh.md) |
+| 手动测试运行中的应用，并证明你所看到的 | [manual-tester](./skills/manual-tester/README.zh.md) |
 
 ## 技能列表
 
@@ -140,15 +140,15 @@ npx skills add tronghieu/agent-skills --skill fiction-studio
 
 [阅读 fiction-studio 指南](./skills/fiction-studio/README.zh.md)
 
-### manual-testing
+### manual-tester
 
-适合需要手动测试运行中应用、并希望结论经得起推敲的人：探索性找 bug、验证修复、冒烟测试、UX 或本地化审查，以及检验 AI 助手的回答。每个发现都会对照数据库核实，而不只看屏幕。需要本地开发环境。
+适合需要手动测试运行中应用、并希望结论经得起推敲的人：探索性找 bug、验证修复、冒烟测试、带排序改进清单的 UX 或本地化审查、检验 AI 助手的回答，以及编写跳过自动化测试已证明内容的手动测试计划。每个发现都会对照数据库核实，而不只看屏幕。需要本地开发环境。
 
 ```bash
-npx skills add tronghieu/agent-skills --skill manual-testing
+npx skills add tronghieu/agent-skills --skill manual-tester
 ```
 
-[阅读 manual-testing 指南](./skills/manual-testing/README.zh.md)
+[阅读 manual-tester 指南](./skills/manual-tester/README.zh.md)
 
 ### market-researcher
 

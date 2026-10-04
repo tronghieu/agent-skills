@@ -3,12 +3,12 @@ title: "Session Modes — Verification, Smoke, Assessment, AI Probe"
 type: reference
 status: draft
 created: 2026-07-10
-updated: 2026-07-10
+updated: 2026-10-04
 related:
   - ../SKILL.md
   - exploration-method.md
   - proof-discipline.md
-tags: [manual-testing, session-modes, verification, smoke, assessment, ai-probe]
+tags: [manual-tester, session-modes, verification, smoke, assessment, ai-probe]
 ---
 
 # Session Modes — Verification, Smoke, Assessment, AI Probe
@@ -70,12 +70,15 @@ smoke pass that couldn't check login has not established the app is breathing.
 ## Assessment
 
 **Use when:** the user wants judgment-quality review — "is this screen understandable?",
-"check the localized copy", "review accessibility basics".
+"check the localized copy", "review accessibility basics", "what would you improve here?".
 
 **Mission form:** one lens × one surface set:
 
 > Assess *(screens/flows)* through the *(comprehension | localization | accessibility)*
 > lens for *(target persona)*.
+
+Viewport, locales, persona and accounts come from the adapter. Repeat the core path once
+per extra viewport or locale, not the edge states. Criteria and IDs: `assessment-rubric.md`.
 
 Lenses:
 
@@ -85,23 +88,63 @@ Lenses:
 - **Localization** — naturalness in each locale the project ships (word-for-word
   translations, register/formality, pronoun consistency), no raw i18n keys, locale
   format conventions (currency, dates, phone numbers), text overflow from longer
-  translations. The adapter (`_project/testing/`) says which locales exist and which
-  one is primary.
-- **Accessibility** — the judgment half only: keyboard-only walk, focus visibility,
-  label/announcement sense. (The rule-checkable half — contrast ratios, missing
-  alt/aria — belongs to automated axe-core checks; note it as an automation candidate
-  instead of hand-checking.)
+  translations. The adapter says which locales exist and which one is primary.
+- **Accessibility** — the judgment half: keyboard-only walk, focus visibility,
+  label/announcement sense. The rule-checkable half (contrast, missing names) belongs to
+  automated checks. If the adapter declares a scanner (e.g. `[preflight]` or a script
+  path), run it per screen: cheap evidence, classified by the impact mapping below.
+  Otherwise note it as an automation candidate.
 
 **How to drive:** methodical, garbage-collector style — every screen in the set, every
-state you can reach (empty, filled, error), screenshot everything you judge.
+state you can reach (empty, filled, error), screenshot everything you judge. Do not
+re-check what automated tests decide (`test-plan-intake.md`).
 
-**Verdict discipline — the defining constraint of this mode:** an agent has no authority
-on taste. Almost everything here is an **OBSERVATION** — structured for a human to judge
-efficiently: grouped by screen, tagged with the lens and the HICCUPPS anchor it tripped,
-one screenshot each. Deterministic catches along the way (raw i18n key, text overflowing
-its container, keyboard trap) are still FAILs with evidence, as usual. The mode's value
-is a *complete, well-organized set of candidate judgments* — the human spends minutes
-deciding instead of an hour hunting.
+**Oracles.** Load them before driving and list them in the note's `sources`: feature docs,
+design spec, experience spec, locale files, design mock. Rank: written spec above design
+mock.
+
+- A design mock (studio, Figma) never decides a FAIL here. A screen that differs from it is
+  an OBSERVATION with both screenshots. A weak mock is an IMPROVEMENT aimed at the mock.
+  Never review the mock in place of the real route.
+- Two oracles contradict: open question citing both. Never pick one.
+
+**Measure** once per distinct screen, with whatever browser tool the adapter names. Record
+each row in the note's Automated checks table.
+
+| Check | Flag when |
+| --- | --- |
+| Console errors | Any error |
+| Network | Any 4xx or 5xx |
+| Navigation load time | Over 3000 ms (team default) |
+| Horizontal overflow | Page wider than the viewport |
+| Accessibility scan, if the adapter declares one | Any violation |
+
+A check that cannot run is NOT RUN (or the project's equivalent) with the reason. Continue.
+
+**Classify.** Each finding cites one rubric ID. Take the first row that matches.
+
+| Class | Rule | Goes to |
+| --- | --- | --- |
+| FAIL | Contradicts a written source, other than a design mock. Or a deterministic catch: console error, 5xx, raw i18n key, overflow that hides content, keyboard trap, silent failure | A bug report |
+| IMPROVEMENT | No oracle is broken. A rubric criterion is weak, and you can name one concrete change | Improvements section |
+| OBSERVATION | Looks wrong, but no oracle settles it | Observations section |
+
+- A FAIL still passes the proof-discipline self-check; otherwise downgrade it.
+- IMPROVEMENT is a section, never a status. It needs a rubric ID, an impact, and one
+  concrete suggested change with its source. Missing either: OBSERVATION. Exploratory
+  findings are FAIL or OBSERVATION only.
+- Impact: **high** — the persona fails or errs on a core task; **medium** — they slow
+  down; **low** — polish.
+- Scan impact maps to improvement impact: critical/serious → high, moderate → medium,
+  minor → low. A violation that blocks the task (an unnamed primary button) is a FAIL.
+- Thresholds marked team default never raise a FAIL.
+- Taste is not authority. When unsure, OBSERVATION.
+
+**Evidence.** Every item carries a screenshot, the route, repro steps and its rubric ID.
+An item with no evidence is dropped, and the drop is logged. Findings are grouped by
+screen and tagged with the lens and the HICCUPPS anchor they tripped. The mode's value is
+a complete, well-organized set of candidate judgments: the human spends minutes deciding,
+not an hour hunting. Note sections: `session-note-template.md`.
 
 ## AI probe
 
