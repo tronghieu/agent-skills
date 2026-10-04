@@ -112,7 +112,7 @@ tell the user what to start (or ask before starting them yourself). Read the ada
 
 ### 1 · Mission
 
-**Assigned a test design or test-case IDs?** Run the intake first
+**Assigned a test design, a test plan or test-case IDs?** Run the intake first
 (`references/test-plan-intake.md`). Read the prior session notes and bug reports for the
 target first. Then classify every condition by the evidence the design allocated to it:
 manual, automated, or deferred/unknown. Show the classification. Then

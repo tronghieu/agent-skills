@@ -3,7 +3,7 @@ title: "Test Plan Intake — Scoping a Session from an Assigned Test Design"
 type: reference
 status: draft
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-10-04
 related:
   - ../SKILL.md
   - session-modes.md
@@ -67,6 +67,21 @@ change, or a row written by a user action. Not UI-observable: behavior reachable
 through an elevated database connection, pure functions, internal event emission, and
 races a single tester cannot produce. Put every automated ID in a group by name, not by
 estimate. QA sets scope from these counts, so they must be auditable.
+
+**A hand-written plan is classified too.** When the cases come from a plan written beside
+the design, map each case to the design's conditions and classify it like one. A case
+whose verdict a passing automated test already decides is automated, even if the plan
+says it checks "only the screen". A plan's own claim that it holds only manual work is
+not evidence.
+
+**Zero manual conditions.** Do not invent cases to fill the session. Propose only:
+
+- an **assessment** of the real screens on seeded data (layout, copy, controls), and
+- a few **journeys across screens**, each naming what it can show that no single
+  automated test can.
+
+Re-checking a refusal, permission, filter or save rule "for its message" is not one of
+them.
 
 ## 3. Ask before driving
 
