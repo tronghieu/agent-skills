@@ -63,6 +63,21 @@
         "No content surface relies only on grid gap, child margin, or outer slide padding for its internal inset",
         "No local p-0, padding: 0, negative margin, or absolute positioning cancels the required spacing around primary content"
       ]
+    },
+    {
+      "id": 4,
+      "name": "phone-remote",
+      "prompt": "Mình sẽ đứng giữa sân khấu, không với tới laptop. Dựng deck 6 slide về 'Bảo mật cho dev mới vào nghề' và cho mình chuyển slide bằng điện thoại, quét mã là dùng được.",
+      "expected_output": "A 6-slide deck (either track) that ships the slidewright phone remote: running it locally prints a QR code to a token-protected /remote page on the LAN, and the deck exposes the window.slidewright API so the phone shows counter and title.",
+      "files": [],
+      "assertions": [
+        "Produces a runnable deck of about 6 slides on the topic",
+        "The deck includes slidewright-remote.mjs (HTML: in the deck folder; React: remote/ and registered in vite.config.ts via slidewrightRemote())",
+        "The deck exposes window.slidewright (go/next/prev/getState) and dispatches a 'slidewright:change' event on slide change",
+        "The response tells the user the exact command to start the remote (node <deck>/slidewright-remote.mjs or npm run dev) and that a QR code appears in the terminal",
+        "The response mentions the phone and laptop must share the same network",
+        "Keeps the bottom navigation slider and slide counter; contains no form/input controls on slides"
+      ]
     }
   ]
 }

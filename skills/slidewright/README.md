@@ -53,6 +53,8 @@ Both tracks create the same audience experience: a full-screen deck with visible
 
 The presenter advances with the keyboard or bottom navigation and can jump between slides. A reveal, tab, comparison, timer, or animation is appropriate only when it changes what the presenter is explaining. Forms, logins, submissions, answer collection, and stored audience data do not belong in this kind of deck.
 
+The presenter can also use a phone as a remote. Running the deck locally (`node slidewright-remote.mjs` for HTML, `npm run dev` for React) prints a QR code in the terminal. Scan it on the same Wi-Fi to get Prev/Next buttons, the slide counter and title, and a talk timer. It works offline and needs no extra install; a random token in the URL keeps other people on the network from changing slides.
+
 ## What to provide
 
 Bring what you have: talk goal, audience, duration, key message, source material, required slide count, venue or screen constraints, and any brand colours, logo, images, or tone guidance. Say whether you want a fast HTML deck or a maintainable React project; if you are unsure, describe the deck and the skill can help choose.

@@ -41,6 +41,8 @@ if [[ -e "$DECK_DIR" ]]; then
   exit 1
 fi
 
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 echo "→ Scaffolding Vite (react-ts) at $DECK_DIR ..."
 npm create vite@latest "$DECK_DIR" -- --template react-ts >/dev/null
 
@@ -53,14 +55,21 @@ if [[ "$DO_INSTALL" -eq 1 ]]; then
   npm install -D tailwindcss @tailwindcss/vite >/dev/null
 fi
 
+# --- Phone remote: zero-dependency Vite plugin (WebSocket relay + QR code) ----
+mkdir -p remote
+cp "$SKILL_DIR/assets/remote/slidewright-remote.mjs" "$SKILL_DIR/assets/remote/slidewright-remote.d.mts" remote/
+
 # --- Tailwind wiring spot #1: Vite plugin ------------------------------------
 cat > vite.config.ts <<'EOF'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { slidewrightRemote } from './remote/slidewright-remote.mjs'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // slidewrightRemote: `npm run dev` listens on the LAN and prints a QR code
+  // for the phone remote. Dev server only; it adds nothing to the build.
+  plugins: [react(), tailwindcss(), slidewrightRemote()],
 })
 EOF
 
@@ -159,6 +168,23 @@ import { slides } from '../slides'
 
 const NAV_HEIGHT = 48
 
+/** Phone-remote contract, read by the client that remote/slidewright-remote.mjs injects. */
+interface SlidewrightApi {
+  go: (i: number) => void
+  next: () => void
+  prev: () => void
+  getState: () => { current: number; total: number; title: string; next: string | null }
+}
+declare global {
+  interface Window {
+    slidewright?: SlidewrightApi
+  }
+}
+
+function announce() {
+  window.dispatchEvent(new CustomEvent('slidewright:change'))
+}
+
 /**
  * Owns slide navigation for the whole deck: keyboard (arrows / space / home / end),
  * prev/next buttons, a clickable dot strip and a slide counter. A visible slider
@@ -172,6 +198,23 @@ export default function Deck() {
     (i: number) => setCurrent(() => Math.max(0, Math.min(total - 1, i))),
     [total],
   )
+
+  // Expose navigation to the phone remote and announce every slide change.
+  // The title is read from the rendered slide, so it is re-announced once the
+  // cross-fade has mounted the new slide (onAnimationComplete below).
+  useEffect(() => {
+    window.slidewright = {
+      go,
+      next: () => go(current + 1),
+      prev: () => go(current - 1),
+      getState: () => {
+        const heading = document.querySelector(`[data-slide="${current}"]`)?.querySelector('h1, h2, h3')
+        const title = heading?.textContent?.trim().replace(/\s+/g, ' ') ?? ''
+        return { current, total, title, next: null }
+      },
+    }
+    announce()
+  }, [current, go, total])
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -199,6 +242,8 @@ export default function Deck() {
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
+            data-slide={current}
+            onAnimationComplete={announce}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

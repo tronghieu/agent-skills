@@ -19,7 +19,7 @@ Then:
 
 ```bash
 cd <deck-name>
-npm run dev      # local dev with HMR
+npm run dev      # local dev with HMR + phone remote (QR code in the terminal)
 npm run build    # production build into dist/
 ```
 
@@ -35,10 +35,18 @@ src/
     index.ts           ordered array of slide components — the source of slide order
     00-Title.tsx       one component per slide
   index.css            Tailwind import + base typography
+remote/
+  slidewright-remote.mjs   phone remote: Vite plugin, WebSocket relay, QR code
 ```
 
+`vite.config.ts` registers `slidewrightRemote()`. It makes the dev server listen on the
+LAN and prints a QR code for the phone remote. It is dev-only and adds nothing to the
+build. See `references/remote-control.md`.
+
 - **`Deck`** owns all navigation and the required bottom slider + slide number. You
-  rarely edit it; it reads `slides` from `src/slides/index.ts`.
+  rarely edit it; it reads `slides` from `src/slides/index.ts`. It also exposes
+  `window.slidewright` and dispatches `slidewright:change` for the phone remote — keep
+  both, plus the `data-slide` / `onAnimationComplete` props on the slide wrapper.
 - **`Slide`** is the frame every slide renders inside. It always applies safe-area
   padding so content never touches the viewport edge. Use `fullBleed` for slides where
   the **background** goes edge-to-edge (title, full image, colour block) — the background

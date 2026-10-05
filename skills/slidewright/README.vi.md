@@ -53,6 +53,8 @@ Cả hai hướng đều tạo cùng trải nghiệm cho khán giả: deck toàn
 
 Người trình bày chuyển bằng bàn phím hoặc navigation ở đáy màn hình và có thể nhảy tới từng slide. Reveal, tab, so sánh, timer hoặc animation chỉ phù hợp khi thay đổi điều người nói đang giải thích. Form, đăng nhập, gửi dữ liệu, thu câu trả lời hoặc lưu dữ liệu của khán giả không thuộc loại deck này.
 
+Người trình bày cũng có thể dùng điện thoại làm remote. Khi chạy deck trên máy (`node slidewright-remote.mjs` với HTML, `npm run dev` với React), terminal in ra một mã QR. Quét mã khi điện thoại và laptop cùng Wi-Fi để có nút Trước/Sau, số slide và tiêu đề, cùng đồng hồ bấm giờ. Remote chạy offline, không cần cài thêm gì; token ngẫu nhiên trong URL chặn người khác cùng mạng chuyển slide.
+
 ## Bạn cần cung cấp gì
 
 Hãy mang theo những gì đang có: mục tiêu bài nói, khán giả, thời lượng, thông điệp chính, tài liệu nguồn, số slide yêu cầu, giới hạn địa điểm hoặc màn hình, cùng màu thương hiệu, logo, hình ảnh hay hướng dẫn về giọng điệu. Hãy nói nếu bạn muốn một deck HTML nhanh hay dự án React dễ duy trì; nếu chưa chắc, chỉ cần mô tả deck để skill giúp chọn.
