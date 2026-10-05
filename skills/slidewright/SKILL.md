@@ -5,7 +5,8 @@ description: >-
   by one presenter. Use this skill WHENEVER the user wants to create, build, or design a
   presentation, slide deck, talk, or "bài thuyết trình / slide / trình chiếu", and also
   when they ask to add/edit slides, restyle a deck, scaffold a new presentation project,
-  reuse their presentation setup in another repo, or export slides to PDF — even if they
+  reuse their presentation setup in another repo, control slides from a phone (remote,
+  QR code, "điều khiển slide bằng điện thoại"), or export slides to PDF — even if they
   don't say the word "slide" but clearly need projected talk visuals (e.g. "I'm giving a
   talk next week and need visuals", "dựng deck cho buổi chia sẻ", "làm mấy trang chiếu
   cho hội thảo"). Supports two tracks: a zero-build single HTML file, or a Vite + React
@@ -38,6 +39,9 @@ follows from this. Three failure modes to avoid:
 - **Building an app.** No input fields, no "Submit", no login, no data collection — there
   is no backend and nowhere for data to go. Interaction is only the presenter clicking to
   reveal/advance content. If a component asks "where does this data go?", it's wrong.
+
+The presenter may hold a **phone remote** (scan a QR code from the terminal, then tap
+Next/Prev). It is the same single operator on a second device, not audience interaction.
 
 `references/design-system.md` is the heart of this skill — the typography floor, two-layer
 padding contract, content overflow, layout recipes, motion, and palette. Read it whenever
@@ -77,7 +81,12 @@ you design or restyle slide content.
    `shadow`, rounded surface, or text-overlay panel), verify that its content has
    padding on all four sides. Media and purely decorative edge-to-edge layers are the
    only exceptions; text over them belongs in a nested padded surface.
-9. **Export to PDF** if asked — see `references/export-pdf.md`.
+9. **Tell the user how to present with the phone remote.** Both scaffolds include it.
+   The HTML track runs `node <deck>/slidewright-remote.mjs`. The React track runs `npm run dev`.
+   The terminal prints a QR code for the phone. See `references/remote-control.md`.
+   Keep the deck's `window.slidewright` API and `slidewright:change` event when you edit
+   navigation code.
+10. **Export to PDF** if asked — see `references/export-pdf.md`.
 
 Put each deck in its own folder. Keep any live-demo app as a separate project, not inside
 the deck.
@@ -109,6 +118,13 @@ bash scripts/new-react-deck.sh <deck-name> [target-dir] [--no-install]
 cd <deck-name> && npm run dev
 ```
 
+Both scaffolds include the phone remote (`slidewright-remote.mjs`, zero dependencies).
+For a deck scaffolded before the remote existed:
+
+```bash
+bash scripts/add-remote.sh <path-to-deck>
+```
+
 After scaffolding, read the matching track reference for how slides are structured and how
 to add/reorder them, then build the content.
 
@@ -119,8 +135,14 @@ to add/reorder them, then build the content.
 - `references/html-track.md` — plain-HTML deck structure, template internals, adding slides.
 - `references/react-track.md` — Vite+React architecture, slide ordering, Tailwind wiring.
 - `references/export-pdf.md` — PDF export options and speaker-notes convention.
+- `references/remote-control.md` — phone remote: running it, the deck API contract,
+  security, troubleshooting (wrong IP, firewall, venue Wi-Fi).
 - `scripts/new-html-deck.sh` — scaffold a plain-HTML deck.
 - `scripts/new-react-deck.sh` — scaffold a Vite + React deck.
+- `scripts/add-remote.sh` — add the phone remote to an existing deck.
+- `assets/remote/slidewright-remote.mjs` — the phone remote: WebSocket relay, remote
+  page, terminal QR code, static server (HTML track) and Vite plugin (React track).
+  The scaffolds copy it into each deck; edit this source, not the copies.
 - `scripts/export-deck-pdf.py` — export a deck to a content-complete PDF (waits for render
   and reveals hidden content; image-based).
 - `scripts/verify-slides.sh` — static analysis of deck files: flags text below the

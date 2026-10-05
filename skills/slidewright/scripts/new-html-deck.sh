@@ -114,8 +114,9 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
     #nav button { cursor:pointer; border:none; background:none; color:var(--ink); padding:6px 10px; font-size:15px; border-radius:8px; }
     #nav button:disabled { opacity:.25; cursor:default; }
     #dots { display:flex; gap:6px; align-items:center; max-width:60vw; overflow-x:auto; }
-    .dot { width:8px; height:8px; border-radius:999px; background:#d5c8b4; border:none; cursor:pointer; transition:all .2s; flex:none; }
-    .dot.active { width:22px; background:var(--accent); }
+    /* #nav-scoped so these beat the "#nav button" reset above. */
+    #nav .dot { width:8px; height:8px; padding:0; border-radius:999px; background:#d5c8b4; border:none; cursor:pointer; transition:all .2s; flex:none; }
+    #nav .dot.active { width:22px; background:var(--accent); }
     #counter { font-size:14px; color:var(--soft); font-variant-numeric:tabular-nums; min-width:56px; text-align:center; }
   </style>
 </head>
@@ -197,8 +198,22 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
       counter.textContent = (current + 1) + ' / ' + slides.length;
       prevBtn.disabled = current === 0;
       nextBtn.disabled = current === slides.length - 1;
+      window.dispatchEvent(new CustomEvent('slidewright:change'));
     }
     function go(i) { current = Math.max(0, Math.min(slides.length - 1, i)); render(); }
+
+    // Phone-remote contract (see slidewright-remote.mjs): expose navigation and
+    // announce every slide change. Harmless when the deck is opened as a file.
+    function titleOf(i) {
+      const h = slides[i] && slides[i].querySelector('h1, h2, h3');
+      return h ? h.textContent.trim().replace(/\s+/g, ' ') : '';
+    }
+    window.slidewright = {
+      go, next: () => go(current + 1), prev: () => go(current - 1),
+      getState: () => ({ current, total: slides.length, title: titleOf(current),
+        next: current + 1 < slides.length ? titleOf(current + 1) : null }),
+    };
+
 
     prevBtn.addEventListener('click', () => go(current - 1));
     nextBtn.addEventListener('click', () => go(current + 1));
@@ -226,6 +241,11 @@ s = s.replace("__TITLE__", title).replace("__NAME__", name)
 open(path, "w", encoding="utf-8").write(s)
 PYEOF
 
+# Phone remote: a zero-dependency local server that serves the deck, relays
+# commands over WebSocket, and prints a QR code for the phone.
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cp "$SKILL_DIR/assets/remote/slidewright-remote.mjs" "$DECK_DIR/slidewright-remote.mjs"
+
 cat > "$DECK_DIR/$NAME-notes.md" <<NOTESEOF
 # $TITLE — speaker notes
 
@@ -242,5 +262,6 @@ NOTESEOF
 
 echo "✅ Created plain-HTML deck: $DECK_DIR"
 echo "   Open in browser:   open \"$DECK_DIR/index.html\""
+echo "   Phone remote:      node \"$DECK_DIR/slidewright-remote.mjs\"   (Node 18+, scan the QR code)"
 echo "   Slides live inside the <!-- SLIDES --> block in index.html."
 echo "   Speaker notes:     $DECK_DIR/$NAME-notes.md"

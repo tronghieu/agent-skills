@@ -13,6 +13,11 @@ bash scripts/new-html-deck.sh <deck-name> [target-dir] [--title "Deck title"]
 Creates `<deck-name>/index.html`, `<deck-name>/assets/`, and a `<deck-name>-notes.md`
 speaker-notes file. Open with `open <deck-name>/index.html`.
 
+The scaffold also copies `slidewright-remote.mjs` into the deck. To present with a phone
+remote, run `node <deck-name>/slidewright-remote.mjs` instead and open the printed
+`http://localhost:<port>/`. The terminal shows a QR code for the phone. See
+`references/remote-control.md`.
+
 ## How the template works
 
 - **Fluid layout.** Slides are positioned `absolute; inset:0` inside `#viewport` and fill
@@ -34,6 +39,9 @@ speaker-notes file. Open with `open <deck-name>/index.html`.
 - **Navigation** (required) is the bottom `#nav`: prev/next buttons, a generated dot
   strip, and a `current / total` counter. Keyboard: → / Space / PageDown / ← / PageUp /
   Home / End.
+- **Remote API.** The script sets `window.slidewright` (`go`, `next`, `prev`, `getState`)
+  and `render()` dispatches `slidewright:change`. The phone remote depends on both — keep
+  them when you change navigation code.
 - **Tailwind** loads from CDN (`cdn.tailwindcss.com`) so utility classes work with no
   build. The base typography (`.slide h1`, `.slide li`, etc.) is defined in `<style>` to
   enforce the floor; you can still add Tailwind classes on elements.
