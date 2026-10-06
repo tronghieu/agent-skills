@@ -92,14 +92,14 @@ cat > "$DECK_DIR/index.html" <<HTMLEOF
        role has a legible range (see references/design-system.md) and the max here is
        the projection size. Tune the max PER SLIDE, not these globals:
          - text-heavy slide  -> lower the max toward the floor so it doesn't overflow
-                                 (body floor 40px; caption 32px; never below)
+                                 (body floor 28px; caption 20px at 1080p; never below)
          - sparse/hero slide -> raise the max toward the ceiling for presence.
        Override on the specific <section>/element; keep these globals as the default. */
-    .slide          { font-size:clamp(18px,2.6vw,44px); line-height:1.45; }
-    .slide h1       { font-size:clamp(28px,5.6vw,88px); line-height:1.04; letter-spacing:-.03em; font-weight:900; }
-    .slide h2       { font-size:clamp(24px,3.4vw,60px);  line-height:1.12; font-weight:800; }
-    .slide .lead    { font-size:clamp(20px,2.9vw,48px);  color:var(--soft); }
-    .slide .caption { font-size:clamp(14px,1.9vw,36px);  color:var(--soft); }
+    .slide          { font-size:clamp(18px,2.2vw,36px); line-height:1.45; }
+    .slide h1       { font-size:clamp(28px,5.4vw,92px); line-height:1.04; letter-spacing:-.03em; font-weight:900; }
+    .slide h2       { font-size:clamp(24px,3.2vw,54px);  line-height:1.12; font-weight:800; }
+    .slide .lead    { font-size:clamp(20px,2.6vw,42px);  color:var(--soft); }
+    .slide .caption { font-size:clamp(14px,1.4vw,24px);  color:var(--soft); }
     .slide ul       { list-style:none; display:flex; flex-direction:column; gap:clamp(16px,2.4vh,28px); }
     .slide li       { display:flex; gap:.55em; align-items:flex-start; }
     .slide li::before { content:''; flex:none; width:.42em; height:.42em; margin-top:.5em; border-radius:.12em; background:var(--accent); }

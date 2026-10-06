@@ -29,7 +29,7 @@ follows from this. Three failure modes to avoid:
 - **Text too small.** Slides are read from across a room, not on a laptop. Never use
   web-reading sizes (`text-sm`, `16px`) or fixed Tailwind text classes (`text-4xl`).
   Always use fluid `clamp()` so text scales with the screen. Honour the typography floor
-  (body ≥ ~40px on a 1080p canvas). See `references/design-system.md`.
+  (body ≈ 30–36px, never below 28px on a 1080p canvas). See `references/design-system.md`.
 - **Content hugging an edge.** Padding is a two-layer contract. Slide content must stay
   inside the viewport safe area, and content inside a card, panel, callout, bordered box,
   or other visible container must stay inset from that container's own edge. A parent

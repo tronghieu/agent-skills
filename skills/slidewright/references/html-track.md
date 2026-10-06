@@ -54,7 +54,7 @@ remote, run `node <deck-name>/slidewright-remote.mjs` instead and open the print
   for spacing and max-widths. Pick the `max` from each role's range in
   `references/design-system.md` based on how much content the slide holds — tighten toward
   the floor on text-heavy slides so nothing overflows, open up on sparse/hero slides.
-  Never below the floor (body 40px, caption 32px). Don't hard-code fixed px or use
+  Never below the floor (body 28px, caption 20px at 1080p). Don't hard-code fixed px or use
   Tailwind text size classes (`text-sm`, `text-base`, `text-4xl`) — they don't scale.
 - Do **not** override the `.slide` padding to zero. Content must stay inside the safe area
   (see `references/design-system.md` "Two-layer padding contract").

@@ -19,22 +19,23 @@ Two mistakes follow from forgetting this, and both are common:
    go. If a component raises the question *"where does this data go / who reads it?"*,
    it is wrong — remove it.
 
-## Typography floor (non-negotiable)
+## Typography floor (practical, not maximal)
 
-Sizes are projection sizes on a **1920×1080** screen (1pt ≈ 2px). There is **no single
-"correct" size** — each role has a **range**, and you pick within it per slide based on how
-much content is on it. The floor is the hard bottom; the hero ceiling is the hard top.
+Sizes are projection sizes on a **1920×1080** screen. There is **no single "correct"
+size** — each role has a **range**, and you pick within it per slide based on how much
+content is on it. Floors are deliberately modest: oversized floors make multi-column
+slides (e.g. 3-card grids) wrap repeatedly, overflow vertically and look "mobile-like".
 
-| Role                | Floor (hard min) | Projection range — pick per slide | Hero ceiling |
-| ------------------- | ---------------- | --------------------------------- | ------------ |
-| Body / bullet       | 20pt · 40px      | **40–48px**                       | 52px         |
-| Subtitle / lead     | 24pt · 48px      | **48–60px**                       | 64px         |
-| Section head (h2)   | —                | **52–64px**                       | 72px         |
-| Main title (h1)     | 36pt · 72px      | **72–88px**                       | 120px        |
-| Caption / slide no. | 16pt · 32px*     | **32–38px**                       | —            |
+| Role                | Floor (hard min @1080p) | Projection range — pick per slide | Hero ceiling |
+| ------------------- | ----------------------- | --------------------------------- | ------------ |
+| Body / bullet       | 28px                    | **30–36px**                       | 40px         |
+| Subtitle / lead     | 34px                    | **36–44px**                       | 48px         |
+| Section head (h2)   | 40px                    | **44–56px**                       | 64px         |
+| Main title (h1)     | 64px                    | **72–96px**                       | 120px        |
+| Caption / slide no. | 20px                    | **22–26px**                       | —            |
 
-\* caption/slide-number is the one role allowed below the body floor (never < 16pt = 32px),
-since it isn't primary reading.
+The `min` argument of `clamp()` (e.g. `18px`) is only a small-window fallback; the
+floor above applies when the deck is actually projected at ~1080p.
 
 **How to pick within the range — this is the point:**
 
@@ -65,13 +66,13 @@ slides; push toward ceiling on sparse/hero slides):
 
 | Role              | Ordinary slide                      | Text-heavy slide                    | Sparse / hero slide                  |
 | ----------------- | ----------------------------------- | ----------------------------------- | ------------------------------------ |
-| Body / bullet     | `clamp(18px, 2.6vw, 44px)`         | `clamp(18px, 2.4vw, 40px)`         | `clamp(18px, 2.8vw, 48px)`          |
-| Subtitle / lead   | `clamp(20px, 2.9vw, 48px)`         | `clamp(20px, 2.7vw, 44px)`         | `clamp(20px, 3.2vw, 56px)`          |
-| Section head (h2) | `clamp(24px, 3.4vw, 60px)`         | `clamp(24px, 3.0vw, 52px)`         | `clamp(24px, 4.0vw, 68px)`          |
-| Main title (h1)   | `clamp(28px, 5.6vw, 88px)`         | `clamp(28px, 5.0vw, 80px)`         | `clamp(28px, 6.4vw, 100px)`         |
-| Caption / slide # | `clamp(14px, 1.9vw, 36px)`         | `clamp(14px, 1.7vw, 32px)`         | `clamp(14px, 2.0vw, 38px)`          |
+| Body / bullet     | `clamp(18px, 2.2vw, 36px)`         | `clamp(18px, 2.0vw, 32px)`         | `clamp(18px, 2.4vw, 40px)`          |
+| Subtitle / lead   | `clamp(20px, 2.6vw, 42px)`         | `clamp(20px, 2.4vw, 38px)`         | `clamp(20px, 2.8vw, 48px)`          |
+| Section head (h2) | `clamp(24px, 3.2vw, 54px)`         | `clamp(24px, 2.8vw, 46px)`         | `clamp(24px, 3.6vw, 64px)`          |
+| Main title (h1)   | `clamp(28px, 5.4vw, 92px)`         | `clamp(28px, 4.6vw, 76px)`         | `clamp(28px, 6.5vw, 120px)`         |
+| Caption / slide # | `clamp(14px, 1.4vw, 24px)`         | `clamp(14px, 1.3vw, 22px)`         | `clamp(14px, 1.5vw, 26px)`          |
 
-In JSX, apply via `style={{ fontSize: 'clamp(18px, 2.6vw, 44px)' }}`. In the HTML
+In JSX, apply via `style={{ fontSize: 'clamp(18px, 2.2vw, 36px)' }}`. In the HTML
 template, use the same value in inline `style` or in `<style>` overrides.
 
 ### Two scaling strategies
@@ -227,7 +228,7 @@ Reach for these instead of inventing structure each time. (Tailwind classes show
 the React track; the plain-HTML template uses equivalent inline styles.)
 
 **Title** — badge top, big headline + one-line lead centre, presenter line bottom.
-`flex flex-col justify-between`, headline `clamp(64px,9vw,120px) font-black`.
+`flex flex-col justify-between`, headline `clamp(28px,6.5vw,120px) font-black`.
 
 **Bulleted point** — `h2` heading + 3–5 short bullets, generous `gap`. Keep bullets to
 one line each; if a bullet wraps twice, split the slide.

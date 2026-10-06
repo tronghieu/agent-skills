@@ -324,7 +324,7 @@ export default function TitleSlide() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="font-black leading-[1.0] tracking-tight text-[#1f2430]"
-            style={{ fontSize: 'clamp(28px, 6vw, 88px)' }}
+            style={{ fontSize: 'clamp(28px, 5.4vw, 92px)' }}
           >
             Tiêu đề bài nói
           </motion.h1>
@@ -333,13 +333,13 @@ export default function TitleSlide() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.12, ease: 'easeOut' }}
             className="max-w-4xl text-[#6d6a66]"
-            style={{ fontSize: 'clamp(18px, 2.8vw, 40px)', lineHeight: 1.4 }}
+            style={{ fontSize: 'clamp(20px, 2.6vw, 42px)', lineHeight: 1.4 }}
           >
             Một dòng dẫn ngắn, nói thẳng bài này nói về điều gì.
           </motion.p>
         </div>
 
-        <p className="text-[#6d6a66]" style={{ fontSize: 'clamp(14px, 1.8vw, 32px)' }}>
+        <p className="text-[#6d6a66]" style={{ fontSize: 'clamp(14px, 1.4vw, 24px)' }}>
           Tên người trình bày · Vai trò
         </p>
       </div>
