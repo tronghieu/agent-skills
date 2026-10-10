@@ -7,7 +7,7 @@ description: >-
   analyze, review, or answer questions about a long book, textbook, PDF, EPUB,
   thesis, dissertation, survey paper, or any document of roughly 50+ pages, in
   any language (Vietnamese "đọc sách", "tóm tắt sách", "phân tích luận án").
-  Also use when a `<slug>-notes/` workspace from a previous session sits next to
+  Also use when a `{slug}-notes/` workspace from a previous session sits next to
   a source file and the user asks a follow-up question about that book. Not for
   short documents (under ~30 pages) that fit in context; read those directly.
 ---
