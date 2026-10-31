@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0",
+  "assessment_date": "2026-10-31",
+  "rubric": {
+    "id": "backend-delivery",
+    "version": "1",
+    "job_title": "Backend Engineer",
+    "source": "jd.md",
+    "assumptions": [
+      "Weights reflect JD emphasis on delivery over tuning."
+    ],
+    "criteria": [
+      {
+        "id": "api",
+        "description": "Deliver and operate a production Python API",
+        "importance": "must_have",
+        "weight": 60,
+        "jd_evidence": {
+          "quote": "Required: deliver and operate production Python APIs.",
+          "location": "Requirements, bullet 1"
+        },
+        "anchors": {
+          "0": "Explicitly no Python API delivery experience",
+          "1": "Only tutorial API work; explicitly no production work",
+          "2": "Production delivery but explicitly no operation responsibility",
+          "3": "Delivery and limited operation, with an explicit scope gap",
+          "4": "Production delivery and operation both described"
+        }
+      },
+      {
+        "id": "sql",
+        "description": "PostgreSQL query tuning",
+        "importance": "preferred",
+        "weight": 40,
+        "jd_evidence": {
+          "quote": "Preferred: PostgreSQL query tuning.",
+          "location": "Requirements, bullet 2"
+        },
+        "anchors": {
+          "0": "Explicitly no query tuning experience",
+          "1": "Training-only tuning; explicitly no production application",
+          "2": "One production tuning task with an explicit scope limitation",
+          "3": "Several production tuning tasks with a stated remaining gap",
+          "4": "Production query analysis, changes, and outcomes described"
+        }
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "id": "candidate-a",
+      "name": "Candidate A",
+      "source": "cv-a.md",
+      "extraction": {
+        "status": "readable",
+        "limitations": []
+      },
+      "assessments": [
+        {
+          "criterion_id": "api",
+          "status": "met",
+          "score": 4,
+          "evidence": [
+            {
+              "quote": "Built and operated a production Python API, including on-call.",
+              "location": "Experience, Atlas project"
+            }
+          ],
+          "searched_locations": [],
+          "rationale": "Delivery and production operation are explicitly stated.",
+          "contradiction": false
+        },
+        {
+          "criterion_id": "sql",
+          "status": "unknown",
+          "score": null,
+          "evidence": [],
+          "searched_locations": [
+            "Skills",
+            "Experience",
+            "Projects"
+          ],
+          "rationale": "The CV does not describe tuning; ability remains unknown.",
+          "contradiction": false
+        }
+      ],
+      "summary": "Production Python delivery is documented; tuning needs clarification.",
+      "highlights": [
+        "Delivery and on-call responsibilities are described."
+      ],
+      "verification_items": [
+        {
+          "criterion_id": "sql",
+          "issue": "No tuning example in the CV.",
+          "question": "Have you tuned a PostgreSQL query in production? Describe your role and outcome."
+        }
+      ],
+      "interview_questions": [
+        {
+          "criterion_id": "sql",
+          "question": "How did you identify a query bottleneck and check the effect of your change?"
+        }
+      ]
+    }
+  ]
+}

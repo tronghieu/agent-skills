@@ -8,3 +8,6 @@ __pycache__/
 # skill-building scratch (eval runs, iteration workspaces) — not shipped with skills
 *-workspace/
 evals/
+# CV Scorer ships synthetic evaluation inputs; generated runs stay ignored above.
+!skills/cv-scorer/evals/
+!skills/cv-scorer/evals/**

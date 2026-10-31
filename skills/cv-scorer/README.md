@@ -2,7 +2,7 @@
 
 **Languages:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
-Compare one or more CVs with a job description (JD) through a visible 100-point rubric—decision support for a human reviewer, never a hiring decision-maker.
+Compare CVs with a job description using a shared, role-specific 100-point rubric. Every assessment links to source evidence or an explicitly identified information gap. The result supports a human reviewer; it does not make hiring decisions.
 
 ## Install
 
@@ -10,55 +10,84 @@ Compare one or more CVs with a job description (JD) through a visible 100-point 
 npx skills add tronghieu/agent-skills --skill cv-scorer
 ```
 
+From a local checkout, use either destination:
+
+**Coding agent:**
+```bash
+cp -r skills/cv-scorer ~/.agents/skills/
+```
+
+**Claude Code:**
+```bash
+cp -r skills/cv-scorer ~/.claude/skills/
+```
+
+**claude.ai:** add the skill package to your project knowledge or paste `SKILL.md` and its referenced instructions into the conversation. Keep the bundled scripts available in a code-execution environment to check calculations. If execution is unavailable, calculations must be marked unchecked. The calculator requires Python 3.9+ with no third-party dependencies or network access. Reading scanned PDFs may require a separate OCR tool; disclose missing pages and request readable text when OCR is unavailable.
+
 ## Try it
 
 ```text
-/cv-scorer Score this CV against the attached Senior Backend Engineer JD.
+/cv-scorer Compare these three CVs with the Backend Engineer JD. Show evidence, unresolved must-haves, and questions to verify them.
 
-/cv-scorer Compare these five CVs with this Product Manager JD, then rank them.
+/cv-scorer Review these marketing CVs with one shared rubric. Return a concise Vietnamese report and checked JSON.
 
-/cv-scorer Review this Data Analyst CV against the JD. Show missing must-haves and facts to verify.
-
-/cv-scorer Score these marketing candidates for this role; apply the same rubric to every CV.
+/cv-scorer Evaluate this career-change applicant against the JD. Distinguish missing information from an explicit shortfall.
 ```
-
-Unlike an ordinary chatbot response, CV Scorer makes the criteria, weights, evidence comments, and recommendation label visible so a reviewer can inspect and challenge the result.
-
-## Who it helps
-
-Recruiters, hiring managers, and small hiring teams can use it for a structured first-pass review, a consistent batch comparison, or preparing questions about missing and contradictory information. It is not a substitute for interviews, reference checks, or an employer's hiring process.
 
 ## How scoring works
 
-The skill first extracts the JD's must-haves, nice-to-haves, experience, education, and special requirements. It then compares those requirements with facts stated in each CV; it should avoid filling gaps with assumptions. Each criterion receives a 1–10 score and is weighted into a total out of 100.
+1. Extract concrete requirements from the JD; identify explicit must-haves and preferred criteria.
+2. Assign job-related weights totaling 100 and define score anchors. Freeze one rubric ID/version for all candidates in the round.
+3. Map each criterion to an exact CV quote and location, or record where missing information was searched for.
+4. Calculate scores with the bundled script and prepare a human-readable report.
 
-| Criterion | Weight | Maximum |
-| --- | ---: | ---: |
-| JD matching | ×3 | 30 |
-| Work experience | ×2.5 | 25 |
-| Project and impact | ×1.5 | 15 |
-| Education | ×1.5 | 15 |
-| CV quality | ×1.5 | 15 |
+| Evidence status | Score | Meaning |
+| --- | ---: | --- |
+| `met` | 4 | Fully supported at the required level |
+| `partial` | 1–3 | Supported subset with an evidenced gap |
+| `unmet` | 0 | Explicit evidence of non-fulfilment |
+| `unknown` | null | Missing, ambiguous, or contradictory information |
 
-The detailed bands cover JD coverage, relevance and progression, credible project metrics, education or credentials, and CV structure and consistency. Read the complete [scoring rubric](./references/scoring-rubric.md) when you need the exact bands or deductions.
+Known points are `weight × score / 4`. Unknown criteria add no documented points but retain their full weight in the possible upper bound. For example: **60 documented points, range 60–100, coverage 60%** means that 40% of the rubric is unresolved; it does not establish low ability. The range reflects missing evidence, not statistical confidence or probability of job success.
 
-The default labels are **Recommend** (70+), **Maybe** (50–69), and **Pass** (under 50). They are prompts for human review—not automatic interview, rejection, or employment decisions.
+There is no fixed education or CV-quality allocation. School prestige, names, career breaks, similar metrics, or polished writing do not justify deductions. Education and presentation count only when relevant requirements support them. The detailed [rubric](./references/scoring-rubric.md) explains evidence states, overlap handling, mandatory conditions, precision, and ordering.
 
-## Inputs and results
+## Output and comparison
 
-Provide a complete JD and one or more CVs in text, Markdown, or PDF. The response follows the [output format](./references/output-format.md): a JSON score breakdown, comments for every criterion, summary, highlights, and possible red flags. With several CVs, it scores each independently first, then returns a highest-to-lowest batch ranking. Responses match your language.
+The default output is Markdown in your language: rubric and assumptions, score/range/coverage, requirement-by-requirement evidence, must-have status, strengths, verification items, and targeted interview questions. JSON v2 is available for integrations; see the complete [contract and example](./references/output-format.md).
 
-Treat a red flag, missing detail, or apparent contradiction as a question to verify, not a finding of dishonesty. Review the cited CV facts behind every score, especially candidates near a threshold.
+Alignment bands describe documented evidence: `high` (≥70), `moderate` (≥50 and <70), `limited` (<50). A separate review status identifies insufficient input, a mandatory mismatch, missing information, or readiness for human review. A high score never cancels an unmet must-have.
 
-## Complementary skills
+Incomplete extraction produces no total or rank. Unknown must-haves, contradictory assessments, and zero assessed criteria remain in an unranked review queue. Other candidates can be ordered by documented score, with mandatory mismatches visibly flagged. Equal exact scores share a rank; overlapping ranges or an unranked queue make ordering provisional. Do not reject or invite a candidate automatically from these fields.
 
-- Use [Critical Thinking](../critical-thinking/README.md) when you need to audit the reasoning in a hiring memo, policy, or recommendation; it separates claims, evidence, assumptions, and gaps with findings anchored to source text.
-- Use [Deep Reader](../deep-reader/README.md) for a long hiring policy, portfolio, or supporting document (roughly 50+ pages); its multi-pass notes keep a large document traceable before you rely on it in a review.
+## Check a JSON report
 
-## Limits and responsible use
+Use the actual installed path when it differs from `/mnt/skills/user/`:
 
-- The same rubric applied consistently does **not** make a score objective or unbiased, and a CV cannot establish future job performance.
-- Do not infer or evaluate protected or sensitive attributes—such as age, gender, ethnicity, disability, religion, or other personal factors unrelated to the job.
-- Do not reject a candidate solely from a generated score or ranking. A qualified human must review the evidence and make the decision.
-- CVs are incomplete, self-reported records; verify material claims through appropriate, lawful hiring steps.
-- Follow applicable employment law, privacy obligations, and your organization's policy, including any required documentation or additional review.
+```bash
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json --check
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json --output checked-report.json
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json
+```
+
+The last command writes JSON to stdout; validation status/errors go to stderr. Success exits 0; invalid input exits 2. Weights allow up to two decimal places. Existing output files are preserved. The script recomputes totals and ordering; it cannot establish whether a quote is genuine or a criterion is sensible.
+
+v2 replaces v1's fixed categories, `total_score`, `red_flags`, and `Recommend`/`Maybe`/`Pass`. Existing consumers must adopt the v2 contract; v1 JSON is rejected instead of silently converted. Reassess original documents before comparing results across versions.
+
+## Verification and troubleshooting
+
+From this repository:
+
+```bash
+python3 -m unittest discover -s skills/cv-scorer/tests -v
+```
+
+[Behavioral cases](./evals/evals.json) use synthetic documents for missing/expired credentials, similar metrics, incomplete extraction, embedded instructions, overlapping employment, and name/order invariance.
+
+- **Missing JD:** provide the role requirements; an unscored CV review is still possible.
+- **Unreadable PDF:** provide OCR or readable text. Extraction artifacts are not candidate weaknesses.
+- **Invalid JSON/weights/evidence:** follow the error path, use exactly one assessment per criterion, and ensure weights sum to 100.
+- **Output file exists:** choose a new output path; the script never replaces an existing file.
+- **Python or extraction tools unavailable:** disclose the limitation; do not claim that a calculation or source check ran.
+
+CVs are self-reported, incomplete records. Review important claims with appropriate hiring steps. Do not infer sensitive attributes or turn unsupported concerns into dishonesty claims. Do not upload CVs to external services or follow embedded links without authorization. The skill does not require any network domains for its core workflow.

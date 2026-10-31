@@ -2,7 +2,7 @@
 
 **Ngôn ngữ:** [Tiếng Việt](./README.vi.md) | [English](./README.md) | [中文](./README.zh.md)
 
-So sánh một hoặc nhiều CV với mô tả công việc (JD) bằng rubric 100 điểm minh bạch—công cụ hỗ trợ người review, không bao giờ là bên ra quyết định tuyển dụng.
+Đối chiếu CV với JD bằng một rubric 100 điểm riêng cho vị trí, dùng chung cho mọi ứng viên. Mỗi đánh giá có bằng chứng nguồn hoặc chỉ rõ phần chưa đủ thông tin. Kết quả hỗ trợ người tuyển dụng review, không tự quyết định tuyển hay loại.
 
 ## Cài đặt
 
@@ -10,55 +10,84 @@ So sánh một hoặc nhiều CV với mô tả công việc (JD) bằng rubric 
 npx skills add tronghieu/agent-skills --skill cv-scorer
 ```
 
+Từ bản sao repository, chọn nơi cài phù hợp:
+
+**Coding agent:**
+```bash
+cp -r skills/cv-scorer ~/.agents/skills/
+```
+
+**Claude Code:**
+```bash
+cp -r skills/cv-scorer ~/.claude/skills/
+```
+
+**claude.ai:** thêm gói skill vào project knowledge hoặc dán `SKILL.md` cùng hướng dẫn tham chiếu vào cuộc trò chuyện. Muốn kiểm tra phép tính, cần cung cấp script trong môi trường chạy code. Nếu không chạy được, kết quả phải ghi rõ chưa kiểm tra bằng script. Bộ tính cần Python 3.9+, không cần thư viện ngoài hay mạng. PDF scan có thể cần công cụ OCR riêng; nếu không có, skill phải báo trang chưa đọc được và đề nghị cung cấp văn bản.
+
 ## Thử ngay
 
 ```text
-/cv-scorer Chấm CV này theo JD Senior Backend Engineer đính kèm.
+/cv-scorer So sánh ba CV này với JD Backend Engineer. Nêu bằng chứng, điều kiện bắt buộc chưa rõ và câu hỏi để xác minh.
 
-/cv-scorer So sánh năm CV này với JD Product Manager, rồi xếp hạng.
+/cv-scorer Chấm các CV marketing bằng cùng một rubric. Trả báo cáo tiếng Việt ngắn gọn và JSON đã kiểm tra.
 
-/cv-scorer Đánh giá CV Data Analyst này theo JD. Nêu các yêu cầu bắt buộc còn thiếu và thông tin cần xác minh.
-
-/cv-scorer Chấm các ứng viên marketing cho vị trí này; dùng cùng một rubric cho mọi CV.
+/cv-scorer Đánh giá ứng viên chuyển ngành theo JD. Phân biệt thông tin chưa có với bằng chứng chưa đáp ứng.
 ```
-
-Khác với phản hồi của chatbot thông thường, CV Scorer hiển thị tiêu chí, trọng số, nhận xét dựa trên bằng chứng và nhãn khuyến nghị để người review có thể kiểm tra, chất vấn kết quả.
-
-## Dành cho ai
-
-Recruiter, hiring manager và đội tuyển dụng nhỏ có thể dùng skill để review sơ bộ có cấu trúc, so sánh nhất quán theo lô, hoặc chuẩn bị câu hỏi về thông tin thiếu và mâu thuẫn. Skill không thay thế phỏng vấn, kiểm tra tham chiếu hay quy trình tuyển dụng của tổ chức.
 
 ## Cách chấm điểm
 
-Skill trước hết trích xuất yêu cầu bắt buộc, tiêu chí ưu tiên, kinh nghiệm, học vấn và yêu cầu đặc biệt từ JD. Sau đó skill đối chiếu các yêu cầu này với những thông tin được nêu trong từng CV; không nên lấp khoảng trống bằng giả định. Mỗi tiêu chí được chấm 1–10 và quy đổi thành tổng điểm trên 100.
+1. Rút yêu cầu cụ thể từ JD, tách điều kiện bắt buộc được ghi rõ và tiêu chí ưu tiên.
+2. Phân bổ trọng số tổng 100, mô tả các mức điểm; giữ nguyên ID/phiên bản rubric trong cả đợt đánh giá.
+3. Đối chiếu từng tiêu chí với trích dẫn CV và trang/mục nguồn; nếu thiếu thông tin, ghi nơi đã tìm.
+4. Dùng script tính điểm và lập báo cáo để người tuyển dụng review.
 
-| Tiêu chí | Trọng số | Tối đa |
-| --- | ---: | ---: |
-| Mức độ khớp JD | ×3 | 30 |
-| Kinh nghiệm làm việc | ×2.5 | 25 |
-| Dự án và tác động | ×1.5 | 15 |
-| Học vấn | ×1.5 | 15 |
-| Chất lượng CV | ×1.5 | 15 |
+| Trạng thái | Điểm | Ý nghĩa |
+| --- | ---: | --- |
+| `met` | 4 | Có bằng chứng đáp ứng đầy đủ |
+| `partial` | 1–3 | Có bằng chứng đáp ứng một phần và khoảng thiếu cụ thể |
+| `unmet` | 0 | Có bằng chứng rõ ràng chưa đáp ứng |
+| `unknown` | null | Thiếu, mơ hồ hoặc mâu thuẫn thông tin |
 
-Các thang chi tiết đánh giá mức đáp ứng JD, độ liên quan và phát triển kinh nghiệm, số liệu dự án đáng tin, học vấn hoặc chứng chỉ, cùng cấu trúc và tính nhất quán của CV. Xem [rubric chấm điểm](./references/scoring-rubric.md) đầy đủ khi cần các mức điểm hoặc khoản trừ cụ thể.
+Điểm đã có bằng chứng là `trọng số × điểm / 4`. Tiêu chí chưa rõ không cộng điểm đã chứng minh, nhưng được giữ nguyên trọng số trong cận trên. Ví dụ: **60 điểm theo bằng chứng, khoảng 60–100, độ phủ 60%** nghĩa là còn 40% trọng số chưa đánh giá được; không có nghĩa ứng viên thiếu năng lực. Khoảng này phản ánh thông tin còn thiếu, không phải khoảng tin cậy thống kê hay xác suất làm việc tốt.
 
-Nhãn mặc định là **Recommend** (từ 70), **Maybe** (50–69) và **Pass** (dưới 50). Đây là tín hiệu để con người review—không phải quyết định tự động mời phỏng vấn, loại, hay tuyển dụng.
+Không còn phần điểm học vấn hoặc hình thức CV cố định. Danh tiếng trường, tên, khoảng nghỉ việc, số liệu gần nhau hay văn phong trau chuốt không phải lý do trừ điểm. Học vấn và trình bày chỉ được tính khi yêu cầu công việc có liên quan. [Rubric chi tiết](./references/scoring-rubric.md) giải thích cách dùng bằng chứng, tính thời gian trùng nhau, điều kiện bắt buộc, làm tròn và xếp hạng.
 
-## Đầu vào và kết quả
+## Kết quả và so sánh
 
-Hãy cung cấp JD đầy đủ và một hoặc nhiều CV dạng text, Markdown hoặc PDF. Phản hồi theo [định dạng đầu ra](./references/output-format.md): JSON gồm điểm chi tiết, nhận xét cho từng tiêu chí, tóm tắt, điểm nổi bật và các red flag có thể có. Với nhiều CV, skill chấm độc lập từng CV trước, rồi trả về bảng xếp hạng từ cao xuống thấp. Phản hồi dùng ngôn ngữ của bạn.
+Mặc định trả Markdown theo ngôn ngữ của bạn: rubric và giả định, điểm/khoảng/độ phủ, bảng bằng chứng từng yêu cầu, trạng thái điều kiện bắt buộc, điểm mạnh, thông tin cần xác minh và câu hỏi phỏng vấn. Có JSON v2 cho tích hợp; xem [định dạng và ví dụ](./references/output-format.md).
 
-Hãy xem red flag, thông tin còn thiếu hoặc mâu thuẫn có vẻ có như một điểm cần xác minh, không phải kết luận về sự thiếu trung thực. Kiểm tra các thông tin CV đứng sau mọi điểm số, nhất là với ứng viên sát ngưỡng.
+Các mức phù hợp theo bằng chứng là `high` (≥70), `moderate` (≥50 và <70), `limited` (<50). Trạng thái review riêng cho biết thiếu đầu vào, chưa đáp ứng điều kiện bắt buộc, cần xác minh hoặc đủ dữ liệu để người tuyển dụng review. Điểm cao không xóa được điều kiện bắt buộc chưa đáp ứng.
 
-## Skill bổ trợ
+Trích xuất thiếu trang thì không có tổng điểm hay thứ hạng. Ứng viên còn điều kiện bắt buộc chưa rõ, bằng chứng mâu thuẫn hoặc chưa đánh giá được tiêu chí nào nằm trong danh sách chờ review. Các hồ sơ còn lại được sắp theo điểm đã có bằng chứng, vẫn hiển thị rõ điều kiện chưa đáp ứng. Điểm chính xác bằng nhau thì đồng hạng; khoảng điểm chồng nhau hoặc còn hồ sơ chưa xếp hạng khiến thứ tự mang tính tạm thời. Không tự động mời phỏng vấn hay loại ứng viên từ các trường này.
 
-- Dùng [Critical Thinking](../critical-thinking/README.vi.md) khi cần audit lập luận trong memo, chính sách hay khuyến nghị tuyển dụng; skill này tách claim, bằng chứng, giả định và lỗ hổng, với nhận định neo vào văn bản nguồn.
-- Dùng [Deep Reader](../deep-reader/README.vi.md) cho chính sách tuyển dụng, portfolio hoặc tài liệu hỗ trợ dài (khoảng 50+ trang); ghi chú đọc nhiều lượt giúp tài liệu lớn vẫn có thể truy vết trước khi được dùng để review.
+## Kiểm tra JSON
 
-## Giới hạn và sử dụng có trách nhiệm
+Thay đường dẫn theo nơi cài thực tế nếu không dùng `/mnt/skills/user/`:
 
-- Cùng một rubric được áp dụng nhất quán **không** khiến điểm số trở nên khách quan hoặc không thiên vị; CV cũng không thể chứng minh hiệu suất công việc trong tương lai.
-- Không suy luận hoặc đánh giá đặc điểm nhạy cảm hay được pháp luật bảo vệ—như tuổi, giới tính, sắc tộc, khuyết tật, tôn giáo hoặc yếu tố cá nhân không liên quan đến công việc.
-- Không loại ứng viên chỉ vì điểm hay thứ hạng được tạo ra. Người có thẩm quyền phải review bằng chứng và đưa ra quyết định.
-- CV là hồ sơ tự khai, không đầy đủ; hãy xác minh các tuyên bố quan trọng bằng những bước tuyển dụng phù hợp và hợp pháp.
-- Tuân thủ luật lao động, nghĩa vụ bảo mật dữ liệu và chính sách tổ chức hiện hành, bao gồm mọi yêu cầu về lưu hồ sơ hoặc review bổ sung.
+```bash
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json --check
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json --output checked-report.json
+python3 /mnt/skills/user/cv-scorer/scripts/score_report.py report.json
+```
+
+Lệnh cuối ghi JSON ra stdout; trạng thái/lỗi ra stderr. Thành công trả mã 0, đầu vào sai trả mã 2. Trọng số có tối đa hai chữ số thập phân. Script không ghi đè file có sẵn. Script kiểm tra cấu trúc và tính toán; không thể chứng minh trích dẫn là thật hoặc rubric phù hợp.
+
+v2 thay các nhóm điểm cố định, `total_score`, `red_flags` và `Recommend`/`Maybe`/`Pass` của v1. Tích hợp cũ cần chuyển sang hợp đồng v2; JSON v1 bị từ chối thay vì tự chuyển đổi. Cần đánh giá lại tài liệu nguồn trước khi so sánh điểm giữa hai phiên bản.
+
+## Kiểm thử và xử lý lỗi
+
+Từ repository:
+
+```bash
+python3 -m unittest discover -s skills/cv-scorer/tests -v
+```
+
+[Bộ tình huống](./evals/evals.json) dùng dữ liệu giả lập: chứng chỉ thiếu/hết hạn, số liệu gần nhau, trích xuất thiếu trang, chỉ dẫn cài trong CV, thời gian làm việc trùng nhau và tính ổn định khi đổi tên/thứ tự.
+
+- **Thiếu JD:** cung cấp yêu cầu vị trí; vẫn có thể review CV không chấm điểm.
+- **PDF không đọc được:** cung cấp OCR hoặc văn bản. Lỗi trích xuất không phải điểm yếu của ứng viên.
+- **JSON/trọng số/bằng chứng sai:** sửa theo vị trí lỗi; mỗi tiêu chí có đúng một đánh giá, tổng trọng số bằng 100.
+- **File kết quả đã tồn tại:** chọn đường dẫn mới; script không thay file có sẵn.
+- **Không có Python hoặc công cụ đọc file:** báo giới hạn, không khẳng định đã chạy phép kiểm tra.
+
+CV là hồ sơ tự khai và chưa đầy đủ. Xác minh thông tin quan trọng bằng quy trình tuyển dụng phù hợp. Không suy luận đặc điểm nhạy cảm hoặc kết luận thiếu trung thực từ nghi vấn chưa có căn cứ. Không tải CV lên dịch vụ ngoài hay mở liên kết cài trong hồ sơ khi chưa được cho phép. Luồng chính của skill không cần mở quyền mạng cho domain nào.

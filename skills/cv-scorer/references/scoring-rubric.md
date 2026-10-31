@@ -1,67 +1,67 @@
-# CV Scoring Rubric
+# Building and applying the rubric
 
-Each criterion is scored 1–10, then multiplied by its weight.
+## One role, one version
 
-## 1. JD Matching (weight ×3 = max 30 pts)
+Build criteria from the JD, not from candidates. Give each criterion a stable ID, a description, a JD quote and location, importance (`must_have` or `preferred`), a positive weight, and anchors for all five integer scores 0–4. Weights total exactly 100. Use one frozen rubric ID/version across the hiring round.
 
-How well the candidate's overall profile matches the JD requirements.
+The old fixed categories (JD matching, experience, impact, education, CV quality) are replaced by role-specific requirements. They often overlap and can reward the same achievement repeatedly. Group related JD statements into one criterion; make scoring dimensions distinct. One project may support several distinct capabilities, but the same outcome must not earn duplicate points for the same capability.
 
-| Score | Criteria |
-|-------|----------|
-| 9–10 | Meets >90% must-haves + multiple nice-to-haves |
-| 7–8  | Meets 70–90% must-haves |
-| 5–6  | Meets 50–70% must-haves |
-| 3–4  | Meets 30–50% must-haves |
-| 1–2  | Meets <30% must-haves or completely wrong domain |
+Prefer a small set of assessable criteria, typically 4–8. For example, an engineering JD could allocate 35 to backend delivery, 25 to database work, 20 to operating production systems, and 20 to collaboration, if the JD supports that emphasis. These weights are illustrative, not a universal preset. Other roles need their own criteria. Do not create a degree, GPA, prestige, years-of-service, or visual-format criterion merely because those fields appear in a CV.
 
-## 2. Work Experience (weight ×2.5 = max 25 pts)
+A must-have is an explicit JD/user requirement, not an inference from importance or a high weight. Preferred criteria still need a JD source; cite user clarifications when they add requirements. Identify alternatives such as “degree OR equivalent experience” in the same criterion. If the JD has no assessable job-related requirements, request clarification instead of fabricating a numeric rubric.
 
-Practical work history, relevance, and career progression.
+## Evidence states and anchors
 
-| Score | Criteria |
-|-------|----------|
-| 9–10 | Highly relevant experience, clear career progression, significant scale |
-| 7–8  | Relevant experience with progression |
-| 5–6  | Partially relevant experience |
-| 3–4  | Limited relevant experience |
-| 1–2  | No relevant experience |
+| Status | Score | Meaning |
+| --- | --- | --- |
+| `met` | 4 | CV explicitly supports the full criterion at its stated level |
+| `partial` | 1, 2, or 3 | Explicit evidence supports some of the criterion; explain the gap using its anchors |
+| `unmet` | 0 | Explicit evidence shows the criterion is not satisfied |
+| `unknown` | null | Missing, ambiguous, or contradictory evidence prevents assessment |
 
-## 3. Project & Impact (weight ×1.5 = max 15 pts)
+Write criterion-specific anchors before scoring. General pattern: 0 = explicit non-fulfilment; 1 = small supported subset; 2 = meaningful subset; 3 = most requirements supported with a concrete gap; 4 = all requirements supported. Define subsets in job terms rather than “weak/good/excellent.” Unknown is outside the scale. Do not assign 0 just because a skill was not mentioned, and do not award full points to keywords without scope/context.
 
-Specific projects and measurable achievements.
+Every known result needs at least one exact CV quote plus a page or section location. Partial/unmet results need evidence of the specific gap, not just a related strength. For example, “2 years commercial Python” can demonstrate a shortfall against an explicit three-year requirement; silence about Python cannot. When some subrequirements are supported but the rest are silent, use unknown and explain the supported subset until clarified, rather than treating silence as proven failure. Split independently important requirements at rubric-building time when useful.
 
-**Red flag:** Multiple projects with suspiciously similar metrics (e.g., "improved retention by 22%" and "improved retention by 23%") signals auto-generated or dishonest content — deduct points.
+Unknown results need searched locations and a reason. For contradictions, retain both quotes and set `contradiction: true`. Quotes are self-reported claims, not independent verification. Use brief quotations sufficient for checking; avoid copying full CVs or unrelated personal data.
 
-| Score | Criteria |
-|-------|----------|
-| 9–10 | Directly relevant projects with impressive, credible metrics |
-| 7–8  | Relevant projects with specific metrics |
-| 5–6  | Partially relevant projects, vague metrics |
-| 3–4  | Few relevant projects or no metrics |
-| 1–2  | No notable projects or completely irrelevant work |
+## Calculation
 
-## 4. Education (weight ×1.5 = max 15 pts)
+For criterion i with weight w and known score s:
 
-Academic background, university reputation, GPA, certifications.
+`documented_points_i = w × s / 4`
 
-| Score | Criteria |
-|-------|----------|
-| 9–10 | Directly relevant degree + reputable school + high GPA + certifications |
-| 7–8  | Relevant degree + decent GPA or certifications |
-| 5–6  | Relevant degree but unremarkable |
-| 3–4  | Weakly relevant degree |
-| 1–2  | No relevant degree |
+Unknown criteria contribute no *documented* points. This is an evidence accounting convention, not a finding of zero ability. Always report these together:
 
-## 5. CV Quality (weight ×1.5 = max 15 pts)
+- `documented_score`: sum of known points, out of the full 100.
+- `possible_score`: documented score plus the weights of unknown criteria.
+- `coverage_percent`: sum of weights of known criteria.
+- `score_range`: [documented score, possible score], reflecting missing evidence only.
 
-Presentation: structure, conciseness, consistency, honesty signals.
+Do not renormalize to known-only weights. The range is not a statistical confidence interval; scores do not estimate job-success probability. Model judgment can vary even when coverage is 100%.
 
-**Major red flag:** Copy-pasted paragraphs repeated across sections — heavily penalize this.
+Use decimal arithmetic. Keep full precision through summation; round final displayed values to two decimals, half-up. Compute bands and ranks on unrounded totals: `high` at ≥70, `moderate` at ≥50 and <70, `limited` below 50. These describe documented alignment, replacing v1's `Recommend`/`Maybe`/`Pass`; they are not hiring actions. All totals/bands are null when extraction is partial or unreadable.
 
-| Score | Criteria |
-|-------|----------|
-| 9–10 | Professional, concise, well-structured, error-free |
-| 7–8  | Good overall, minor improvements needed |
-| 5–6  | Acceptable but has structural issues or repetitive content |
-| 3–4  | Multiple issues (heavy repetition, poor structure, vague content) |
-| 1–2  | Very poor quality |
+## Mandatory conditions and review status
+
+Derive mandatory status separately:
+
+- `not_applicable`: no explicit must-haves.
+- `unmet`: at least one must-have is explicitly partial or unmet. Also show any unknown must-haves.
+- `unknown`: none partial/unmet, but at least one unknown.
+- `met`: every must-have is supported in full.
+
+Review status precedence:
+
+1. `insufficient_input`: partial/unreadable extraction; no numeric total or rank.
+2. `criteria_review`: a must-have is partial/unmet; a human reviews the mismatch.
+3. `needs_verification`: any unknown criterion; a human obtains missing information.
+4. `ready_for_human_review`: all criteria assessed; still requires human judgment.
+
+Batch ranking includes only readable CVs with at least one assessed criterion and no unknown must-haves or contradictory criteria. Candidates with an explicit mandatory mismatch may appear in the evidence ordering, clearly marked `criteria_review`; their score never overrides that status. Sort by unrounded documented score descending, use competition ranks (1, 1, 3), and use stable candidate IDs only for display within ties. Mark ordering provisional when ranked score ranges overlap or any candidates remain unranked. Never compare different rubric versions.
+
+## Verification instead of red-flag deductions
+
+Record a concern only with source evidence and job relevance. Similar percentages, repeated phrases, employment gaps, and AI-like prose are not proof of fabrication. Repeated text can be a PDF extraction artifact; check before interpreting it. Count overlapping periods once; overlapping roles alone do not establish misconduct.
+
+Turn actual ambiguity into a question: “These two sections give different certification expiry dates; which is current?” An expired mandatory credential is an evidenced mismatch when the assessment date establishes expiry. A missing expiry date is unknown. Do not label an applicant dishonest or deduct an extra, unbounded penalty on top of the criterion assessment.
