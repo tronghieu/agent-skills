@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/tronghieu/agent-skills?style=flat)](https://github.com/tronghieu/agent-skills)
 [![skills.sh](https://skills.sh/b/tronghieu/agent-skills)](https://www.skills.sh/tronghieu/agent-skills)
+[![Suede AI Skills Directory: listed](https://skills.suedeai.ai/directory/tronghieu/agent-skills/badge.svg)](https://skills.suedeai.ai/directory/tronghieu/agent-skills/)
 [![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code)
 
 A collection of method-driven skills for people who use AI to make decisions, run projects, analyze evidence, create documents, and produce finished work. These skills are designed for active collaborators: you provide the real context and remain responsible for the decision; the agent supplies structure, analysis, and quality checks.
