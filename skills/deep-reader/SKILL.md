@@ -146,7 +146,13 @@ bash ./scripts/extract-structure.sh <workspace>/source.txt
 ```
 
 Treat its output as a noisy first guess, not ground truth — cross-check it
-against the table of contents. Then:
+against the table of contents. The heading heuristics cover English
+(`Chapter 4`, `Preface`), Vietnamese (`Chương 4`) and French (`Chapitre 4`,
+`CHAPITRE PREMIER`, `Deuxième partie`, `Préface`, `Table des matières`,
+`Épilogue`, `Annexe A`) markers, plus numbered headings in any language; accents
+and accented capitals are folded before matching. A structural word inside a
+sentence is not a heading and is not reported — that is deliberate, to keep the
+seed free of false positives. Then:
 
 1. Use `read-pages.sh` on the table of contents, preface/introduction,
    conclusion/final chapter, and index if present.

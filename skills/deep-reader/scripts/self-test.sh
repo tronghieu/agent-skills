@@ -524,6 +524,81 @@ fi
 echo
 
 # =====================================================================
+# 6. French support (regression: guillemets « » and French headings)
+# =====================================================================
+FR_WS="$WORKDIR/fr-workspace"
+mkdir -p "$FR_WS/notes"
+cat > "$FR_WS/source.txt" << 'EOF'
+[[page 1]]
+Préface
+Le livre commence ici avec des mots ordinaires pour occuper la page entière.
+[[page 2]]
+Chapitre 2
+La phrase que nous allons citer se trouve sur cette page précise du livre.
+EOF
+
+FR_QUOTE="La phrase que nous allons citer se trouve sur cette page précise du livre"
+cat > "$FR_WS/notes/citation.md" << EOF
+Comme le dit l'auteur : « $FR_QUOTE » (p. 2).
+EOF
+runcap "$SCRIPT_DIR/verify-quotes.sh" "$FR_WS"
+expect_exit "verify-quotes: French guillemets citation -> exit 0" 0
+expect_json_field "verify-quotes: French guillemets are scanned (checked=1)" "$LAST_STDOUT" "checked" "1"
+expect_json_field "verify-quotes: French guillemets are verified (ok=1)" "$LAST_STDOUT" "ok" "1"
+
+cat > "$FR_WS/notes/citation-fausse.md" << 'EOF'
+Citation inventée : « Voici une phrase entièrement fabriquée qui n'existe nulle part dans ce livre » (p. 2).
+EOF
+runcap "$SCRIPT_DIR/verify-quotes.sh" "$FR_WS"
+expect_exit "verify-quotes: fabricated French citation -> exit 1" 1
+expect_json_field "verify-quotes: fabricated French citation is scanned (checked=2)" "$LAST_STDOUT" "checked" "2"
+expect_json_field "verify-quotes: fabricated French citation is caught (fail=1)" "$LAST_STDOUT" "fail" "1"
+rm -f "$FR_WS/notes/citation-fausse.md"
+
+# --- Page range with a typographic en dash (pp. 12–15) ---
+# Isolated workspace: the check must prove the marker itself was parsed, not
+# borrow an "ok" from another note in the shared workspace.
+FR_DASH_WS="$WORKDIR/fr-dash-workspace"
+mkdir -p "$FR_DASH_WS/notes"
+cp "$FR_WS/source.txt" "$FR_DASH_WS/source.txt"
+cat > "$FR_DASH_WS/notes/citation-plage.md" << EOF
+Guillemets français et plage au demi-cadratin : « $FR_QUOTE » (pp. 2–2).
+EOF
+runcap "$SCRIPT_DIR/verify-quotes.sh" "$FR_DASH_WS"
+expect_exit "verify-quotes: en-dash page range -> exit 0" 0
+expect_json_field "verify-quotes: en-dash page range is scanned (checked=1)" "$LAST_STDOUT" "checked" "1"
+expect_json_field "verify-quotes: en-dash page range is verified (ok=1)" "$LAST_STDOUT" "ok" "1"
+
+# --- Structure extraction on French headings ---
+FR_TXT="$WORKDIR/fr-structure.txt"
+cat > "$FR_TXT" << 'EOF'
+[[page 1]]
+PRÉFACE
+[[page 2]]
+CHAPITRE PREMIER
+[[page 3]]
+Chapitre 2
+[[page 4]]
+Table des matières
+[[page 5]]
+ÉPILOGUE
+[[page 6]]
+Annexe A
+[[page 7]]
+Remerciements
+EOF
+runcap "$SCRIPT_DIR/extract-structure.sh" "$FR_TXT"
+expect_exit "extract-structure: French fixture -> exit 0" 0
+expect_stdout_has "extract-structure: finds PRÉFACE" "PRÉFACE"
+expect_stdout_has "extract-structure: finds CHAPITRE PREMIER" "CHAPITRE PREMIER"
+expect_stdout_has "extract-structure: finds Chapitre 2" "Chapitre 2"
+expect_stdout_has "extract-structure: finds Table des matières" "Table des matières"
+expect_stdout_has "extract-structure: finds ÉPILOGUE" "ÉPILOGUE"
+expect_stdout_has "extract-structure: finds Annexe A" "Annexe A"
+expect_stdout_has "extract-structure: finds Remerciements" "Remerciements"
+echo
+
+# =====================================================================
 # Summary
 # =====================================================================
 printf '\n== %d passed, %d failed, %d skipped (%ds) ==\n' "$PASS_COUNT" "$FAIL_COUNT" "$SKIP_COUNT" "$SECONDS"

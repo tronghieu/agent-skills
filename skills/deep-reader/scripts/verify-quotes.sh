@@ -38,8 +38,36 @@ if [ "${#md_files[@]}" -eq 0 ]; then
 fi
 
 cat > "$tmp_awk" <<'AWK_EOF'
+function fold_accents(s) {
+  # French text carries accents that the ASCII normalizer below would delete
+  # (it strips every byte outside [a-z0-9 -]), which silently shortens both the
+  # quoted span and the page blob. Fold accented letters to their base letters
+  # instead, so "café" and "cafe" compare equal and no letter is lost.
+  # Each gsub uses a literal multi-byte pattern; character classes are avoided
+  # because they behave differently across awk implementations.
+  gsub(/à|â|ä/, "a", s)
+  gsub(/À|Â|Ä/, "a", s)
+  gsub(/é|è|ê|ë/, "e", s)
+  gsub(/É|È|Ê|Ë/, "e", s)
+  gsub(/î|ï/, "i", s)
+  gsub(/Î|Ï/, "i", s)
+  gsub(/ô|ö/, "o", s)
+  gsub(/Ô|Ö/, "o", s)
+  gsub(/ù|û|ü/, "u", s)
+  gsub(/Ù|Û|Ü/, "u", s)
+  gsub(/ÿ/, "y", s)
+  gsub(/Ÿ/, "y", s)
+  gsub(/ç/, "c", s)
+  gsub(/Ç/, "c", s)
+  gsub(/œ/, "oe", s)
+  gsub(/Œ/, "oe", s)
+  gsub(/æ/, "ae", s)
+  gsub(/Æ/, "ae", s)
+  return s
+}
+
 function normalize(s,    r) {
-  r = s
+  r = fold_accents(s)
   gsub(/“/, "\"", r)
   gsub(/”/, "\"", r)
   gsub(/‘/, "'", r)
@@ -73,13 +101,17 @@ function first_n_words(s, n,    c, arr, out, i, lim) {
   return out
 }
 
-# Extracts double-quoted spans (>=5 words) from a line. Curly double quotes
-# are folded to straight quotes first so both styles are handled by a single
-# scan; the returned text is used only for the human-readable preview.
+# Extracts quoted spans (>=5 words) from a line. Curly double quotes, French
+# guillemets « » and low-9 quotes „ are folded to straight quotes first, so a
+# single scan handles every style; the returned text is used only for the
+# human-readable preview.
 function extract_quotes(line,    conv, i, start, end, span, n) {
   conv = line
   gsub(/“/, "\"", conv)
   gsub(/”/, "\"", conv)
+  gsub(/«/, "\"", conv)
+  gsub(/»/, "\"", conv)
+  gsub(/„/, "\"", conv)
   n = 0
   i = 1
   while (1) {
@@ -137,7 +169,12 @@ in_fence { next }
 
 {
   line = $0
-  if (!match(line, /\((pp?|tr)\.[[:blank:]]*[0-9]+(-[0-9]+)?\)/)) next
+  # Page citation marker. The range separator accepts the ASCII hyphen plus the
+  # typographic en dash (U+2013) and em dash (U+2014): French documents usually
+  # print ranges as (pp. 12–15). The dashes are spelled out as alternatives, not
+  # as a bracket class: they are multi-byte sequences, and mawk matches a class
+  # byte by byte, so [-–—] would never match a whole dash.
+  if (!match(line, /\((pp?|tr)\.[[:blank:]]*[0-9]+((-|–|—)[0-9]+)?\)/)) next
 
   cit = substr(line, RSTART, RLENGTH)
   inner = substr(cit, 2, length(cit) - 2)
@@ -156,6 +193,9 @@ in_fence { next }
     sub(/^p\.[[:blank:]]*/, "", rest)
   }
 
+  # Fold a typographic dash to the ASCII hyphen before splitting the range, for
+  # the same multi-byte reason as the marker match above.
+  gsub(/–|—/, "-", rest)
   if (rest ~ /-/) {
     split(rest, rg, "-")
     lo_exact = rg[1] + 0; hi_exact = rg[2] + 0

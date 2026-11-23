@@ -105,6 +105,14 @@ These are optional follow-on skills, not requirements:
 
 ## Limits
 
+`extract-structure.sh` is a heuristic seed, not a table of contents: it covers
+English, Vietnamese and French heading conventions, and a structural word inside
+a sentence is not reported. `verify-quotes.sh` checks quotations of at least five
+words written between `"…"`, `“…”`, `„…“` or `«…»`, cited as `(p. N)`,
+`(pp. A-B)` or `(tr. N)` — the range accepts a hyphen or a typographic dash.
+Accents are folded on both sides before comparison, so a note written without
+accents still matches an accented source.
+
 Page anchors for EPUB, DOCX, text, and Markdown are generated coordinates, not printed page numbers. Extraction quality can also be affected by scans, complex layouts, equations, and tables. Important academic, legal, medical, or publication-ready citations should still be checked against the original edition.
 
 Deep Reader helps you understand and evaluate a source; it does not make the source correct, replace domain expertise, or independently reproduce experiments that require unavailable data.
