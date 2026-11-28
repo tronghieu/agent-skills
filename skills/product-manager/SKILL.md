@@ -14,6 +14,8 @@ description: >-
   created (a directory holding `product.md`, `state.md`, and `decisions.md`).
   Not for deep user discovery (design-thinking), desk market facts
   (market-researcher), or company-level bets (strategy-board).
+metadata:
+  version: "1.0.0"
 ---
 
 # Product Manager

@@ -1,6 +1,8 @@
 ---
 name: system-prompt-creator
 description: Create high-quality, model-aware system prompts for any LLM (Claude, GPT, Gemini, open-source, etc.). Use this skill whenever the user wants to create, write, build, design, draft, or improve a system prompt, system instructions, or custom instructions for any AI model. Also trigger when the user asks about prompt engineering, prompt design, prompt optimization, or wants to define behavior for an AI assistant, chatbot, agent, or any LLM-powered application — even if they don't explicitly say "system prompt". Covers all use cases including chatbots, agentic systems, tool-use workflows, content generation, data extraction, code assistants, and multi-turn conversations.
+metadata:
+  version: "1.0.0"
 ---
 
 # System Prompt Creator

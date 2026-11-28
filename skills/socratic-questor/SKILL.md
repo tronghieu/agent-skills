@@ -9,6 +9,8 @@ description: >
   understand something through dialogue rather than passive reading. Also trigger
   when the user provides a text or document and wants to be questioned about it,
   or wants to check their own understanding of a concept.
+metadata:
+  version: "1.0.0"
 ---
 
 # Gadfly — Your Socratic Questioning Partner

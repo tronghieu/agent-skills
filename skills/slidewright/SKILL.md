@@ -12,6 +12,8 @@ description: >-
   cho hội thảo"). Supports two tracks: a zero-build single HTML file, or a Vite + React
   project. Do NOT use it for printable documents, normal web apps, or dashboards meant
   for individual users to interact with.
+metadata:
+  version: "1.0.0"
 ---
 
 # Interactive presentation builder

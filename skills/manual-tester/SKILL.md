@@ -11,6 +11,8 @@ description: >-
   agent's answers", "write manual test cases", "kịch bản test manual" — or assigns a test
   design, test plan or test-case IDs to execute by hand. Not for writing automated tests.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(curl *), Bash(psql *), Bash(docker *), Bash(jq *), Bash(python3 *)
+metadata:
+  version: "1.0.0"
 ---
 
 # Manual Tester — Session-Based Testing on the Running App

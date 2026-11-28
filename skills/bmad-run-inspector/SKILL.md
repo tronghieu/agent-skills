@@ -10,6 +10,8 @@ description: >-
   for bmad-loop's own run artifacts, not application runtime logs or CI-provider
   build logs.
 allowed-tools: Read Glob Grep Bash(python3 *) Bash(bmad-loop *) Bash(git *) Bash(ls *) Bash(ps *) Bash(wc *) Bash(tmux *) Bash(psmux *)
+metadata:
+  version: "1.0.0"
 ---
 
 # BMAD Run Inspector

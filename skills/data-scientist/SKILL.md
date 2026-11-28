@@ -12,6 +12,8 @@ description: >-
   written up for decision-makers. Triggers in any language ("phân tích dữ liệu",
   "xây model dự đoán", "kiểm định A/B"), even when they never say "data science"
   or "statistics".
+metadata:
+  version: "1.0.0"
 ---
 
 # Data Scientist

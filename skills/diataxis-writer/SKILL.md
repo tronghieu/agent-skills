@@ -10,6 +10,8 @@ description: >-
   confusing. Also use for Simplified Technical English (ASD-STE100) or
   controlled-language rewrites of English technical docs. Not for marketing, legal, sales, press, or fiction writing unless
   the user wants a Diataxis-style analysis.
+metadata:
+  version: "1.0.0"
 ---
 
 # Diataxis Writer

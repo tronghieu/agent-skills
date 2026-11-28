@@ -12,6 +12,8 @@ description: >-
   thinking". Also use when the user drops raw interview notes, transcripts, or
   survey exports and wants insights, personas, or product decisions. Not for "is
   there a market for X" desk questions (market-researcher).
+metadata:
+  version: "1.0.0"
 ---
 
 # Design Thinking

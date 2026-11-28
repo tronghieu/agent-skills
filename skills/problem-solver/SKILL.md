@@ -12,6 +12,8 @@ description: >-
   sales" is a diagnosis request. Not for open-ended ideation when nothing is
   broken (brainstorm-coach), understanding user needs (design-thinking), or
   company-level strategic bets (strategy-board).
+metadata:
+  version: "1.0.0"
 ---
 
 # Problem Solver

@@ -12,6 +12,8 @@ description: >
   exists and the question touches sprints, ceremonies, impediments, or
   team process health. Not for delivery dates and budget
   (project-manager) or deciding what to build (product-manager).
+metadata:
+  version: "1.0.0"
 ---
 
 # Scrum Master

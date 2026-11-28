@@ -33,6 +33,8 @@ skills/
 ---
 name: {skill-name}
 description: {One sentence describing when to use this skill. Include trigger phrases like "Deploy my app", "Check logs", etc.}
+metadata:
+  version: "1.0.0"
 ---
 
 # {Skill Title}
@@ -67,6 +69,10 @@ bash /mnt/skills/user/{skill-name}/scripts/{script}.sh [args]
 
 {Common issues and solutions, especially network/permissions errors}
 ```
+
+### Skill Versions
+
+Start each skill at `metadata.version: "1.0.0"` in `SKILL.md`. Bump the patch version for fixes, the minor version for backward-compatible features, and the major version for changes that require users to change how they use the skill. Keep the version for typo-only edits. Rebuild the skill's ZIP whenever its version changes.
 
 ### Best Practices for Context Efficiency
 

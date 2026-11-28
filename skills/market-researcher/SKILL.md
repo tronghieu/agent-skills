@@ -13,6 +13,8 @@ description: >
   use it when
   another skill or workflow (strategy-board, design-thinking, a product brief)
   needs external market facts delivered into its fact base or research folder.
+metadata:
+  version: "1.0.0"
 ---
 
 # Market Researcher

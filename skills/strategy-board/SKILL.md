@@ -15,6 +15,8 @@ description: >
   Also trigger when the user names a board member (Drucker, Porter, Christensen,
   Graham, Grove, Wack, Taleb, Minto) or asks to convene the board / open a
   boardroom session.
+metadata:
+  version: "1.0.0"
 ---
 
 # Strategy Board

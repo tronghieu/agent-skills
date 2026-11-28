@@ -14,6 +14,8 @@ description: >-
   Also use whenever a `_project/` directory exists and the user asks about
   schedule, deadline, risk, status, scope, budget, or stakeholders. Not for what
   to build (product-manager) or company-level bets (strategy-board).
+metadata:
+  version: "1.0.0"
 ---
 
 # Project Manager

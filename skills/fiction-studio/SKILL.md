@@ -12,6 +12,8 @@ description: >
   trigger when the user names a studio member (Homer, Aristotle, Fyodor, Tolkien,
   Scheherazade, Oscar, Max, Virginia, Borges, Bloom) or asks to switch creative
   roles / bring in a specialist.
+metadata:
+  version: "1.0.0"
 ---
 
 # Fiction Studio

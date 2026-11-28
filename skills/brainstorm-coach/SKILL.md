@@ -12,6 +12,8 @@ description: >-
   mấy ý tưởng này", "party mode"). Not for diagnosing why something is failing
   (problem-solver), user research (design-thinking), or company-level strategic
   bets (strategy-board).
+metadata:
+  version: "1.0.0"
 ---
 
 # Brainstorm Coach

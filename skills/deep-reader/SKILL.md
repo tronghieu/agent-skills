@@ -10,6 +10,8 @@ description: >-
   Also use when a `{slug}-notes/` workspace from a previous session sits next to
   a source file and the user asks a follow-up question about that book. Not for
   short documents (under ~30 pages) that fit in context; read those directly.
+metadata:
+  version: "1.0.0"
 ---
 
 # Deep Reader

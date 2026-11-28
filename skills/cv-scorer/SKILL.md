@@ -1,6 +1,8 @@
 ---
 name: cv-scorer
 description: "Evaluate, score, and compare candidate CVs/resumes against a job description with a shared 100-point rubric and traceable evidence. Use for CV screening, resume review, candidate ranking, shortlist support, or interview questions based on gaps between a CV and a JD."
+metadata:
+  version: "1.0.0"
 ---
 
 # CV Scorer

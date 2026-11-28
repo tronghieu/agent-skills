@@ -12,6 +12,8 @@ description: >-
   drops a document and asks whether to trust or act on it, or asks to see their
   reasoning profile. Not for company-level strategic bets (strategy-board) or
   learning a topic through dialogue (socratic-questor).
+metadata:
+  version: "1.0.0"
 ---
 
 # Critical Thinking
