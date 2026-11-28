@@ -1,5 +1,9 @@
 # Agent Skills
 
+<!-- yarkr:badges:start -->
+[![Indexed on Yarkr](https://api.yarkr.com/functions/v1/api/api/v1/badges/repos/tronghieu/agent-skills/version.svg)](https://yarkr.com/arks/tronghieu/agent-skills)
+<!-- yarkr:badges:end -->
+
 **Language:** [English](./README.md) | [Tiếng Việt](./README.vi.md) | [中文](./README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -32,6 +36,40 @@ Then invoke a skill in your agent:
 ```
 
 Most agent tools use slash commands. Codex and ChatGPT use `$`; in those tools, replace the leading `/` with `$`.
+
+<!-- yarkr:install:start -->
+## Install with Yarkr
+
+This repo is indexed on [Yarkr](https://yarkr.com/arks/tronghieu/agent-skills) as the ark [tronghieu/agent-skills](https://yarkr.com/arks/tronghieu/agent-skills), so its skills install into Claude Code, Codex, Cursor and other agent harnesses with one command.
+
+### CLI
+
+Install the whole ark, which Yarkr keeps equal to this repo:
+
+```bash
+npx yarkr-cli sync tronghieu/agent-skills
+```
+
+Or add individual skills:
+
+```bash
+npx yarkr-cli add skill:tronghieu/agent-skills/bmad-run-inspector
+npx yarkr-cli add skill:tronghieu/agent-skills/brainstorm-coach
+npx yarkr-cli add skill:tronghieu/agent-skills/critical-thinking
+```
+
+No Node.js? `curl -fsSL https://yarkr.com/install.sh | sh` (macOS, Linux) or `irm https://yarkr.com/install.ps1 | iex` (Windows PowerShell) installs `yarkr` as a standalone binary; then type `yarkr` in place of `npx yarkr-cli`.
+
+### MCP
+
+Connect your agent to the ark over MCP:
+
+```bash
+npx yarkr-cli mcp add tronghieu/agent-skills
+```
+
+Or point any MCP client at `https://api.yarkr.com/functions/v1/api/mcp/o/tronghieu/agent-skills`.
+<!-- yarkr:install:end -->
 
 ## Choose a skill
 
